@@ -1,0 +1,173 @@
+export const SEMINARS = [
+    '4e23-Ynlzqs',
+    'NPCGmMlgd-4',
+    'WtKgwYSdpiU',
+    'L_sJyBK1mTk',
+    'v8123gq10Dk',
+    'ej38zi7fFlo',
+    '4wkc5dOaETQ',
+    'zuRt0z577bA',
+    'hafkYxvXoAU',
+    '91mxaLdf3hA',
+    'yqY8yS-mnnE',
+    'gX8-9p1BmAI',
+    'TkFhMGZkTZ8',
+    'WHHUAYZ9TKc',
+    'lc-9Uh9euls',
+    'Od4Sfgd0zc8',
+    'cmY_MUvXenc',
+    'sdX1mRHHmtQ',
+    'i6p6f7NqP24',
+    'cfKiAwfU1MI',
+    'ur5A49htfwg',
+    'PdHaGwSN1oA',
+    'yTDyakMnkjo',
+    '3IZoa7xc94Q',
+    'wTk_6Wv7qiI',
+    'aiPx-W5Ix2M',
+    'loGCro25HPk',
+    'cBUi6dayhx4',
+    '13C9dI_Cl4w',
+    'M109cdUPPNA',
+    'gugwkLDlymo',
+    '3PK19rufFcg',
+    'HEUpzIs3xKE',
+    '1pT2Bkkvou8',
+    'JpzyT2XPNqw',
+  ] as const;
+
+  export const STUDIES = [
+    {
+      title: '프레임워크 없는 프론트엔드 개발',
+      description: '여러 프레임워크에 대해 학습 및 논의',
+      thumbnail: '/study_frontend.jpg',
+      tags: ['study'],
+    },
+    {
+      title: '만약',
+      description: '친구와 쉽게 약속을 잡을 수 있는 서비스',
+      thumbnail: '/project_manyaak.png',
+      tags: ['project'],
+      url: 'https://github.com/manyaak/manyaak-front',
+    },
+    {
+      title: 'MSA 스터디',
+      description: '[그림으로 공부하는 마이크로 서비스 구조] 독서',
+      thumbnail: '/study_msa.png',
+      tags: ['study'],
+    },
+    {
+      title: '부엉이 우편함',
+      description: 'GPS를 기반으로 한 익명 우편함',
+      thumbnail: '/project_owl-box.png',
+      tags: ['project'],
+      url: 'https://github.com/gdsc-ssu/gdsc-owl-mailbox-front',
+    },
+    {
+      title: '도커에 주저하는 사람들을 위한 생존형 도커 스터디!',
+      description: '[도커 교과서] 독서 및 리뷰',
+      thumbnail: '/study_docker.png',
+      tags: ['study'],
+    },
+    {
+      title: '사실;',
+      description: '개인의 사소한 실험을 공유하는 플랫폼',
+      thumbnail: '/project_sasil.png',
+      tags: ['project'],
+      url: 'https://github.com/gdsc-ssu/sasil-front',
+    },
+    {
+      title: 'Javascript Challenge',
+      description: '10개의 자바스크립트 프로젝트 제작하기',
+      thumbnail: '/study_js-challenge.png',
+      tags: ['study'],
+    },
+    {
+      title: 'Emotimer',
+      description: '웹소켓을 이용한 다중기기 동시 타이머',
+      thumbnail: '/project_emotimer.png',
+      tags: ['project'],
+      url: 'https://github.com/gdsc-ssu/emotimer',
+    },
+    {
+      title: 'WOW MEET',
+      description: '로그인 없이 1분만에 끝내는 초 간단 일정 조율',
+      thumbnail: '/project_wowmeet.png',
+      tags: ['project'],
+    },
+    {
+      title: '세상을 바꾸는 프론트엔드',
+      description: '프론트엔드의 자유 주제 발제, 토론',
+      thumbnail: '/study_typescript.png',
+      tags: ['study'],
+    },
+    {
+      title: '여자친구(생기면 갈 곳) API',
+      description: '여자친구가 생기면 갈 곳을 CLI로 찾아보자!',
+      thumbnail: '/project_up-date.png',
+      tags: ['project'],
+      url: 'https://github.com/gdsc-ssu/up-date-cli',
+    },
+  ];
+
+  export const EVENTS = [
+    {
+      image: '/event_escape.jpeg',
+      url: 'https://www.instagram.com/p/CV7gvPzvRnk',
+    },
+    {
+      image: '/event_senior-seminar.jpeg',
+      url: 'https://www.instagram.com/p/CWHyKsIvbiv',
+    },
+    {
+      image: '/event_debate.jpeg',
+      url: 'https://www.instagram.com/p/CbpxVsSvRDK/',
+    },
+    {
+      image: '/event_gdsc-career.jpeg',
+      url: 'https://www.instagram.com/p/CfWjWDalMh4',
+    },
+    {
+      image: '/event_festival.jpg',
+      url: 'https://www.instagram.com/p/Cgx1YZzvhpB',
+      imageAlign: 'top',
+    },
+    {
+      image: '/event_solution-challenge.jpeg',
+      url: 'https://developers.google.com/community/gdsc-solution-challenge?hl=ko',
+    },
+    {
+      image: '/event_ideathon.jpeg',
+      url: 'https://www.instagram.com/p/CwSWDYAvbsJ',
+    },
+    {
+      image: '/event_job-fair.jpeg',
+      url: 'https://www.instagram.com/p/CwSXa7vPnp7',
+    },
+    {
+      image: '/event_devcon.jpg',
+      url: 'https://www.instagram.com/p/CwSYnl7vSLh/',
+      imageAlign: 'bottom',
+    },
+    {
+      image: '/event_devfest-campus.png',
+      url: 'https://festa.io/events/4397',
+    },
+    {
+      image: '/event_newyear-hackathon.jpg',
+      url: 'https://www.instagram.com/p/C1LlhgTBbY1/?img_index=1',
+    },
+    {
+      image: '/event_snowflower-hackathon.jpg',
+      url: 'https://www.instagram.com/p/C0X94oRyVje/?img_index=1',
+    },
+    {
+      image: '/event_gen-ai.png',
+      url: 'https://gdsc.community.dev/events/details/developer-student-clubs-chungang-university-presents-gdsc-x-wrtn-gen-ai-onboarding-conference/',
+      imageAlign: 'top',
+    },
+    {
+      image: '/event_devcon-2024.jpeg',
+      url: 'https://www.instagram.com/p/C4xPOOIBc5r/?img_index=1',
+    },
+  ] as const;

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SUIT Variable';
+  font-weight: 100 900;
+  src: url('../../public/fonts/SUIT-Variable.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Nanum BaReunHiPi';
+  font-weight: 100 900;
+  src: url('../../public/fonts/Nanum-BaReunHiPi.woff2') format('woff2-variations');
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*:before,
+*:after {
+  font-family: 'SUIT Variable';
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+}
+
+.hipi {
+  font-family: 'Nanum BaReunHiPi';
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
