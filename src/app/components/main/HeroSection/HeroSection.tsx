@@ -2,11 +2,11 @@ import Image from 'next/image';
 
 const HeroSection = () => (
   <section className="
-    w-full max-w-[1280px] mx-auto
-    px-[101px] 
-    lg:px-[101px]
-    md:px-[101px]
-    sm:px-[52px]
+    w-full max-w-[1280px] m-auto
+    p-[101px] 
+    lg:p-[101px]
+    md:p-[101px]
+    sm:p-[52px]
   ">
     <Image 
       src="/icons/Logo.svg"
@@ -25,6 +25,7 @@ const HeroSection = () => (
       lg:text-[96px]
       md:text-[80px]
       sm:text-[12vw]
+      max-sm:text-[12vw]
     ">
       <span className="text-grayscale-gray5">
         Google
