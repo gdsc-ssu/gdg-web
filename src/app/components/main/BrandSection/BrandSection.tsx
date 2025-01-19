@@ -1,11 +1,5 @@
 import Image from 'next/image';
 import SectionWrapper from '../SectionWrapper';
-import Star from '@public/icons/Star.svg';
-import SmileFace from '@public/icons/SmileFace.svg';
-import WorldWithFlag from '@public/icons/WorldWithFlag.svg';
-import UnderScore from '@public/icons/UnderScore.svg';
-import PaperAirplane from '@public/icons/PaperAirplane.svg';
-import { COLORS } from '@/app/constants/styles';
 
 const BrandSection = () => {
   return (
@@ -91,7 +85,7 @@ const BrandSection = () => {
                 md:text-[24px]
                 sm:text-[20px]
                 hipi
-              "> 세상</span>
+              ">세상</span>
               <span className="mx-1">
                 <Image 
                   src="/icons/WorldWithFlag.svg"
