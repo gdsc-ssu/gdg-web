@@ -20,13 +20,13 @@ export default function NavBar() {
           <Link href="/">
             <span className="text-primary-black text-[24px] font-normal leading-[110%]">Landing</span>
           </Link>
-          <Link href="/Activities">
+          <Link href="/activities">
             <span className="text-primary-black text-[24px] font-normal leading-[110%]">Activities</span>
           </Link>
-          <Link href="/People">
+          <Link href="/people">
             <span className="text-primary-black text-[24px] font-normal leading-[110%]">People</span>
           </Link>
-          <Link href="/Support">
+          <Link href="/support">
             <span className="text-primary-black text-[24px] font-normal leading-[110%]">Support</span>
           </Link>
         </div>
