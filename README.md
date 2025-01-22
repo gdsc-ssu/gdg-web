@@ -1,4 +1,4 @@
-# GDG-WEB-2025
+# GDG-WEB-2025 DEV
 
 ## 🌱 Commit Convention
 
