@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { usePathname } from 'next/navigation';
 export default function NavBar() {
+  const pathname = usePathname();
   return (
     <div className="    
     w-full max-w-[1280px] m-auto
@@ -29,21 +30,32 @@ export default function NavBar() {
         md:space-x-[10px]
         sm:space-x-[5px]">
           <Link href="/">
-            <span className="
-            text-primary-black text-[16px] font-bold leading-[110%]
-            sm:text-[12px]">Landing</span>
+            <span className={`
+            text-[16px] font-bold leading-[110%]
+            ${pathname === '/' ? 'text-primary-black' : 'text-grayscale-gray5'}
+            sm:text-[12px]
+            `}>Landing</span>
           </Link>
           <Link href="/activities">
-            <span className="text-primary-black text-[16px] font-bold leading-[110%]
-            sm:text-[12px]">Activities</span>
+            <span className={`
+            text-[16px] font-bold leading-[110%]
+            ${pathname === '/activities' ? 'text-primary-black' : 'text-grayscale-gray5'}
+            sm:text-[12px]
+            `}>Activities</span>
           </Link>
           <Link href="/people">
-            <span className="text-primary-black text-[16px] font-bold leading-[110%]
-            sm:text-[12px]">People</span>
+            <span className={`
+            text-[16px] font-bold leading-[110%]
+            ${pathname === '/people' ? 'text-primary-black' : 'text-grayscale-gray5'}
+            sm:text-[12px]
+            `}>People</span>
           </Link>
           <Link href="/support">
-            <span className="text-primary-black text-[16px] font-bold leading-[110%]
-            sm:text-[12px]">Support</span>
+            <span className={`
+            text-[16px] font-bold leading-[110%]
+            ${pathname === '/support' ? 'text-primary-black' : 'text-grayscale-gray5'}
+            sm:text-[12px]
+            `}>Support</span>
           </Link>
         </div>
       </div>
