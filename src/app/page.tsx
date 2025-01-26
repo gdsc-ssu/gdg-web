@@ -2,6 +2,7 @@ import ActivitySection from '@/app/components/main/ActivitySection';
 import BrandSection from '@/app/components/main/BrandSection';
 import HeroSection from '@/app/components/main/HeroSection';
 import PictureSection from '@/app/components/main/PictureSection';
+import NavBar from '@/app/components/NavBar';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
+      <NavBar />
       <HeroSection />
       <BrandSection />
       <ActivitySection />
