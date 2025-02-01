@@ -1,2 +1,2 @@
-import TabBar from "./TabBar";
-export default TabBar;
+import TabContent from "./TabContent";
+export default TabContent;
