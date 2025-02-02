@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import ChallengeMainImg from "@public/challenge_main.png";
 import ChallengeSubImg from "@public/challenge_sub.png";
 import ChallengeCatImg from "@public/challenge_cat.jpg";
 
@@ -24,7 +23,7 @@ const Challenge = () => {
       title: "만약에 한 줄보다 길면은 이렇게 . . .",
     },
     {
-      image: ChallengeMainImg,
+      image: ChallengeCatImg,
       team: "Team Name",
       title: "2-1 케러셀",
     },
@@ -73,7 +72,7 @@ const Challenge = () => {
 
       <section className="flex justify-center pb-12">
         <Image
-          src={ChallengeMainImg}
+          src="/challenge_main.webp"
           alt="ChallengeMainImg"
           width={854}
           height={480}

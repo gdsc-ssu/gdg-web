@@ -8,7 +8,7 @@ import Community from "../Community";
 const TabContent = () => {
   const { items } = useContext(TabBarContext);
   const activeTab = items.find((item) => item.isActive);
-  console.log(activeTab?.label);
+
   const renderContent = () => {
     switch (activeTab?.id) {
       case "seminar":
