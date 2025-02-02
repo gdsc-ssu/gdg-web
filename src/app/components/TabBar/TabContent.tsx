@@ -3,16 +3,17 @@ import { useContext } from "react";
 import { TabBarContext } from "./context";
 import TabBar from "./TabBar";
 import Seminar from "../Seminar";
+import Challenge from "../Challenge/Challenge";
 const TabContent = () => {
   const { items } = useContext(TabBarContext);
   const activeTab = items.find((item) => item.isActive);
-
+  console.log(activeTab?.label);
   const renderContent = () => {
     switch (activeTab?.id) {
       case "seminar":
         return <Seminar />;
       case "challenge":
-        return <div>Solution Challenge Content</div>;
+        return <Challenge />;
       case "community":
         return <div>Community Content</div>;
       default:
