@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import SeminarMainImg from "@public/ssumall seminar png.png";
+import SeminarMainImg from "@public/seminar_main.png";
 
 const Seminar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
