@@ -174,9 +174,11 @@ const Challenge = () => {
       </section>
 
       <section className="text-center py-8">
-        <p className="font-medium">
-          사회에 선한 영향력을 주는 개발자,
-          <br />
+        <p>
+          <span className="font-medium">
+            사회에 선한 영향력을 주는 개발자,
+            <br />
+          </span>
           <span className="font-bold">
             Google Developer Groups on Campus
           </span>{" "}

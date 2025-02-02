@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { TabBarContext } from "./context";
 import TabBar from "./TabBar";
 import Seminar from "../Seminar";
-import Challenge from "../Challenge/Challenge";
+import Challenge from "../Challenge";
+import Community from "../Community";
 const TabContent = () => {
   const { items } = useContext(TabBarContext);
   const activeTab = items.find((item) => item.isActive);
@@ -15,9 +16,9 @@ const TabContent = () => {
       case "challenge":
         return <Challenge />;
       case "community":
-        return <div>Community Content</div>;
+        return <Community />;
       default:
-        return <div>Select a tab to see the content.</div>;
+        return <Seminar />;
     }
   };
 
