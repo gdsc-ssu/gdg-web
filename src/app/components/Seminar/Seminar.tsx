@@ -89,7 +89,7 @@ const Seminar = () => {
             href="https://www.youtube.com/@gdscsoongsil6711"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="text-blue-500 underline font-bold"
           >
             GDSC Soongsil 유튜브
           </a>
