@@ -24,13 +24,16 @@ export default {
           green: COLORS.primary.green,
           blue: COLORS.primary.blue,
           red: COLORS.primary.red,
-          ssuLightBlue: COLORS.primary.ssuLightBlue,
           yellow200: COLORS.primary.yellow200,
+          "ssu-blue": {
+            light: COLORS.primary.ssuBlue.light,
+            medium: COLORS.primary.ssuBlue.medium,
+            dark: COLORS.primary.ssuBlue.dark,
+          },
         },
         grayscale: {
           white: COLORS.grayscale.white,
           gray1: COLORS.grayscale.gray1,
-          gray100: COLORS.grayscale.gray100,
           gray2: COLORS.grayscale.gray2,
           gray3: COLORS.grayscale.gray3,
           gray4: COLORS.grayscale.gray4,

@@ -30,9 +30,9 @@ const TabBar = () => {
         ))}
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-2 bg-grayscale-gray100" />
+      <div className="absolute bottom-0 left-0 w-full h-2 bg-grayscale-gray1" />
       <div
-        className="absolute bottom-0 h-2 bg-primary-ssuLightBlue transition-all duration-300"
+        className="absolute bottom-0 h-2 bg-primary-ssu-blue-light transition-all duration-300"
         style={{
           width: getUnderlineWidth(activeIndex),
           left: `${(activeIndex * 100) / totalTabs}%`,

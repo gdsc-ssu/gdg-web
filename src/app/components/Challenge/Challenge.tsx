@@ -80,9 +80,9 @@ const Challenge = () => {
         />
       </section>
 
-      <section className="max-w-[1084px] mx-auto text-center p-12 border-2 border-primary-ssuLightBlue rounded-lg mb-16">
+      <section className="max-w-[1084px] mx-auto text-center p-12 border-2 border-primary-ssu-blue-light rounded-lg mb-16">
         <p className="leading-relaxed font-medium">
-          <span className="text-primary-ssuLightBlue font-bold">
+          <span className="text-primary-ssu-blue-light font-bold">
             Solution Challenge
           </span>
           는 <span className="text-blue-500 font-bold">Google의 기술</span>을

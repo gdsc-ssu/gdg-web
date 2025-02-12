@@ -54,7 +54,7 @@ const Seminar = () => {
               <h1 className="text-[48px] sm:text-[36px] font-extrabold text-black leading-tight">
                 Small?
                 <br />
-                <span className="text-primary-ssuLightBlue">SSUmall!</span>
+                <span className="text-primary-ssu-blue-light">SSUmall!</span>
               </h1>
             </div>
 
@@ -65,7 +65,7 @@ const Seminar = () => {
                     key={index}
                     className={`w-3 h-3 rounded-full border ${
                       selectedIndex === index
-                        ? "bg-primary-ssuLightBlue"
+                        ? "bg-primary-ssu-blue-light"
                         : "bg-gray-200"
                     }`}
                     onClick={() => setSelectedIndex(index)}

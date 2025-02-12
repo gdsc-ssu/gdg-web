@@ -4,13 +4,16 @@ export const COLORS = {
     yellow: "#FBBC04",
     green: "#0F9D58",
     blue: "#4285F4",
-    ssuLightBlue: "#62C6C4",
     yellow200: "#FDE293",
+    ssuBlue: {
+      light: "#62C6C4",
+      medium: "#02A6CB",
+      dark: "#006E93",
+    },
   },
   grayscale: {
     white: "#FFFFFF",
     gray1: "#F3F5F7",
-    gray100: "#F1F3F4",
     gray2: "#ECEEF0",
     gray3: "#E2E5E8",
     gray4: "#D4D8DC",
