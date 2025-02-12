@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import SeminarMainImg from "@public/seminar_main.png";
+import Slide from "./Slide";
 
 const Seminar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -58,7 +59,7 @@ const Seminar = () => {
               </h1>
             </div>
 
-            <div className=" rounded-md p-6  relative w-[400px]">
+            <div className=" rounded-md p-6  relative w-[400px] h-[202px]">
               <div className="flex items-center space-x-2 mb-4">
                 {seminarContents.map((_, index) => (
                   <button
@@ -95,45 +96,7 @@ const Seminar = () => {
           에서 확인할 수 있습니다.
         </p>
 
-        {/* 케러셀 확인 후 대체 예정 */}
-        <article className="flex justify-center space-x-4 mb-8">
-          <div className="w-1/4 bg-red-200 p-4 rounded-xl shadow-md">
-            <p className="text-lg font-bold text-red-600">
-              당신이 원해왔던, 슈몰세미나.
-            </p>
-            <p className="text-sm text-gray-600 mt-2">
-              GDG server/cloud 장환곤
-            </p>
-          </div>
-
-          <div className="w-1/4 bg-blue-200 p-4 rounded-xl shadow-md">
-            <p className="text-lg font-bold text-red-600">
-              당신이 원해왔던, 슈몰세미나.
-            </p>
-            <p className="text-sm text-gray-600 mt-2">
-              GDG server/cloud 장환곤
-            </p>
-          </div>
-
-          <div className="w-1/4 bg-green-200 p-4 rounded-xl shadow-md relative">
-            <p className="text-lg font-bold text-red-600">
-              당신이 원해왔던, 슈몰세미나.
-            </p>
-            <p className="text-sm text-gray-600 mt-2">
-              GDG server/cloud 장환곤
-            </p>
-          </div>
-        </article>
-
-        <article className="text-center">
-          <p className="text-base font-medium">
-            다양한 경험, 지식, 관심사를 가진 학생 개발자들이 모여 수많은
-            이야기를 공유합니다.
-          </p>
-          <p className="text-lg font-bold mt-2 ">
-            SSUmall Seminar에서 다양한 인사이트와 경험을 얻어가시길 바랍니다!
-          </p>
-        </article>
+        <Slide />
       </section>
     </main>
   );
