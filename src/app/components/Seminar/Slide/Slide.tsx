@@ -34,7 +34,7 @@ const Slide = () => {
     <div className="relative w-full max-w-[1280px] mx-auto overflow-hidden">
       <motion.div
         className="flex gap-4"
-        animate={{ x: `-${index * 506}px` }} // 이미지 크기 + 간격 반영
+        animate={{ x: `-${index * 506}px` }}
         transition={{ ease: "easeInOut", duration: 0.8 }}
       >
         {images.map((data, i) => (
