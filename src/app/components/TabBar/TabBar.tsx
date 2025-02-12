@@ -9,10 +9,19 @@ const TabBar = () => {
   const activeIndex = items.findIndex((item) => item.isActive);
   const totalTabs = items.length;
 
-  const getUnderlineWidth = (index: number) => {
-    if (index === 0 || index === totalTabs - 1) return "33.33%"; // 왼쪽/오른쪽 탭
-    if (index === 1) return "35%"; // 가운데 탭
+  type TabPosition = "left" | "center" | "right";
+
+  const getTabPosition = (index: number, totalTabs: number): TabPosition =>
+    index === 0 ? "left" : index === totalTabs - 1 ? "right" : "center";
+
+  const widthMap: Record<TabPosition, string> = {
+    left: "33.33%",
+    center: "35%",
+    right: "33.33%",
   };
+
+  const getUnderlineWidth = (index: number, totalTabs: number): string =>
+    widthMap[getTabPosition(index, totalTabs)];
 
   return (
     <div className="relative w-full">
@@ -34,7 +43,7 @@ const TabBar = () => {
       <div
         className="absolute bottom-0 h-2 bg-primary-ssu-blue-light transition-all duration-300"
         style={{
-          width: getUnderlineWidth(activeIndex),
+          width: getUnderlineWidth(activeIndex, totalTabs),
           left: `${(activeIndex * 100) / totalTabs}%`,
         }}
       />
