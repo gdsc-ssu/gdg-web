@@ -24,6 +24,7 @@ export default {
           green: COLORS.primary.green,
           blue: COLORS.primary.blue,
           red: COLORS.primary.red,
+          yellow200: COLORS.primary.yellow200,
           "ssu-blue": {
             light: COLORS.primary.ssuBlue.light,
             medium: COLORS.primary.ssuBlue.medium,
