@@ -54,13 +54,11 @@ const GenerationBar = () => {
           setGenerationInfo(data[0].properties.generation.multi_select.options);
         } else console.error("Failed to fetch generation info", res.status);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
 
     fetchGenerationInfo();
-    console.log("after fetch", selectedGeneration);
-    console.log("after fetch generation info", generationInfo);
   }, []);
   return (
     <div

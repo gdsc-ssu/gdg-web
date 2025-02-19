@@ -20,7 +20,6 @@ const useGenerationStore = create<State & Actions>((set) => ({
   },
   resetGeneration: () => {
     set(initialState);
-    console.log("init in store");
   },
 }));
 

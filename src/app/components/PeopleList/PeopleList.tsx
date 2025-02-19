@@ -71,7 +71,6 @@ const PeopleList = () => {
 
   useEffect(() => {
     resetGeneration();
-    console.log("after reset", generation);
   }, []);
 
   useEffect(() => {
@@ -90,7 +89,6 @@ const PeopleList = () => {
       }
     };
     fetchPeopleInfo();
-    console.log("people data", peopleInfo);
   }, [generation]);
 
   return (

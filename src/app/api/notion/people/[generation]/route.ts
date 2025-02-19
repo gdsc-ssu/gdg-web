@@ -11,14 +11,12 @@ export async function GET(
 ) {
   const { generation } = await params;
   if (!DB_ID) {
-    console.error("NOTION_DB_ID is missing");
     return NextResponse.json(
       { error: "Missing NOTION_DATABASE_ID in environment variables" },
       { status: 500 }
     );
   }
   try {
-    console.log("calling Notion API with DB_ID", DB_ID);
     const res = await notion.databases.query({
       database_id: DB_ID,
       filter: {
@@ -31,6 +29,6 @@ export async function GET(
 
     return NextResponse.json(res.results);
   } catch (err) {
-    console.error("err in people route", err);
+    return NextResponse.json({ error: err }, { status: 500 });
   }
 }
