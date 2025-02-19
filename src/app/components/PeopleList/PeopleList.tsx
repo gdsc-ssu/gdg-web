@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import useGenerationStore from "../../../store/useGenerationStore";
 
-type websitesType = "github" | "linkedin" | "ig";
+type websitesType = "github" | "linkedin" | "instagram";
 
 interface PeopleCardProps {
   pictureUrl: string | undefined;
@@ -37,7 +37,7 @@ const PeopleCard = ({
         <Websites
           github={websites.github}
           linkedin={websites.linkedin}
-          ig={websites.ig}
+          instagram={websites.instagram}
         />
       </div>
       <div className="text-[16px] mr-2 mb-4">{part}</div>
@@ -58,7 +58,7 @@ interface personInfo {
     name: { title: { plain_text: string }[] };
     github: { url: string };
     linkedin: { url: string };
-    ig: { url: string };
+    instagram: { url: string };
     part: { multi_select: { name: string }[] };
     comment: { rich_text: { plain_text: string }[] };
   };
@@ -103,7 +103,7 @@ const PeopleList = () => {
           websites={{
             github: person.properties.github.url,
             linkedin: person.properties.linkedin.url,
-            ig: person.properties.ig.url,
+            instagram: person.properties.instagram.url,
           }}
           part={person.properties.part.multi_select
             .map((item) => item.name)

@@ -6,9 +6,9 @@ import Link from "next/link";
 interface WebsiteProps {
   github: string;
   linkedin: string;
-  ig: string;
+  instagram: string;
 }
-const Websites = ({ github, linkedin, ig }: WebsiteProps) => {
+const Websites = ({ github, linkedin, instagram }: WebsiteProps) => {
   return (
     <div className="flex flex-row justify-start gap-2">
       <Link href={github || ""} target="_blank">
@@ -38,9 +38,9 @@ const Websites = ({ github, linkedin, ig }: WebsiteProps) => {
           ""
         )}
       </Link>
-      <Link href={ig || ""} target="_blank">
-        {ig ? (
-          <Image src="/icons/ig.svg" alt="ig" width={18} height={18} />
+      <Link href={instagram || ""} target="_blank">
+        {instagram ? (
+          <Image src="/icons/ig.svg" alt="instagram" width={18} height={18} />
         ) : (
           ""
         )}
