@@ -99,7 +99,7 @@ const PeopleList = () => {
         <PeopleCard
           key={person.id}
           pictureUrl={person.cover?.file?.url || person.cover?.external?.url}
-          name={person.properties.name.title[0].plain_text}
+          name={person.properties.name.title[0]?.plain_text}
           websites={{
             github: person.properties.github.url,
             linkedin: person.properties.linkedin.url,
