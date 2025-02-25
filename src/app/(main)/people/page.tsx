@@ -11,7 +11,7 @@ export default function PeoplePage() {
   return (
     <main className="w-full min-h-screen pt-24">
       <section className="max-w-[1280px] mx-auto mb-10 px-[101px] sm:px-[52px]">
-        <h1 className="text-[64px] font-bold lg:text-[48px] sm:text-[36px]">
+        <h1 className="text-[72px] font-extrabold text-center bg-gradient-to-b from-black to-primary-ssu-blue-light bg-clip-text text-transparent">
           People
         </h1>
         <GenerationBar />
