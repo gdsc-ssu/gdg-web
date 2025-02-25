@@ -28,18 +28,29 @@ const Generation = ({ title, active, onClickGeneration }: GenerationProps) => {
   );
 };
 
-interface generationInfo {
+interface ResData {
+  properties: {
+    generation: {
+      multi_select: {
+        options: any[];
+      };
+    };
+  };
+}
+
+interface GenerationInfo {
   id: string;
   name: string;
 }
 
 const GenerationBar = () => {
-  const selectedGeneration = useGenerationStore((state) => state.generation);
-  const updateSelectedGeneration = useGenerationStore(
-    (state) => state.updateGeneration
+  const selectedGeneration: string = useGenerationStore(
+    (state) => state.generation
   );
+  const updateSelectedGeneration: (newGeneration: string) => void =
+    useGenerationStore((state) => state.updateGeneration);
 
-  const [generationInfo, setGenerationInfo] = useState<generationInfo[]>([]);
+  const [generationInfo, setGenerationInfo] = useState<GenerationInfo[]>([]);
 
   const handleActivateGeneration = (newSelectedGeneration: string) => {
     updateSelectedGeneration(newSelectedGeneration);
@@ -48,9 +59,9 @@ const GenerationBar = () => {
   useEffect(() => {
     const fetchGenerationInfo = async () => {
       try {
-        const res = await fetch("/api/notion/generation");
+        const res: Response = await fetch("/api/notion/generation");
         if (res.ok) {
-          const data = await res.json();
+          const data: ResData[] = await res.json();
           setGenerationInfo(data[0].properties.generation.multi_select.options);
         } else console.error("Failed to fetch generation info", res.status);
       } catch (err) {
@@ -68,12 +79,12 @@ const GenerationBar = () => {
       md:gap-3 md:mt-16 md:mb-8
       sm:gap-2 sm:mt-14 sm:mb-6"
     >
-      {generationInfo.map((generation) => (
+      {generationInfo.map(({ id, name }: GenerationInfo) => (
         <Generation
-          key={generation.id}
-          title={generation.name}
+          key={id}
+          title={name}
           active={selectedGeneration}
-          onClickGeneration={() => handleActivateGeneration(generation.name)}
+          onClickGeneration={() => handleActivateGeneration(name)}
         />
       ))}
     </div>

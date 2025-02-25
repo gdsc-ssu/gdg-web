@@ -48,7 +48,7 @@ const PeopleCard = ({
   );
 };
 
-interface personInfo {
+interface PersonInfo {
   id: string;
   cover?: {
     file?: { url: string };
@@ -65,9 +65,11 @@ interface personInfo {
 }
 
 const PeopleList = () => {
-  const [peopleInfo, setPeopleInfo] = useState<personInfo[]>([]);
-  const generation = useGenerationStore((state) => state.generation);
-  const resetGeneration = useGenerationStore((state) => state.resetGeneration);
+  const [peopleInfo, setPeopleInfo] = useState<PersonInfo[]>([]);
+  const generation: string = useGenerationStore((state) => state.generation);
+  const resetGeneration: () => void = useGenerationStore(
+    (state) => state.resetGeneration
+  );
 
   useEffect(() => {
     resetGeneration();
@@ -76,10 +78,9 @@ const PeopleList = () => {
   useEffect(() => {
     const fetchPeopleInfo = async () => {
       try {
-        const res = await fetch(`/api/notion/people/${generation}`);
+        const res: Response = await fetch(`/api/notion/people/${generation}`);
         if (res.ok) {
-          const data = await res.json();
-
+          const data: PersonInfo[] = await res.json();
           setPeopleInfo(data);
         } else {
           console.error(`res is not ok : ${res.status}`);
@@ -93,20 +94,20 @@ const PeopleList = () => {
 
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      {peopleInfo.map((person) => (
+      {peopleInfo.map(({ id, cover, properties }: PersonInfo) => (
         <PeopleCard
-          key={person.id}
-          pictureUrl={person.cover?.file?.url || person.cover?.external?.url}
-          name={person.properties.name.title[0]?.plain_text}
+          key={id}
+          pictureUrl={cover?.file?.url || cover?.external?.url}
+          name={properties.name.title[0]?.plain_text}
           websites={{
-            github: person.properties.github.url,
-            linkedin: person.properties.linkedin.url,
-            instagram: person.properties.instagram.url,
+            github: properties.github.url,
+            linkedin: properties.linkedin.url,
+            instagram: properties.instagram.url,
           }}
-          part={person.properties.part.multi_select
+          part={properties.part.multi_select
             .map((item) => item.name)
             .join(" / ")}
-          comment={person.properties.comment.rich_text[0]?.plain_text}
+          comment={properties.comment.rich_text[0]?.plain_text}
         />
       ))}
     </div>

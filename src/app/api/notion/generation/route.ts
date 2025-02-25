@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
+import { SearchResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const DB_ID = process.env.NOTION_DB_ID;
 const notion = new Client({ auth: process.env.NOTION_PEOPLE_API_KEY });
@@ -12,7 +13,7 @@ export async function GET() {
     );
   }
   try {
-    const res = await notion.search({
+    const res: SearchResponse = await notion.search({
       query: "people",
       filter: {
         value: "database",

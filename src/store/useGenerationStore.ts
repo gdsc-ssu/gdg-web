@@ -15,7 +15,7 @@ const initialState: State = {
 
 const useGenerationStore = create<State & Actions>((set) => ({
   ...initialState,
-  updateGeneration: (newGeneration) => {
+  updateGeneration: (newGeneration: string) => {
     set({ generation: newGeneration });
   },
   resetGeneration: () => {
