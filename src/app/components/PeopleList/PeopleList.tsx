@@ -2,11 +2,15 @@
 
 import Websites from "../Websites";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import useGenerationStore from "../../../store/useGenerationStore";
+
+type websitesType = "github" | "linkedin" | "instagram";
 
 interface PeopleCardProps {
-  pictureUrl: string;
+  pictureUrl: string | undefined;
   name: string;
-  websites: boolean[];
+  websites: Record<websitesType, string>;
   part: string;
   comment: string;
 }
@@ -23,16 +27,17 @@ const PeopleCard = ({
       <Image
         src={pictureUrl || "/icons/default_picture.svg"}
         alt="picture"
-        width={180}
-        height={180}
+        width={160}
+        height={160}
         className="row-span-3 m-auto"
+        priority
       />
       <div className="flex items-center gap-2 mr-2 h-fit mr-2 mt-2">
         <div className="text-[24px] font-semibold">{name}</div>
         <Websites
-          github={websites[0]}
-          linkedin={websites[1]}
-          ig={websites[2]}
+          github={websites.github}
+          linkedin={websites.linkedin}
+          instagram={websites.instagram}
         />
       </div>
       <div className="text-[16px] mr-2 mb-4">{part}</div>
@@ -43,17 +48,66 @@ const PeopleCard = ({
   );
 };
 
-const PeopleList = ({ people }: { people: PeopleCardProps[] }) => {
+interface PersonInfo {
+  id: string;
+  cover?: {
+    file?: { url: string };
+    external?: { url: string };
+  };
+  properties: {
+    name: { title: { plain_text: string }[] };
+    github: { url: string };
+    linkedin: { url: string };
+    instagram: { url: string };
+    part: { multi_select: { name: string }[] };
+    comment: { rich_text: { plain_text: string }[] };
+  };
+}
+
+const PeopleList = () => {
+  const [peopleInfo, setPeopleInfo] = useState<PersonInfo[]>([]);
+  const generation: string = useGenerationStore((state) => state.generation);
+  const resetGeneration: () => void = useGenerationStore(
+    (state) => state.resetGeneration
+  );
+
+  useEffect(() => {
+    resetGeneration();
+  }, []);
+
+  useEffect(() => {
+    const fetchPeopleInfo = async () => {
+      try {
+        const res: Response = await fetch(`/api/notion/people/${generation}`);
+        if (res.ok) {
+          const data: PersonInfo[] = await res.json();
+          setPeopleInfo(data);
+        } else {
+          console.error(`res is not ok : ${res.status}`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchPeopleInfo();
+  }, [generation]);
+
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      {people.map((person, idx) => (
+      {peopleInfo.map(({ id, cover, properties }: PersonInfo) => (
         <PeopleCard
-          key={idx}
-          pictureUrl={person.pictureUrl}
-          name={person.name}
-          websites={person.websites}
-          part={person.part}
-          comment={person.comment}
+          key={id}
+          pictureUrl={cover?.file?.url || cover?.external?.url}
+          name={properties.name.title[0]?.plain_text}
+          websites={{
+            github: properties.github.url,
+            linkedin: properties.linkedin.url,
+            instagram: properties.instagram.url,
+          }}
+          part={properties.part.multi_select
+            .map((item) => item.name)
+            .join(" / ")}
+          comment={properties.comment.rich_text[0]?.plain_text}
         />
       ))}
     </div>
