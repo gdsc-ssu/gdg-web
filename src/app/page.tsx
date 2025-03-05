@@ -36,12 +36,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col justify-center items-center w-full min-h-screen pt-24">
       <NavBar />
       <HeroSection />
       <BrandSection />
-      <ActivitySection />
-      <PictureSection />
+      {/* <ActivitySection /> */}
+      {/* <PictureSection /> */}
     </main>
   );
 } 

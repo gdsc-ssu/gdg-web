@@ -17,7 +17,7 @@ const HeroSection = () => (
         w-[200px] h-[103px] mb-[56px]
         lg:w-[160px] lg:h-[82px] lg:mb-[40px]
         md:w-[120px] md:h-[62px] md:mb-[32px]
-        sm:w-[20vw] sm:h-[calc(20vw*103/200)] sm:mb-[5vw]
+        sm:w-[80px] sm:h-[41px] sm:mb-[20px]
       "
     />
     <p className="
