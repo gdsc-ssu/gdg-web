@@ -40,7 +40,7 @@ export default function Home() {
       <NavBar />
       <HeroSection />
       <BrandSection />
-      {/* <ActivitySection /> */}
+      <ActivitySection />
       {/* <PictureSection /> */}
     </main>
   );

@@ -18,7 +18,6 @@ interface SectionProps {
 const Section = ({
   title,
   description,
-  isFirst,
   childrenContainerClassName,
   children,
   index,
@@ -30,17 +29,39 @@ const Section = ({
     <div
       ref={sectionRef}
       className={`
-        w-full h-screen flex flex-col justify-center items-center overflow-hidden
+        w-full h-screen 
+        flex flex-col justify-center items-center 
+        overflow-hidden
         sticky top-0 transition-opacity duration-500
         ${index === activeIndex ? 'opacity-100 z-50' : 'opacity-0 z-0'}
       `}
     >
-      <SectionWrapper reverse className="gap-32 lg:gap-[53px] md:gap-10 sm:gap-5">
+      <div className="
+      flex flex-col
+      lg:flex-row
+      md:flex-row
+      sm:flex-row
+      px-[104px]
+      lg:px-[76px]
+      md:px-[104px]
+      sm:px-[52px]
+      ">
+        <SectionWrapper reverse className="
+      gap-[32px] 
+      lg:gap-[53px] 
+      md:gap-[10px]
+      sm:gap-[5px]">
         <div 
-          className="flex-shrink-0 relative flex flex-col pr-[101px] lg:pr-[76px] md:pr-[101px] sm:pr-[52px]"
-          style={{
-            opacity: isFirst ? 1 : 0
-          }}
+          className="flex-shrink-0 relative 
+          flex flex-col 
+          font-bold
+          pr-[101px] 
+          lg:pr-[76px]
+          lg:text-[48px]
+          md:pr-[0px]
+          md:text-[32px]
+          sm:pr-[0px]
+          sm:text-[28px]"
         >
           <span className="flex">
             <span className="relative whitespace-nowrap ">
@@ -62,16 +83,31 @@ const Section = ({
             alt="Pencil"
             width={101}
             height={101}
-            className="absolute right-0 bottom-0 w-[101px] h-[101px] lg:w-20 lg:h-20 md:w-20 md:h-20 sm:w-[50px] sm:h-[50px]"
+            className="
+            absolute right-0 bottom-0 
+            w-[101px] h-[101px] 
+            lg:w-20 lg:h-20 
+            md:w-20 md:h-20 
+            sm:w-[50px] sm:h-[50px]"
           />
         </div>
-        <div className="md:px-[104px] sm:px-[52px]">
-          <span className="text-primary-blue break-keep text-[40px] font-normal leading-[110%] block mb-3 lg:text-[32px] md:text-[32px] sm:text-[28px] hipi">
+        </SectionWrapper>
+        <SectionWrapper>
+          <div className="">
+          <span className="text-primary-blue 
+          break-keep 
+          text-[40px] font-normal leading-[110%] block mb-3 
+          lg:text-[48px] 
+          md:text-[32px] 
+          sm:text-[28px] 
+          hipi">
             {title}
-          </span>
+        </span>
           {description}
-        </div>
-      </SectionWrapper>
+          </div>
+        </SectionWrapper>
+      </div>
+
       <div 
         className={`
           flex flex-row gap-6 mt-10 h-[280px] self-start

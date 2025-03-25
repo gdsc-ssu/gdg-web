@@ -4,10 +4,11 @@ import SectionWrapper from '../SectionWrapper';
 const left = ( ) => {
   return (
   <div className="
-  flex-shrink-0 relative 
+  relative 
+  flex-shrink-0 
   flex flex-col
   text-[32px] font-bold leading-[120%]
-
+  items-start
   lg:pl-[76px]
   md:pl-[101px]
   lg:text-[48px]
@@ -140,11 +141,12 @@ const BrandSection = () => {
     flex flex-col
     w-full h-screen
     justify-center
-    items-center
+    item-center
     max-w-[1280px]
+    px-[16px]
     lg:flex-row
     md:flex-row
-    sm:flex-col
+    sm:flex-col px-[76px]
     ">
       <SectionWrapper className="">
         {left()}
