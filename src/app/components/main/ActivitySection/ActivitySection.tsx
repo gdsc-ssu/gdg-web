@@ -30,7 +30,9 @@ const Section = ({
       ref={sectionRef}
       className={`
         w-full h-screen 
-        flex flex-col justify-center items-center 
+        flex flex-col 
+        justify-center
+        items-center
         overflow-hidden
         sticky top-0 transition-opacity duration-500
         ${index === activeIndex ? 'opacity-100 z-50' : 'opacity-0 z-0'}
@@ -38,29 +40,24 @@ const Section = ({
     >
       <div className="
       flex flex-col
+      px-[104px]
       lg:flex-row
       md:flex-row
       sm:flex-row
-      px-[104px]
-      lg:px-[76px]
-      md:px-[104px]
-      sm:px-[52px]
       ">
-        <SectionWrapper reverse className="
-      gap-[32px] 
-      lg:gap-[53px] 
-      md:gap-[10px]
-      sm:gap-[5px]">
+        <SectionWrapper reverse className="">
         <div 
-          className="flex-shrink-0 relative 
+          className="
+          flex-shrink-0 
+          relative 
           flex flex-col 
           font-bold
+          text-[48px]
           pr-[101px] 
-          lg:pr-[76px]
           lg:text-[48px]
-          md:pr-[0px]
+          lg:pr-[250px]
           md:text-[32px]
-          sm:pr-[0px]
+          md:pr-[200px]
           sm:text-[28px]"
         >
           <span className="flex">
@@ -84,11 +81,10 @@ const Section = ({
             width={101}
             height={101}
             className="
-            absolute right-0 bottom-0 
-            w-[101px] h-[101px] 
-            lg:w-20 lg:h-20 
-            md:w-20 md:h-20 
-            sm:w-[50px] sm:h-[50px]"
+            absolute left-[200px] bottom-[0px]
+            lg:w-[100px] lg:h-[100px] lg:left-[200px]
+            md:w-20 md:h-20 md:left-[150px]
+            sm:w-[60px] sm:h-[60px] sm:left-[120px]"
           />
         </div>
         </SectionWrapper>
@@ -153,7 +149,12 @@ const ActivitySection = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full flex flex-col h-[500vh] relative">
+    <section ref={containerRef} className="
+    w-full 
+    flex 
+    flex-col 
+    h-[500vh] 
+    relative">
       <Section
         title="슈몰세미나"
         description={
