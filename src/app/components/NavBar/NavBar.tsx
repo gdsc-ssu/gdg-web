@@ -47,7 +47,7 @@ export default function NavBar() {
           {[
             { href: '/', label: 'Landing' },
             { href: '/activities', label: 'Activities' },
-            { href: '/people', label: 'People' },
+            { href: '/peoples', label: 'Peoples' },
             { href: '/support', label: 'Support' }
           ].map(({ href, label }) => (
             <Link key={href} href={href}>
