@@ -34,14 +34,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex flex-col justify-center items-center w-full min-h-screen pt-24">
-      <NavBar />
+    <main className="flex flex-col justify-center items-center w-full min-h-screen">
       <HeroSection />
       <BrandSection />
       <ActivitySection />
-      {/* <PictureSection /> */}
+      <PictureSection />
     </main>
   );
 } 
