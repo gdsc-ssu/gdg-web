@@ -2,13 +2,24 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['img.youtube.com'],
+    domains: [
+      "img.youtube.com",
+      "www.notion.so",
+      "images.unsplash.com",
+      "s3.us-west-2.amazonaws.com",
+    ],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'img.youtube.com',
-        port: '',
-        pathname: '/vi/**',
+        protocol: "https",
+        hostname: "img.youtube.com",
+        port: "",
+        pathname: "/vi/**",
+      },
+      {
+        protocol: "https",
+        hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
@@ -16,9 +27,9 @@ const nextConfig: NextConfig = {
   experimental: {
     turbo: {
       rules: {
-        '*.svg': ['@svgr/webpack']
-      }
-    }
+        "*.svg": ["@svgr/webpack"],
+      },
+    },
   },
 };
 
