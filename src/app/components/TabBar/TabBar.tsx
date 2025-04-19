@@ -36,7 +36,7 @@ const TabBar = () => {
               text-center 
               text-[12px]
               sm:text-[10px]
-              md:text-[20px]
+              md:text-[18px]
               lg:text-[24px]
               xl:text-[28px]
               font-semibold 
