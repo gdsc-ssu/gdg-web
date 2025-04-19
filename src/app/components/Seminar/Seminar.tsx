@@ -52,13 +52,17 @@ const Seminar = () => {
       <section className="w-full bg-white ">
         <article className="max-w-[1280px] mx-auto px-6 sm:px-4 flex items-center justify-center">
           <div className="
-          flex flex-row gap-8 
+          flex flex-row gap-8
+          pt-16
           items-center space-y-6
-          sm:flex-col sm:space-y-0
-          md:flex-row md:space-y-0
+          sm:flex-col sm:space-y-0 sm:pt-24
+          md:flex-row md:space-y-0 
           ">
             <div className="text-center sm:text-left">
-              <h1 className="text-[48px] sm:text-[36px] font-extrabold text-black leading-tight">
+              <h1 className="text-[48px] font-extrabold text-black leading-tight
+              sm:text-[36px] 
+              md:text-[72px]
+              ">
                 Small?
                 <br />
                 <span className="text-primary-ssu-blue-light">SSUmall!</span>
