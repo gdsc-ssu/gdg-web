@@ -30,9 +30,21 @@ const TabBar = () => {
           <button
             key={item.id}
             onClick={() => toggleActive(item.id)}
-            className={`relative py-4 w-full text-center text-lg font-semibold flex flex-col items-center ${
-              item.isActive ? "text-black" : "text-gray-500"
-            }`}
+            className={`relative 
+              py-4 
+              w-full 
+              text-center 
+              text-[12px]
+              sm:text-[10px]
+              md:text-[20px]
+              lg:text-[24px]
+              xl:text-[28px]
+              font-semibold 
+              flex 
+              flex-col 
+              items-center 
+              ${item.isActive ? "text-black" : "text-gray-500"}
+            `}
           >
             {item.label}
           </button>
