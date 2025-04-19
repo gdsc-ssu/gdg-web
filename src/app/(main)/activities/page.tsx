@@ -12,10 +12,7 @@ export default function ActivitiesPage() {
     <main className="w-full min-h-screen pt-24 ">
       <section className="max-w-[1280px] mx-auto px-[101px] sm:px-[52px]">
         <h1 className="
-        text-[72px] 
-        font-extrabold 
-        text-center 
-        text-primary-black
+        text-[72px] font-extrabold text-center text-primary-black
         sm:text-[36px]
         md:text-[48px]
         lg:text-[60px]
