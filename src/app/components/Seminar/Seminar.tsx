@@ -24,11 +24,12 @@ const Seminar = () => {
         "멤버들은 최근 흥미를 가지게 된 기술에 대해 이야기하고, 목표하는 커리어에 대해 이야기하기도 하며, 심지어는 본인의 평소 가치관이나 생활 습관에 대해서도 자유롭게 이야기를 나눕니다.",
     },
   ];
+  
   return (
     <main className="w-full min-h-screen bg-white pt-16">
       <section>
         <div className="text-center mb-12">
-          <h1 className="text-[48px] font-extrabold text-primary-red">
+          <h1 className="text-[48px] font-extrabold text-primary-red sm:text-[36px] md:text-[48px]">
             SSUmall Seminar
           </h1>
           <p className="text-lg sm:text-base mt-2 font-semibold">
@@ -50,7 +51,12 @@ const Seminar = () => {
       </section>
       <section className="w-full bg-white ">
         <article className="max-w-[1280px] mx-auto px-6 sm:px-4 flex items-center justify-center">
-          <div className="flex flex-row gap-8 sm:flex-row items-center sm:items-start space-y-6 sm:space-y-0 sm:space-x-8">
+          <div className="
+          flex flex-row gap-8 
+          items-center space-y-6
+          sm:flex-col sm:space-y-0
+          md:flex-row md:space-y-0
+          ">
             <div className="text-center sm:text-left">
               <h1 className="text-[48px] sm:text-[36px] font-extrabold text-black leading-tight">
                 Small?
@@ -59,7 +65,7 @@ const Seminar = () => {
               </h1>
             </div>
 
-            <div className=" rounded-md p-6  relative w-[400px] h-[202px]">
+            <div className=" rounded-md p-6 relative w-full max-w-[400px] h-[200px]">
               <div className="flex items-center space-x-2 mb-4">
                 {seminarContents.map((_, index) => (
                   <button

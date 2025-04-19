@@ -62,7 +62,9 @@ const Challenge = () => {
   return (
     <main className="w-full min-h-screen bg-white">
       <section className="text-center py-16">
-        <h1 className="text-[48px] font-extrabold text-primary-yellow">
+        <h1 className="text-[48px] 
+        sm:text-[36px]
+        font-extrabold text-primary-yellow">
           Solution Challenge
         </h1>
         <p className="text-lg font-semibold pt-2">
