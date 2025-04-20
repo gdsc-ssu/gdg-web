@@ -19,7 +19,7 @@ const Websites = ({ github, linkedin, instagram }: WebsiteProps) => {
             width={18}
             height={18}
             onClick={() => {
-              `location.href=${github}`;
+              location.href = github;
             }}
           />
         ) : (
