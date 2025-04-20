@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const SECTION_CLASSNAMES = `
   w-full max-w-[1280px] m-auto
   p-[50px] mt-[101px]
