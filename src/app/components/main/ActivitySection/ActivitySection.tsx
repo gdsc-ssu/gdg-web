@@ -5,16 +5,50 @@ import Image from 'next/image';
 import { EventItem, SeminarItem, StudyItem } from './Slider';
 import { SEMINARS, STUDIES, EVENTS } from './const';
 
+// 각 아이템의 타입 정의 (const.ts 파일의 데이터 구조와 일치시킴)
+type SeminarType = string;
 
-type ActivityData = {
+interface StudyType {
   title: string;
   description: string;
-  items: any[];
-  ItemComponent: React.ComponentType<any>;
+  thumbnail: string;
+  tags?: string[];
+  url?: string;
+}
+
+interface EventType {
+  image: string;
+  url: string;
+  imageAlign?: 'center' | 'bottom' | 'top';
+}
+
+// 활동 데이터 타입 정의를 더 정확하게 함
+type ActivityDataBase = {
+  title: string;
+  description: string;
   containerWidth: string;
   smContainerWidth: string;
-  renderItem: (item: any, index: number) => React.ReactNode;
 };
+
+interface SeminarActivityData extends ActivityDataBase {
+  items: SeminarType[];
+  ItemComponent: typeof SeminarItem;
+  renderItem: (item: SeminarType, index: number) => React.ReactNode;
+}
+
+interface StudyActivityData extends ActivityDataBase {
+  items: StudyType[];
+  ItemComponent: typeof StudyItem;
+  renderItem: (item: StudyType, index: number) => React.ReactNode;
+}
+
+interface EventActivityData extends ActivityDataBase {
+  items: EventType[];
+  ItemComponent: typeof EventItem;
+  renderItem: (item: EventType, index: number) => React.ReactNode;
+}
+
+type ActivityData = SeminarActivityData | StudyActivityData | EventActivityData;
 
 interface SectionProps {
   title: string;
@@ -140,32 +174,32 @@ const ACTIVITIES_DATA: ActivityData[] = [
     title: "슈몰세미나",
     description: 
       '슈몰세미나는 모든 멤버가 최소 한 번 직접 주제를 정하고 발표하는 내부 세미나 활동입니다. 꼭 프로그래밍이 아니어도 여행 경험이나 관심사 등 다양한 주제로 발표할 수 있습니다.',
-    items: [...SEMINARS, ...SEMINARS],
+    items: [...SEMINARS, ...SEMINARS] as SeminarType[],
     ItemComponent: SeminarItem,
     containerWidth: "w-[22824px]",
     smContainerWidth: "sm:w-[14244px]",
-    renderItem: (item: any, index: number) => <SeminarItem key={index} youtubeVideoId={item} />
-  },
+    renderItem: (item: SeminarType, index: number) => <SeminarItem key={index} youtubeVideoId={item} />
+  } as SeminarActivityData,
   {
     title: "스터디 & 프로젝트",
     description: 
       "내부에서 다양하고 재미있는 주제로 스터디와 프로젝트가 활발하게 개설됩니다. 함께 할 때 가치가 높아지는 것이라면 그 어떤 주제도 환영합니다.",
-    items: [...STUDIES, ...STUDIES],
+    items: [...STUDIES, ...STUDIES] as StudyType[],
     ItemComponent: StudyItem,
     containerWidth: "w-[7128px]",
     smContainerWidth: "sm:w-[4928px]",
-    renderItem: (item: any, index: number) => <StudyItem key={index} {...item} />
-  },
+    renderItem: (item: StudyType, index: number) => <StudyItem key={index} {...item} />
+  } as StudyActivityData,
   {
     title: "커뮤니티 활동",
     description: 
       "개방적인 학생 개발자 커뮤니티로서, 정보를 공유하거나 견학, 체험 등의 활동을 함께 합니다. 세미나, 대회, MT, Code Jam 등 한계 없이 다양한 범위의 이벤트를 개최합니다.",
-    items: [...EVENTS, ...EVENTS],
+    items: [...EVENTS, ...EVENTS] as EventType[],
     ItemComponent: EventItem,
     containerWidth: "w-[4752px]",
     smContainerWidth: "sm:w-[3312px]",
-    renderItem: (item: any, index: number) => <EventItem key={index} {...item} />
-  }
+    renderItem: (item: EventType, index: number) => <EventItem key={index} {...item} />
+  } as EventActivityData
 ];
 
 const ActivitySection = () => {
@@ -195,13 +229,36 @@ const ActivitySection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
+  // 각 활동 유형에 맞는 자식 컴포넌트 렌더링 함수
+  const renderActivityItems = (activity: ActivityData) => {
+    if ('items' in activity && 'renderItem' in activity) {
+      if (activity.title === "슈몰세미나") {
+        const seminarActivity = activity as SeminarActivityData;
+        return seminarActivity.items.map((item, itemIndex) => 
+          seminarActivity.renderItem(item, itemIndex)
+        );
+      } else if (activity.title === "스터디 & 프로젝트") {
+        const studyActivity = activity as StudyActivityData;
+        return studyActivity.items.map((item, itemIndex) => 
+          studyActivity.renderItem(item, itemIndex)
+        );
+      } else {
+        const eventActivity = activity as EventActivityData;
+        return eventActivity.items.map((item, itemIndex) => 
+          eventActivity.renderItem(item, itemIndex)
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     <section 
       ref={containerRef} 
       className="w-full flex flex-col h-[500vh] relative"
     >
       {ACTIVITIES_DATA.map((activity, index) => {
-        const { title, description, items, renderItem, containerWidth, smContainerWidth } = activity;
+        const { title, description, containerWidth, smContainerWidth } = activity;
         
         return (
           <Section
@@ -212,7 +269,7 @@ const ActivitySection = () => {
             index={index}
             activeIndex={activeIndex}
           >
-            {items.map((item, itemIndex) => renderItem(item, itemIndex))}
+            {renderActivityItems(activity)}
           </Section>
         );
       })}
