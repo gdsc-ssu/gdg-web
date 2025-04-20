@@ -32,7 +32,7 @@ interface ResData {
   properties: {
     generation: {
       multi_select: {
-        options: any[];
+        options: Option[];
       };
     };
   };
