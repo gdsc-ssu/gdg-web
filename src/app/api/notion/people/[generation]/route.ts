@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -7,10 +7,11 @@ const DB_ID = process.env.NOTION_DB_ID;
 const notion = new Client({ auth: process.env.NOTION_PEOPLE_API_KEY });
 
 export async function GET(
-  req: Request,
-  { params }: { params: { generation: string } }
+  request: NextRequest,
+  context: { params: Promise<{ generation: string }> }
 ) {
-  const { generation }: { generation: string } = await params;
+  const { generation } = await context.params;
+  
   if (!DB_ID) {
     return NextResponse.json(
       { error: "Missing NOTION_DATABASE_ID in environment variables" },
