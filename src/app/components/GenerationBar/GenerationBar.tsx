@@ -28,6 +28,11 @@ const Generation = ({ title, active, onClickGeneration }: GenerationProps) => {
   );
 };
 
+interface Option {
+  id: string;
+  name: string;
+}
+
 interface ResData {
   properties: {
     generation: {
