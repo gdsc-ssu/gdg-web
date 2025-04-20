@@ -28,11 +28,16 @@ const Generation = ({ title, active, onClickGeneration }: GenerationProps) => {
   );
 };
 
+interface Option {
+  id: string;
+  name: string;
+}
+
 interface ResData {
   properties: {
     generation: {
       multi_select: {
-        options: any[];
+        options: Option[];
       };
     };
   };
