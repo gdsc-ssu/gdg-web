@@ -65,7 +65,7 @@ export default function NavBar() {
         {isMobile ? (
           <div className="cursor-pointer" onClick={toggleMenu}>
             <Image 
-              src="/icons/menu.svg" 
+              src="/icons/Menu.svg" 
               alt="Menu" 
               width={24} 
               height={24} 
