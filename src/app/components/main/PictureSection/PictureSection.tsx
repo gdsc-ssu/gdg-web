@@ -80,9 +80,9 @@ const STYLES = {
   characterImage: `
     absolute -right-[101px] bottom-0
     w-[101px] h-[101px] text-primary-yellow
-    lg:w-20 lg:h-20 lg:-right-20
-    md:w-20 md:h-20 md:-right-20
-    sm:w-[50px] sm:h-[50px] sm:-right-[50px]
+    lg:w-[100px] lg:h-[100px] lg:-right-[150px]
+    md:w-[80px] md:h-[80px] md:-right-[120px]
+    sm:w-[60px] sm:h-[60px] sm:-right-[90px]
   `
 };
 
