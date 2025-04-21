@@ -22,7 +22,6 @@ interface EventType {
   imageAlign?: 'center' | 'bottom' | 'top';
 }
 
-// 활동 데이터 타입 정의를 더 정확하게 함
 type ActivityDataBase = {
   title: string;
   description: string;
@@ -99,9 +98,9 @@ const Section = ({
       px-[104px]
       lg:flex-row
       md:flex-row
-      sm:flex-row
+      sm:flex-col sm:px-[52px]
       ">
-        <SectionWrapper reverse className="">
+        <SectionWrapper className="">
         <div 
           className="
           flex-shrink-0 
@@ -109,12 +108,9 @@ const Section = ({
           flex flex-col 
           font-bold
           text-[32px]
-          lg:text-[48px]
-          lg:pr-[250px]
-          md:text-[32px]
-          md:pr-[200px]
-          sm:text-[28px]
-          sm:pr-[100px]"
+          lg:text-[48px] lg:pl-[76px]
+          md:text-[42px] md:pl-[52px]
+          sm:text-[32px]"
         >
           <span className="flex">
             <span className="relative whitespace-nowrap ">
@@ -138,15 +134,15 @@ const Section = ({
             height={101}
             className="
             absolute 
-            left-[130px] bottom-[0px] w-[100px] h-[100px]
-            lg:w-[100px] lg:h-[100px] lg:left-[200px]
-            md:w-20 md:h-20 md:left-[150px]
-            sm:w-[60px] sm:h-[60px] sm:left-[120px]"
+            left-[120px] bottom-[0px] w-[100px] h-[100px]
+            lg:w-[100px] lg:h-[100px] lg:left-[250px]
+            md:w-[80px] md:h-[80px] md:left-[200px]
+            sm:w-[60px] sm:h-[60px] sm:left-[150px]"
           />
         </div>
         </SectionWrapper>
         <SectionWrapper>
-          <div>
+          <div className="md:pt-[0px] sm:pt-[50px]">
             <span className={`text-primary-blue break-keep pt-[100px] md:pt-[0px] sm:pt-[0px] ${TITLE_STYLES} hipi`}>
               {title}
             </span>
