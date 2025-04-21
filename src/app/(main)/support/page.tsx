@@ -12,7 +12,7 @@ export default function SupportPage() {
         <h1 className="text-[64px] font-bold lg:text-[48px] sm:text-[36px]">
           Support
         </h1>
-        {/* Support 컨텐츠 */}
+        <h1>branch init</h1>
       </section>
     </main>
   );
