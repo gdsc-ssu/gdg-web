@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const SupporterCardFactory = ({ supporters }: { supporters: Array<SupporterInfo> }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-10">
       {supporters.map((supporter, index) => (
         <SupporterCard key={index} supporterInfo={supporter} reverse={index % 2 !== 0} />
       ))}
@@ -35,8 +35,10 @@ export default function SupportPage() {
         <h1 className="text-center text-primary-blue text-xl font-medium m-20">
         GDGoC Soongsil의 발전을 위해 도움 주신 분들입니다.
         </h1>
+        <div className="flex flex-col gap-20">
         <SupporterPortraitGroup images={supporters.map((supporter) => supporter.profile)} names={supporters.map((supporter) => supporter.name)} />
         <SupporterCardFactory supporters={supporters} />
+        </div>
         <div className="h-[200px]"> </div>
       </section>
     </main>
