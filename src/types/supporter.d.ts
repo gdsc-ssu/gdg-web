@@ -19,3 +19,8 @@ export interface SupporterPortraitGroupProps extends CommonProps {
   images: string[];
   names: string[];
 }
+
+export interface SupporterCardProps {
+  supporterInfo: SupporterInfo;
+  reverse: boolean;
+}
