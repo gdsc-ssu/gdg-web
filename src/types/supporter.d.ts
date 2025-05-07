@@ -10,7 +10,7 @@ export interface SupporterInfo {
 
 export interface SupportPortraitProps {
   image: string;
-  name : string;
+  name? : string;
   width?: number;
   height?: number;
 }

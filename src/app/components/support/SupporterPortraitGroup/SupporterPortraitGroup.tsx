@@ -2,7 +2,7 @@
 
 import SupportPortrait from "../SupporterPortrait/SuporterPortrait";
 import { SupporterPortraitGroupProps } from "@/types/supporter";
-
+import character from '@public/supporter/gdg_charactor_wink.png';
 const SupporterGrid = ({ images, names, width, height }: SupporterPortraitGroupProps) => {
   return (
     <div className="flex flex-col gap-4 w-fit">
@@ -27,8 +27,8 @@ const SupporterGrid = ({ images, names, width, height }: SupporterPortraitGroupP
 const SupporterPortraitGroup = ({ images, names }: SupporterPortraitGroupProps) => {
   const width = 200;
   const height = 200;
-  const charactorWidth = width * 1.5;
-  const charactorHeight = height * 2 + 4;
+  const charactorWidth = width * 1.3;
+  const charactorHeight = height * 0.8 + 4;
   return (
     <div className="overflow-x-auto flex flex-row gap-4 scrollbar-hide select-none">
     <style jsx global>{`
@@ -40,7 +40,7 @@ const SupporterPortraitGroup = ({ images, names }: SupporterPortraitGroupProps) 
         scrollbar-width: none;
       }
     `}</style>
-      <SupportPortrait image={images[0]} name={names[0]} width={charactorWidth} height={charactorHeight} />
+      <SupportPortrait image={character.src} width={charactorWidth} height={charactorHeight} />
       <SupporterGrid images={images} names={names} width={width} height={height} />
     </div>
   );
