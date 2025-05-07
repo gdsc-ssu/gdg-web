@@ -30,7 +30,7 @@ export default function NavBar() {
   return (
     <div className="
     flex justify-center items-center
-    bg-white
+    bg-white/80 backdrop-blur-md
     w-full min-h-[100px]
     px-[0px]
     fixed top-0 left-0 right-0 z-[9999]
