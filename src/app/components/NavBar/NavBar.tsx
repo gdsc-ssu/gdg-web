@@ -23,26 +23,35 @@ export default function NavBar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (isMenuOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isMenuOpen]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   
   return (
-    <div className="
-    flex justify-center items-center
-    bg-white/80 backdrop-blur-md
-    w-full min-h-[100px]
-    px-[0px]
-    fixed top-0 left-0 right-0 z-[9999]
-    md:px-[50px]
-    sm:px-[20px]
+    <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center
+    max-h-[50px] max-w-[1280px] px-[20px] py-[10px] mx-auto
+    lg:backdrop-blur-md
+    lg:bg-white/80
+    md:backdrop-blur-md
+    md:bg-whtie/80
+    sm:bg-white
     ">
-      <div className="
-        flex justify-between items-center 
-        max-w-[1280px] h-full 
-        w-full mx-auto px-6
-      ">
-        <div className="flex-shrink-0">
+      <div className="w-full h-full flex justify-between items-center">
+        <div className="shrink-0">
           <Link href="/">
             <div className="
               flex justify-center items-center
@@ -143,7 +152,7 @@ export default function NavBar() {
         {/* 배경 오버레이 */}
         {isMenuOpen && isMobile && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[9000]"
             onClick={toggleMenu}
           />
         )}
