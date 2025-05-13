@@ -1,5 +1,24 @@
+'use client';
+
 import Image from 'next/image';
 import SectionWrapper from '../SectionWrapper';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { AnimatedText } from '@/app/components/Animated/AnimatedText';
+import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
+
+const SECTION_CLASSNAMES = `
+  w-full h-screen
+  flex flex-col
+  justify-center
+  items-center
+  max-w-[1280px]
+  px-[16px]
+  lg:flex-row
+  md:flex-row
+  sm:flex-col sm:px-[52px]
+  sticky top-0
+`;
 
 const LeftSection = () => {
   return (
@@ -9,41 +28,45 @@ const LeftSection = () => {
       flex flex-col
       text-[32px] font-bold leading-[120%]
       items-start
-      
-      
       lg:text-[48px] lg:pl-[76px]
       md:text-[42px] md:pt-[0px] md:pl-[48px]
       sm:text-[32px] sm:pt-[200px]
     ">
-      <span>실력 너머의</span>
+      <AnimatedText text="실력 너머의" delay={0} />
       <span className="flex">
         <span className="relative whitespace-nowrap">
-          유쾌함으로
-          <Image 
+          <AnimatedText text="유쾌함으로" delay={0.8} />
+          <AnimatedImage 
             src="/icons/UnderScore_red.svg"
             alt="UnderScore"
             width={100}
             height={2}
             className="absolute left-0 bottom-[-2px] w-full"
+            delay={1.2}
+            animationType="drawLine"
           />
         </span>
         <div className="flex h-full">
-          <Image 
+          <AnimatedImage 
             src="/icons/SmileFace.svg"
             alt="SmileFace"
             width={32}
             height={24}
             className="w-[47px] h-[35px] lg:w-[37px] lg:h-[28px] md:w-[37px] md:h-[28px] sm:w-[32px] sm:h-[24px]"
+            delay={1.5}
+            animationType="fadeUp"
           />
         </div>
       </span>
-      <span>세상을 바꿉니다.</span>
-      <Image 
+      <AnimatedText text="세상을 바꿉니다." delay={1.8} />
+      <AnimatedImage 
         src="/icons/PaperAirplane.svg"
         alt="PaperAirplane"
         width={182}
         height={124}
         className="absolute left-0 bottom-[-69px] w-[114px] h-[78px] lg:bottom-[-83px] lg:w-[160px] lg:h-[110px] md:bottom-[-83px] md:left-[25px] md:w-[160px] md:h-[110px] sm:bottom-[-83px] sm:left-[9px] sm:w-[114px] sm:h-[78px]"
+        delay={2.1}
+        animationType="fadeDown"
       />
     </div>
   );
@@ -113,25 +136,34 @@ const RightSection = () => {
 }
 
 const BrandSection = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [0, -50, 0]);
+
   return (
-    <section className="
-      flex flex-col
-      w-full h-screen
-      justify-center
-      items-center
-      max-w-[1280px]
-      px-[16px]
-      lg:flex-row
-      md:flex-row
-      sm:flex-col sm:px-[52px]
-    ">
-      <SectionWrapper>
-        <LeftSection />
-      </SectionWrapper>
-      <SectionWrapper>
-        <RightSection />
-      </SectionWrapper>
-    </section>
+    <div className="relative h-[300vh]" ref={ref}>
+      <section className={SECTION_CLASSNAMES}>
+        <motion.div
+          style={{
+            scale,
+            y,
+          }}
+          className="w-full flex flex-col lg:flex-row md:flex-row sm:flex-col"
+        >
+          <SectionWrapper>
+            <LeftSection />
+          </SectionWrapper>
+          <SectionWrapper>
+            <RightSection />
+          </SectionWrapper>
+        </motion.div>
+      </section>
+    </div>
   );
 };
 

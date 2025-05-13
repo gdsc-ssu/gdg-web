@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { AnimatedText } from '@/app/components/Animated/AnimatedText';
+import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
 
 interface PictureItemProps {
   image: string;
@@ -110,28 +112,32 @@ const HeadingSection = () => (
   <span className={STYLES.heading}>
     <span className="relative inline-block">
       <span className="whitespace-nowrap">
-        소중한 인연
-        <Image
+        <AnimatedText text="소중한 인연" delay={0} />
+        <AnimatedImage
           src="/icons/UnderScore.svg"
           alt="under score"
           width={100}
           height={100}
           className="absolute left-0 bottom-[-2px] w-full text-primary-yellow"
+          delay={0.8}
+          animationType="drawLine"
         />
-        <Image
+        <AnimatedImage
           src="/icons/Character.svg"
           alt="character"
           width={100}
           height={100}
           className={STYLES.characterImage}
+          delay={1.2}
+          animationType="fadeUp"
         />
       </span>
     </span>
-    과
+    <AnimatedText text="과" delay={1.5} />
     <br />
-    건강한 커뮤니티를
+    <AnimatedText text="건강한 커뮤니티를" delay={1.8} />
     <br />
-    만듭니다.
+    <AnimatedText text="만듭니다." delay={2.4} />
   </span>
 );
 
@@ -154,6 +160,7 @@ const PictureSection = () => {
       <div className={`
         ${STYLES.pictureContainer}
         ${isLargeScreen ? 'flex-row flex-nowrap' : 'flex-wrap justify-center max-w-[450px]'}
+        pt-[50px]
       `}>
         {PICTURES.map((picture, index) => (
           <PictureItem 

@@ -1,11 +1,12 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
 import SectionWrapper from '../SectionWrapper';
-import Image from 'next/image';
 import { EventItem, SeminarItem, StudyItem } from './Slider';
 import { SEMINARS, STUDIES, EVENTS } from './const';
+import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
+import { AnimatedText } from '@/app/components/Animated/AnimatedText';
 
-// 각 아이템의 타입 정의 (const.ts 파일의 데이터 구조와 일치시킴)
+// Types
 type SeminarType = string;
 
 interface StudyType {
@@ -49,16 +50,7 @@ interface EventActivityData extends ActivityDataBase {
 
 type ActivityData = SeminarActivityData | StudyActivityData | EventActivityData;
 
-interface SectionProps {
-  title: string;
-  description: string;
-  childrenContainerClassName?: string;
-  children: React.ReactNode;
-  index: number;
-  activeIndex: number;
-}
-
-
+// Constants
 const TITLE_STYLES = `
   text-[40px] font-normal leading-[110%] block mb-3 
   lg:text-[48px] 
@@ -75,6 +67,34 @@ const SECTION_STYLES = `
   sticky top-0 transition-opacity duration-500
 `;
 
+const HEADER_STYLES = `
+  flex flex-col
+  px-[104px]
+  lg:flex-row
+  md:flex-row
+  sm:flex-col sm:px-[52px]
+`;
+
+const TITLE_CONTAINER_STYLES = `
+  flex-shrink-0 
+  relative 
+  flex flex-col 
+  font-bold
+  text-[32px]
+  lg:text-[48px] lg:pl-[76px]
+  md:text-[42px] md:pl-[52px]
+  sm:text-[32px]
+`;
+
+const PENCIL_STYLES = `
+  absolute 
+  left-[120px] bottom-[0px] w-[100px] h-[100px]
+  lg:w-[100px] lg:h-[100px] lg:left-[250px]
+  md:w-[80px] md:h-[80px] md:left-[200px]
+  sm:w-[60px] sm:h-[60px] sm:left-[150px]
+`;
+
+// Components
 const Section = ({
   title,
   description,
@@ -82,7 +102,14 @@ const Section = ({
   children,
   index,
   activeIndex,
-}: SectionProps) => {
+}: {
+  title: string;
+  description: string;
+  childrenContainerClassName?: string;
+  children: React.ReactNode;
+  index: number;
+  activeIndex: number;
+}) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -93,53 +120,36 @@ const Section = ({
         ${index === activeIndex ? 'opacity-100 z-50' : 'opacity-0 z-0'}
       `}
     >
-      <div className="
-      flex flex-col
-      px-[104px]
-      lg:flex-row
-      md:flex-row
-      sm:flex-col sm:px-[52px]
-      ">
-        <SectionWrapper className="">
-        <div 
-          className="
-          flex-shrink-0 
-          relative 
-          flex flex-col 
-          font-bold
-          text-[32px]
-          lg:text-[48px] lg:pl-[76px]
-          md:text-[42px] md:pl-[52px]
-          sm:text-[32px]"
-        >
-          <span className="flex">
-            <span className="relative whitespace-nowrap ">
-              함께 한 경험
-              <Image
-                src="/icons/UnderScore_blue.svg"
-                alt="UnderScore"
-                width={100}
-                height={2}
-                className="absolute left-0 bottom-[-2px] w-full text-primary-blue"
-              />
+      <div className={HEADER_STYLES}>
+        <SectionWrapper>
+          <div className={TITLE_CONTAINER_STYLES}>
+            <span className="flex">
+              <span className="relative whitespace-nowrap">
+                <AnimatedText text="함께 한 경험" delay={0} />
+                <AnimatedImage
+                  src="/icons/UnderScore_blue.svg"
+                  alt="UnderScore"
+                  width={100}
+                  height={2}
+                  className="absolute left-0 bottom-[-2px] w-full"
+                  delay={0.8}
+                  animationType="drawLine"
+                />
+              </span>
+              <AnimatedText text="은" delay={0.8} />
             </span>
-            <span>은</span>
-          </span>
-          <span>배움의 가치를</span>
-          <span>더합니다.</span>
-          <Image
-            src="/icons/Pencil.svg"
-            alt="Pencil"
-            width={101}
-            height={101}
-            className="
-            absolute 
-            left-[120px] bottom-[0px] w-[100px] h-[100px]
-            lg:w-[100px] lg:h-[100px] lg:left-[250px]
-            md:w-[80px] md:h-[80px] md:left-[200px]
-            sm:w-[60px] sm:h-[60px] sm:left-[150px]"
-          />
-        </div>
+            <AnimatedText text="배움의 가치를" delay={1.2} />
+            <AnimatedText text="더합니다." delay={1.8} />
+            <AnimatedImage
+              src="/icons/Pencil.svg"
+              alt="Pencil"
+              width={101}
+              height={101}
+              className={PENCIL_STYLES}
+              delay={2.5}
+              animationType="fadeUp"
+            />
+          </div>
         </SectionWrapper>
         <SectionWrapper>
           <div className="md:pt-[0px] sm:pt-[50px]">
@@ -153,7 +163,7 @@ const Section = ({
 
       <div 
         className={`
-          flex flex-row gap-6 mt-10 h-[280px] self-start
+          flex flex-row gap-6 mt-10 h-[280px] self-start pt-[80px]
           sm:mt-6 sm:h-[180px]
           ${childrenContainerClassName}
         `}
@@ -164,7 +174,7 @@ const Section = ({
   );
 };
 
-
+// Data
 const ACTIVITIES_DATA: ActivityData[] = [
   {
     title: "슈몰세미나",
@@ -198,7 +208,8 @@ const ACTIVITIES_DATA: ActivityData[] = [
   } as EventActivityData
 ];
 
-const ActivitySection = () => {
+// Hooks
+const useScrollSection = (totalSections: number) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -208,12 +219,11 @@ const ActivitySection = () => {
       
       const { top, height } = containerRef.current.getBoundingClientRect();
       const scrollPosition = -top;
-      const sectionHeight = height / ACTIVITIES_DATA.length;
+      const sectionHeight = height / totalSections;
       
-      // 스크롤 위치에 따라 활성 섹션 인덱스 계산
       const newIndex = Math.min(
         Math.floor(scrollPosition / sectionHeight),
-        ACTIVITIES_DATA.length - 1
+        totalSections - 1
       );
       
       if (newIndex >= 0 && newIndex !== activeIndex) {
@@ -223,29 +233,31 @@ const ActivitySection = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeIndex]);
+  }, [activeIndex, totalSections]);
 
-  // 각 활동 유형에 맞는 자식 컴포넌트 렌더링 함수
+  return { activeIndex, containerRef };
+};
+
+// Main Component
+const ActivitySection = () => {
+  const { activeIndex, containerRef } = useScrollSection(ACTIVITIES_DATA.length);
+
   const renderActivityItems = (activity: ActivityData) => {
-    if ('items' in activity && 'renderItem' in activity) {
-      if (activity.title === "슈몰세미나") {
-        const seminarActivity = activity as SeminarActivityData;
-        return seminarActivity.items.map((item, itemIndex) => 
-          seminarActivity.renderItem(item, itemIndex)
-        );
-      } else if (activity.title === "스터디 & 프로젝트") {
-        const studyActivity = activity as StudyActivityData;
-        return studyActivity.items.map((item, itemIndex) => 
-          studyActivity.renderItem(item, itemIndex)
-        );
-      } else {
-        const eventActivity = activity as EventActivityData;
-        return eventActivity.items.map((item, itemIndex) => 
-          eventActivity.renderItem(item, itemIndex)
-        );
-      }
+    if (!('items' in activity && 'renderItem' in activity)) return null;
+    
+    if (activity.title === "슈몰세미나") {
+      return (activity as SeminarActivityData).items.map((item, index) => 
+        (activity as SeminarActivityData).renderItem(item, index)
+      );
+    } else if (activity.title === "스터디 & 프로젝트") {
+      return (activity as StudyActivityData).items.map((item, index) => 
+        (activity as StudyActivityData).renderItem(item, index)
+      );
+    } else {
+      return (activity as EventActivityData).items.map((item, index) => 
+        (activity as EventActivityData).renderItem(item, index)
+      );
     }
-    return null;
   };
 
   return (
@@ -253,22 +265,18 @@ const ActivitySection = () => {
       ref={containerRef} 
       className="w-full flex flex-col h-[500vh] relative"
     >
-      {ACTIVITIES_DATA.map((activity, index) => {
-        const { title, description, containerWidth, smContainerWidth } = activity;
-        
-        return (
-          <Section
-            key={title}
-            title={title}
-            description={description}
-            childrenContainerClassName={`animate-slide-90 ${containerWidth} ${smContainerWidth}`}
-            index={index}
-            activeIndex={activeIndex}
-          >
-            {renderActivityItems(activity)}
-          </Section>
-        );
-      })}
+      {ACTIVITIES_DATA.map((activity, index) => (
+        <Section
+          key={activity.title}
+          title={activity.title}
+          description={activity.description}
+          childrenContainerClassName={`animate-slide-90 ${activity.containerWidth} ${activity.smContainerWidth}`}
+          index={index}
+          activeIndex={activeIndex}
+        >
+          {renderActivityItems(activity)}
+        </Section>
+      ))}
     </section>
   );
 };
