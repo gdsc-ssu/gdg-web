@@ -43,14 +43,14 @@ export default function NavBar() {
   
   return (
     <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center
-    max-h-[50px] max-w-[1280px] p-[20px] mx-auto
+    max-h-[60px] py-[10px] px-[20px] mx-auto
     lg:backdrop-blur-md
     lg:bg-white/80
     md:backdrop-blur-md
     md:bg-whtie/80
     sm:bg-white
     ">
-      <div className="w-full h-full flex justify-between items-center">
+      <div className="w-full h-full flex max-w-[1280px] justify-between items-center">
         <div className="shrink-0">
           <Link href="/">
             <div className="
