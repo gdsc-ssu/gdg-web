@@ -43,7 +43,7 @@ export default function NavBar() {
   
   return (
     <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center
-    max-h-[50px] max-w-[1280px] px-[20px] py-[10px] mx-auto
+    max-h-[50px] max-w-[1280px] p-[20px] mx-auto
     lg:backdrop-blur-md
     lg:bg-white/80
     md:backdrop-blur-md
