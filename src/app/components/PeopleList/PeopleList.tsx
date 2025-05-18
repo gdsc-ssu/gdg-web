@@ -2,7 +2,7 @@
 
 import Websites from "../Websites";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useGenerationStore from "../../../store/useGenerationStore";
 
 type websitesType = "github" | "linkedin" | "instagram";
@@ -23,15 +23,18 @@ const PeopleCard = ({
   comment,
 }: PeopleCardProps) => {
   return (
-    <div className="grid grid-cols-[1fr_2fr] grid-rows-[1fr_0.5fr_2fr] border-2 border-gray-200 rounded-lg">
-      <Image
-        src={pictureUrl || "/icons/default_picture.svg"}
-        alt="picture"
-        width={160}
-        height={160}
-        className="row-span-3 m-auto rounded-lg"
-        priority
-      />
+    <div className="grid grid-cols-[1fr_2fr] grid-rows-[1fr_0.5fr_2fr] border-2 border-gray-200 rounded-lg gap-x-2">
+      <div className="relative row-span-3 w-[160px] h-[160px] m-auto ml-2">
+        <Image
+          src={pictureUrl || "/icons/default_picture.svg"}
+          alt={`${name}'s profile picture`}
+          fill
+          sizes="160px"
+          className="rounded-lg object-fill"
+          priority
+          loading="eager"
+        />
+      </div>
       <div className="flex items-center gap-2 mr-2 h-fit mr-2 mt-2">
         <div className="text-[24px] font-semibold">{name}</div>
         <Websites
@@ -64,8 +67,11 @@ interface PersonInfo {
   };
 }
 
+const peopleCache = new Map<string, PersonInfo[]>();
+
 const PeopleList = () => {
   const [peopleInfo, setPeopleInfo] = useState<PersonInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const generation: string = useGenerationStore((state) => state.generation);
   const resetGeneration: () => void = useGenerationStore(
     (state) => state.resetGeneration
@@ -75,23 +81,55 @@ const PeopleList = () => {
     resetGeneration();
   }, [resetGeneration]);
 
-  useEffect(() => {
-    const fetchPeopleInfo = async () => {
-      try {
-        const res: Response = await fetch(`/api/notion/people/${generation}`);
-        if (res.ok) {
-          const data: PersonInfo[] = await res.json();
-          console.log(data);
-          setPeopleInfo(data);
-        } else {
-          console.error(`res is not ok : ${res.status}`);
-        }
-      } catch (err) {
-        console.error(err);
+  const fetchPeopleInfo = useCallback(async () => {
+    // 캐시된 데이터가 있으면 사용
+    if (peopleCache.has(generation)) {
+      setPeopleInfo(peopleCache.get(generation)!);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const res: Response = await fetch(`/api/notion/people/${generation}`);
+      if (res.ok) {
+        const data: PersonInfo[] = await res.json();
+        // 데이터를 캐시에 저장
+        peopleCache.set(generation, data);
+        setPeopleInfo(data);
+      } else {
+        console.error(`res is not ok : ${res.status}`);
       }
-    };
-    fetchPeopleInfo();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [generation]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchPeopleInfo();
+  }, [fetchPeopleInfo]);
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+        {[...Array(4)].map((_, index) => (
+          <div
+            key={index}
+            className="grid grid-cols-[1fr_2fr] grid-rows-[1fr_0.5fr_2fr] border-2 border-gray-200 rounded-lg animate-pulse"
+          >
+            <div className="row-span-3 w-[160px] h-[160px] m-auto bg-gray-200 rounded-lg" />
+            <div className="flex items-center gap-2 mr-2 h-fit mr-2 mt-2">
+              <div className="h-6 w-32 bg-gray-200 rounded" />
+            </div>
+            <div className="h-4 w-24 bg-gray-200 rounded mr-2 mb-4" />
+            <div className="row-span-2 bg-gray-200 rounded-md p-2 mr-2 mb-2" />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
@@ -99,7 +137,7 @@ const PeopleList = () => {
         <PeopleCard
           key={id}
           pictureUrl={cover?.file?.url || cover?.external?.url}
-          name={properties.name.title[0]?.plain_text || "나는영민"} // 나는영민 넣어둠
+          name={properties.name.title[0]?.plain_text || "Unknown"}
           websites={{
             github: properties.github.url,
             linkedin: properties.linkedin.url,
@@ -107,8 +145,8 @@ const PeopleList = () => {
           }}
           part={properties.part.multi_select
             .map((item) => item.name)
-            .join(" / ") || "나는영민"}
-          comment={properties.comment.rich_text[0]?.plain_text || "나는영민"}
+            .join(" / ") || ""}
+          comment={properties.comment.rich_text[0]?.plain_text || ""}
         />
       ))}
     </div>
