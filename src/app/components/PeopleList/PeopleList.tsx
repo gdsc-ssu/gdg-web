@@ -72,8 +72,6 @@ interface PersonInfo {
   };
 }
 
-const peopleCache = new Map<string, PersonInfo[]>();
-
 const PeopleList = () => {
   const [peopleInfo, setPeopleInfo] = useState<PersonInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -103,17 +101,10 @@ const PeopleList = () => {
   }, [resetGeneration]);
 
   const fetchPeopleInfo = useCallback(async () => {
-    if (peopleCache.has(generation)) {
-      setPeopleInfo(peopleCache.get(generation)!);
-      setIsLoading(false);
-      return;
-    }
-
     try {
       const res: Response = await fetch(`/api/notion/people/${generation}`);
       if (res.ok) {
         const data: PersonInfo[] = await res.json();
-        peopleCache.set(generation, data);
         setPeopleInfo(data);
       } else {
         console.error(`res is not ok : ${res.status}`);
