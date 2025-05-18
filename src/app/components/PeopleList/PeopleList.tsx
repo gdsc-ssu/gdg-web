@@ -34,6 +34,7 @@ const PeopleCard = React.memo(({
           fill
           sizes="160px"
           className="rounded-lg object-fill"
+          quality={75}
           loading="lazy"
           onError={(e) => {
             e.currentTarget.src = "/icons/default_picture.svg";
