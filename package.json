@@ -29,6 +29,6 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
-    "webpack": "link:@svgr\\webpack"
+    "webpack": "link:@svgr/webpack"
   }
 }

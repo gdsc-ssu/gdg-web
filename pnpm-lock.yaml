@@ -64,7 +64,7 @@ importers:
         specifier: ^5
         version: 5.7.2
       webpack:
-        specifier: link:@svgr\webpack
+        specifier: link:@svgr/webpack
         version: link:@svgr/webpack
 
 packages:
