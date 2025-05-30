@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import useGenerationStore from "../../../store/useGenerationStore";
+import React from "react";
 
 interface GenerationProps {
   title: string;
@@ -9,7 +10,7 @@ interface GenerationProps {
   onClickGeneration: () => void;
 }
 
-const Generation = ({ title, active, onClickGeneration }: GenerationProps) => {
+const Generation = React.memo(({ title, active, onClickGeneration }: GenerationProps) => {
   return (
     <div
       onClick={onClickGeneration}
@@ -26,7 +27,7 @@ const Generation = ({ title, active, onClickGeneration }: GenerationProps) => {
       {title}기
     </div>
   );
-};
+});
 
 interface Option {
   id: string;
@@ -57,9 +58,16 @@ const GenerationBar = () => {
 
   const [generationInfo, setGenerationInfo] = useState<GenerationInfo[]>([]);
 
-  const handleActivateGeneration = (newSelectedGeneration: string) => {
+  const handleActivateGeneration = useCallback((newSelectedGeneration: string) => {
     updateSelectedGeneration(newSelectedGeneration);
-  };
+  }, [updateSelectedGeneration]);
+
+  const transformedGenerationInfo = useMemo(() => 
+    generationInfo.map(({ id, name }) => ({
+      id,
+      name,
+      isActive: selectedGeneration === name
+    })), [generationInfo, selectedGeneration]);
 
   useEffect(() => {
     const fetchGenerationInfo = async () => {
@@ -76,6 +84,7 @@ const GenerationBar = () => {
 
     fetchGenerationInfo();
   }, []);
+
   return (
     <div
       className="w-full max-w-[1280px] m-auto flex flex-row justify-start items-center 
@@ -84,7 +93,7 @@ const GenerationBar = () => {
       md:gap-3 md:mt-16 md:mb-8
       sm:gap-2 sm:mt-14 sm:mb-6"
     >
-      {generationInfo.map(({ id, name }: GenerationInfo) => (
+      {transformedGenerationInfo.map(({ id, name, isActive }) => (
         <Generation
           key={id}
           title={name}
