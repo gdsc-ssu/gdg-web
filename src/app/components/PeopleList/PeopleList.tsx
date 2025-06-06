@@ -57,6 +57,8 @@ const PeopleCard = React.memo(({
   );
 });
 
+PeopleCard.displayName = 'PeopleCard';
+
 interface PersonInfo {
   id: string;
   cover?: {
