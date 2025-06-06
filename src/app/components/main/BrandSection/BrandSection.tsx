@@ -107,7 +107,7 @@ const RightSection = () => {
       sm:text-[12px] sm:pt-[100px]
     ">
       <div className="">
-        GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는
+        GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는
         학생 개발자 커뮤니티입니다. 그 시너지의 배경에는, 서로 마음을 맞추어
         어떤 것도 함께라면 즐거운{' '}
         
