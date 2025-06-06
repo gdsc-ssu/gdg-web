@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
-import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { QueryDatabaseResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const DB_ID = process.env.NOTION_DB_ID;
 const notion = new Client({ auth: process.env.NOTION_PEOPLE_API_KEY });
 
-const cache = new Map<string, { data: any; timestamp: number }>();
+interface CacheData {
+    data: PageObjectResponse[];
+    timestamp: number;
+}
+
+const cache = new Map<string, CacheData>();
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 export async function GET(
@@ -42,7 +47,7 @@ export async function GET(
     });
 
     cache.set(generation, {
-      data: res.results,
+      data: res.results as PageObjectResponse[],
       timestamp: Date.now(),
     });
 

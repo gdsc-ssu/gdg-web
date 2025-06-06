@@ -29,6 +29,8 @@ const Generation = React.memo(({ title, active, onClickGeneration }: GenerationP
   );
 });
 
+Generation.displayName = 'Generation';
+
 interface Option {
   id: string;
   name: string;
@@ -97,7 +99,7 @@ const GenerationBar = () => {
         <Generation
           key={id}
           title={name}
-          active={selectedGeneration}
+          active={isActive ? name : ''}
           onClickGeneration={() => handleActivateGeneration(name)}
         />
       ))}
