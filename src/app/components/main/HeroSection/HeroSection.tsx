@@ -51,16 +51,12 @@ const HeroSection = () => {
             <br />
           </motion.span>
           <motion.span custom={2} variants={textVariants}>
-            Student
-            <br />
-          </motion.span>
-          <motion.span custom={3} variants={textVariants}>
-            Clubs
+            Group on
             <br />
           </motion.span>
         </motion.span>
         <motion.span 
-          custom={4} 
+          custom={3} 
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
