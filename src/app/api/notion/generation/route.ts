@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
-import { SearchResponse } from "@notionhq/client/build/src/api-endpoints";
+import { DatabaseObjectResponse, PageObjectResponse, PartialDatabaseObjectResponse, PartialPageObjectResponse, SearchResponse } from "@notionhq/client/build/src/api-endpoints";
+
 
 const DB_ID = process.env.NOTION_DB_ID;
 const notion = new Client({ auth: process.env.NOTION_PEOPLE_API_KEY });
 
 interface CacheData {
-    data: SearchResponse;
+    data: (PageObjectResponse | PartialPageObjectResponse | PartialDatabaseObjectResponse | DatabaseObjectResponse)[];
     timestamp: number;
 }
 
@@ -30,24 +31,25 @@ export async function GET() {
     }
 
     try {
-        const response = await notion.databases.query({
-            database_id: DB_ID,
+        const res: SearchResponse = await notion.search({
+          query: "people",
+          filter: {
+            value: "database",
+            property: "object",
+          },
         });
-
+    
         cache = {
-            data: response,
-            timestamp: Date.now(),
+          data: res.results,
+          timestamp: Date.now(),
         };
-
-        return NextResponse.json(response, {
-            headers: {
-                'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-            },
+    
+        return NextResponse.json(res.results, {
+          headers: {
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+          },
         });
-    } catch {
-        return NextResponse.json(
-            { error: "Failed to fetch data from Notion" },
-            { status: 500 }
-        );
+      } catch (err) {
+        return NextResponse.json({ error: err }, { status: 500 });
+      }
     }
-}
