@@ -51,11 +51,11 @@ const HeroSection = () => {
             <br />
           </motion.span>
           <motion.span custom={2} variants={textVariants}>
-            Student
+            Group on
             <br />
           </motion.span>
           <motion.span custom={3} variants={textVariants}>
-            Clubs
+            Campus
             <br />
           </motion.span>
         </motion.span>
