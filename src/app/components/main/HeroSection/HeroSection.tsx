@@ -54,9 +54,13 @@ const HeroSection = () => {
             Group on
             <br />
           </motion.span>
+          <motion.span custom={3} variants={textVariants}>
+            Campus
+            <br />
+          </motion.span>
         </motion.span>
         <motion.span 
-          custom={3} 
+          custom={4} 
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
