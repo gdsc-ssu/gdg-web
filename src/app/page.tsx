@@ -1,8 +1,4 @@
-import ActivitySection from '@/app/components/main/ActivitySection';
-import BrandSection from '@/app/components/main/BrandSection';
-import HeroSection from '@/app/components/main/HeroSection';
-import PictureSection from '@/app/components/main/PictureSection';
-import ScrollGuideSection from '@/app/components/main/ScrollGuideSection';
+import LandingPage from '@/app/components/main/LandingPage';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -35,13 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <main className="flex flex-col justify-center items-center w-full min-h-screen">
-      <HeroSection />
-      <ScrollGuideSection />
-      <BrandSection />
-      <ActivitySection />
-      <PictureSection />
-    </main>
-  );
+  return <LandingPage />;
 } 
