@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import ScrollGuideSection from '../ScrollGuideSection/ScrollGuideSection';
 
 const SECTION_CLASSNAMES = `
   w-full max-w-[1280px] m-auto
@@ -8,6 +9,7 @@ const SECTION_CLASSNAMES = `
   lg:p-[101px]
   md:p-[101px]
   sm:p-[52px]
+  snap-start
 `;
 
 const TEXT_CLASSNAMES = `
@@ -36,7 +38,7 @@ const HeroSection = () => {
   return (
     <section className={SECTION_CLASSNAMES}>
       <p className={TEXT_CLASSNAMES}>
-        <motion.span 
+        <motion.span
           className="text-grayscale-gray5"
           initial="hidden"
           whileInView="visible"
@@ -55,12 +57,12 @@ const HeroSection = () => {
             <br />
           </motion.span>
           <motion.span custom={3} variants={textVariants}>
-            Campus
+            Campus on
             <br />
           </motion.span>
         </motion.span>
-        <motion.span 
-          custom={4} 
+        <motion.span
+          custom={4}
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
@@ -71,6 +73,7 @@ const HeroSection = () => {
           University
         </motion.span>
       </p>
+      <ScrollGuideSection />
     </section>
   );
 };

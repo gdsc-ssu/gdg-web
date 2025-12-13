@@ -12,12 +12,12 @@ const ScrollGuideSection = () => {
             md:text-[24px]
             sm:text-[16px]
             ">
-            <AnimatedText delay={0.5} text="GDGoC Soongsil의 이야기를 알아볼까요?" />
+                <AnimatedText delay={0.2} text="GDGoC Soongsil의 이야기를 알아볼까요?" />
             </span>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 3.2 }}
+                transition={{ delay: 2 }}
             >
                 <motion.div
                     animate={{
@@ -29,12 +29,12 @@ const ScrollGuideSection = () => {
                         ease: "easeInOut"
                     }}
                 >
-                    <Image 
-                        src="/icons/GuideArrow.svg" 
-                        alt="scroll-guide" 
-                        width={50} 
+                    <Image
+                        src="/icons/GuideArrow.svg"
+                        alt="scroll-guide"
+                        width={50}
                         height={50}
-                        className="[filter:brightness(0)_opacity(0.3)] mt-[30px]" 
+                        className="[filter:brightness(0)_opacity(0.3)] mt-[30px]"
                     />
                 </motion.div>
             </motion.div>

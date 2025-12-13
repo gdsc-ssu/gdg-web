@@ -1,6 +1,7 @@
 'use client';
-import { useRef, useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import SectionWrapper from '../SectionWrapper';
+import { motion, AnimatePresence } from 'framer-motion';
 import { EventItem, SeminarItem, StudyItem } from './Slider';
 import { SEMINARS, STUDIES, EVENTS } from './const';
 import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
@@ -64,7 +65,7 @@ const SECTION_STYLES = `
   justify-center
   items-center
   overflow-hidden
-  sticky top-0 transition-opacity duration-500
+  snap-start
 `;
 
 const HEADER_STYLES = `
@@ -100,26 +101,14 @@ const Section = ({
   description,
   childrenContainerClassName,
   children,
-  index,
-  activeIndex,
 }: {
   title: string;
   description: string;
   childrenContainerClassName?: string;
   children: React.ReactNode;
-  index: number;
-  activeIndex: number;
 }) => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
   return (
-    <div
-      ref={sectionRef}
-      className={`
-        ${SECTION_STYLES}
-        ${index === activeIndex ? 'opacity-100 z-50' : 'opacity-0 z-0'}
-      `}
-    >
+    <div className={SECTION_STYLES}>
       <div className={HEADER_STYLES}>
         <SectionWrapper>
           <div className={TITLE_CONTAINER_STYLES}>
@@ -161,7 +150,7 @@ const Section = ({
         </SectionWrapper>
       </div>
 
-      <div 
+      <div
         className={`
           flex flex-row gap-6 mt-10 h-[280px] self-start pt-[80px]
           sm:mt-6 sm:h-[180px]
@@ -178,7 +167,7 @@ const Section = ({
 const ACTIVITIES_DATA: ActivityData[] = [
   {
     title: "슈몰세미나",
-    description: 
+    description:
       '슈몰세미나는 모든 멤버가 최소 한 번 직접 주제를 정하고 발표하는 내부 세미나 활동입니다. 꼭 프로그래밍이 아니어도 여행 경험이나 관심사 등 다양한 주제로 발표할 수 있습니다.',
     items: [...SEMINARS, ...SEMINARS] as SeminarType[],
     ItemComponent: SeminarItem,
@@ -188,7 +177,7 @@ const ACTIVITIES_DATA: ActivityData[] = [
   } as SeminarActivityData,
   {
     title: "스터디 & 프로젝트",
-    description: 
+    description:
       "내부에서 다양하고 재미있는 주제로 스터디와 프로젝트가 활발하게 개설됩니다. 함께 할 때 가치가 높아지는 것이라면 그 어떤 주제도 환영합니다.",
     items: [...STUDIES, ...STUDIES] as StudyType[],
     ItemComponent: StudyItem,
@@ -198,7 +187,7 @@ const ACTIVITIES_DATA: ActivityData[] = [
   } as StudyActivityData,
   {
     title: "커뮤니티 활동",
-    description: 
+    description:
       "개방적인 학생 개발자 커뮤니티로서, 정보를 공유하거나 견학, 체험 등의 활동을 함께 합니다. 세미나, 대회, MT, Code Jam 등 한계 없이 다양한 범위의 이벤트를 개최합니다.",
     items: [...EVENTS, ...EVENTS] as EventType[],
     ItemComponent: EventItem,
@@ -208,75 +197,68 @@ const ACTIVITIES_DATA: ActivityData[] = [
   } as EventActivityData
 ];
 
-// Hooks
-const useScrollSection = (totalSections: number) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      
-      const { top, height } = containerRef.current.getBoundingClientRect();
-      const scrollPosition = -top;
-      const sectionHeight = height / totalSections;
-      
-      const newIndex = Math.min(
-        Math.floor(scrollPosition / sectionHeight),
-        totalSections - 1
-      );
-      
-      if (newIndex >= 0 && newIndex !== activeIndex) {
-        setActiveIndex(newIndex);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeIndex, totalSections]);
-
-  return { activeIndex, containerRef };
-};
 
 // Main Component
 const ActivitySection = () => {
-  const { activeIndex, containerRef } = useScrollSection(ACTIVITIES_DATA.length);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    const handleStepChange = (e: CustomEvent) => {
+      if (e.detail.sectionId === 'activity-section') {
+        setCurrentStep(e.detail.step);
+      }
+    };
+
+    window.addEventListener('hybrid-scroll-step' as any, handleStepChange as any);
+    return () => {
+      window.removeEventListener('hybrid-scroll-step' as any, handleStepChange as any);
+    };
+  }, []);
 
   const renderActivityItems = (activity: ActivityData) => {
     if (!('items' in activity && 'renderItem' in activity)) return null;
-    
+
     if (activity.title === "슈몰세미나") {
-      return (activity as SeminarActivityData).items.map((item, index) => 
+      return (activity as SeminarActivityData).items.map((item, index) =>
         (activity as SeminarActivityData).renderItem(item, index)
       );
     } else if (activity.title === "스터디 & 프로젝트") {
-      return (activity as StudyActivityData).items.map((item, index) => 
+      return (activity as StudyActivityData).items.map((item, index) =>
         (activity as StudyActivityData).renderItem(item, index)
       );
     } else {
-      return (activity as EventActivityData).items.map((item, index) => 
+      return (activity as EventActivityData).items.map((item, index) =>
         (activity as EventActivityData).renderItem(item, index)
       );
     }
   };
 
+  const currentActivity = ACTIVITIES_DATA[currentStep];
+
   return (
-    <section 
-      ref={containerRef} 
-      className="w-full flex flex-col h-[500vh] relative"
+    <section
+      id="activity-section"
+      data-steps={ACTIVITIES_DATA.length}
+      className="w-full flex flex-col h-screen relative snap-start overflow-hidden"
     >
-      {ACTIVITIES_DATA.map((activity, index) => (
-        <Section
-          key={activity.title}
-          title={activity.title}
-          description={activity.description}
-          childrenContainerClassName={`animate-slide-90 ${activity.containerWidth} ${activity.smContainerWidth}`}
-          index={index}
-          activeIndex={activeIndex}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentActivity.title}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full"
         >
-          {renderActivityItems(activity)}
-        </Section>
-      ))}
+          <Section
+            title={currentActivity.title}
+            description={currentActivity.description}
+            childrenContainerClassName={`animate-slide-90 ${currentActivity.containerWidth} ${currentActivity.smContainerWidth}`}
+          >
+            {renderActivityItems(currentActivity)}
+          </Section>
+        </motion.div>
+      </AnimatePresence>
     </section>
   );
 };

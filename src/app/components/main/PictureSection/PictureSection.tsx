@@ -143,19 +143,19 @@ const HeadingSection = () => (
 
 const PictureSection = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(true);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth >= 1024);
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-center py-10">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center py-10 snap-start">
       <HeadingSection />
       <div className={`
         ${STYLES.pictureContainer}
@@ -163,10 +163,10 @@ const PictureSection = () => {
         pt-[50px]
       `}>
         {PICTURES.map((picture, index) => (
-          <PictureItem 
-            key={index} 
-            {...picture} 
-            index={index} 
+          <PictureItem
+            key={index}
+            {...picture}
+            index={index}
             isLargeScreen={isLargeScreen}
           />
         ))}

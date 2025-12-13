@@ -2,8 +2,6 @@
 
 import Image from 'next/image';
 import SectionWrapper from '../SectionWrapper';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { AnimatedText } from '@/app/components/Animated/AnimatedText';
 import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
 
@@ -36,7 +34,7 @@ const LeftSection = () => {
       <span className="flex">
         <span className="relative whitespace-nowrap">
           <AnimatedText text="유쾌함으로" delay={0.8} />
-          <AnimatedImage 
+          <AnimatedImage
             src="/icons/UnderScore_red.svg"
             alt="UnderScore"
             width={100}
@@ -47,7 +45,7 @@ const LeftSection = () => {
           />
         </span>
         <div className="flex h-full">
-          <AnimatedImage 
+          <AnimatedImage
             src="/icons/SmileFace.svg"
             alt="SmileFace"
             width={32}
@@ -59,7 +57,7 @@ const LeftSection = () => {
         </div>
       </span>
       <AnimatedText text="세상을 바꿉니다." delay={1.8} />
-      <AnimatedImage 
+      <AnimatedImage
         src="/icons/PaperAirplane.svg"
         alt="PaperAirplane"
         width={182}
@@ -85,7 +83,7 @@ const TextWithIcon = ({ text, iconSrc, iconAlt, iconClassName, textClassName }: 
     <div className="flex items-center">
       <span className={textClassName}>{text}</span>
       <span className="mx-1">
-        <Image 
+        <Image
           src={iconSrc}
           alt={iconAlt}
           width={24}
@@ -98,7 +96,7 @@ const TextWithIcon = ({ text, iconSrc, iconAlt, iconClassName, textClassName }: 
 );
 
 const RightSection = () => {
-  return (        
+  return (
     <div className="
       flex flex-col
       pt-[200px]
@@ -110,25 +108,25 @@ const RightSection = () => {
         GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는
         학생 개발자 커뮤니티입니다. 그 시너지의 배경에는, 서로 마음을 맞추어
         어떤 것도 함께라면 즐거운{' '}
-        
-        <TextWithIcon 
+
+        <TextWithIcon
           text="놀이"
           iconSrc="/icons/Star.svg"
           iconAlt="Star"
           textClassName="text-primary-red break-keep font-normal leading-[110%] text-[16px] lg:text-[24px] md:text-[20px] sm:text-[16px]"
           iconClassName="align-middle w-[34px] h-[33px] text-primary-red"
         />
-        
+
         로 만드는 선한 친화력이 있습니다. 그리고 우리는 그 즐거움을 전염시켜{' '}
-        
-        <TextWithIcon 
+
+        <TextWithIcon
           text="세상"
           iconSrc="/icons/WorldWithFlag.svg"
           iconAlt="WorldWithFlag"
           textClassName="text-primary-red break-keep font-normal leading-[110%] hipi text-[20px] lg:text-[24px] md:text-[24px] sm:text-[20px]"
           iconClassName="align-middle w-[24px] h-[35px] lg:w-[18px] lg:h-[26px] md:w-[18px] md:h-[26px] sm:w-[14px] sm:h-[20px]"
         />
-        
+
         을 더 좋은 곳으로 만들 수 있다고 믿습니다.
       </div>
     </div>
@@ -136,32 +134,17 @@ const RightSection = () => {
 }
 
 const BrandSection = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [0, -50, 0]);
-
   return (
-    <div className="relative h-[300vh]" ref={ref}>
+    <div className="relative h-screen snap-start">
       <section className={SECTION_CLASSNAMES}>
-        <motion.div
-          style={{
-            scale,
-            y,
-          }}
-          className="w-full flex flex-col lg:flex-row md:flex-row sm:flex-col"
-        >
+        <div className="w-full flex flex-col lg:flex-row md:flex-row sm:flex-col">
           <SectionWrapper>
             <LeftSection />
           </SectionWrapper>
           <SectionWrapper>
             <RightSection />
           </SectionWrapper>
-        </motion.div>
+        </div>
       </section>
     </div>
   );
