@@ -1,5 +1,7 @@
 import TabContent from "@/app/components/TabBar";
 import TabBarProvider from "@/app/components/TabBar/TabBarProvider";
+import PageContainer from "@/app/components/common/PageContainer";
+import PageTitle from "@/app/components/common/PageTitle";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,21 +11,11 @@ export const metadata: Metadata = {
 
 export default function ActivitiesPage() {
   return (
-    <main className="w-full min-h-screen pt-24 ">
-      <section className="max-w-[1280px] mx-auto px-[101px] sm:px-[52px]">
-        <h1 className="
-        text-[72px] font-extrabold text-center text-primary-black
-        sm:text-[36px]
-        md:text-[48px]
-        lg:text-[60px]
-        xl:text-[72px]
-        ">
-          Activities
-        </h1>
-        <TabBarProvider>
-          <TabContent />
-        </TabBarProvider>
-      </section>
-    </main>
+    <PageContainer>
+      <PageTitle>Activities</PageTitle>
+      <TabBarProvider>
+        <TabContent />
+      </TabBarProvider>
+    </PageContainer>
   );
 }
