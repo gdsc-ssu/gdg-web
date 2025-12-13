@@ -1,143 +1,184 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+
+const SCROLL_THRESHOLD = 5;
+const SCROLL_THROTTLE_MS = 500;
+
+interface ScrollEventDetail {
+    sectionId: string;
+    step: number;
+}
 
 export const useHybridScroll = () => {
     const stepsRef = useRef<Record<number, number>>({});
     const lastScrollTime = useRef(0);
 
-    useEffect(() => {
-        const handleWheel = (e: WheelEvent) => {
-            const main = document.querySelector('main');
-            if (!main) return;
+    const getMainSections = useCallback((): HTMLElement[] => {
+        const main = document.querySelector('main');
+        return main ? (Array.from(main.children) as HTMLElement[]) : [];
+    }, []);
 
-            const sections = Array.from(main.children) as HTMLElement[];
-            const currentScroll = window.scrollY;
-            const threshold = 5;
+    const getCurrentSectionIndex = useCallback((sections: HTMLElement[]): number => {
+        const currentScroll = window.scrollY;
+        return sections.findIndex(section => {
+            const { offsetTop, offsetHeight } = section;
+            return currentScroll >= offsetTop - 2 && currentScroll < offsetTop + offsetHeight - 2;
+        });
+    }, []);
+
+    const dispatchStepEvent = useCallback((sectionId: string, step: number) => {
+        window.dispatchEvent(new CustomEvent<ScrollEventDetail>('hybrid-scroll-step', {
+            detail: { sectionId, step }
+        }));
+    }, []);
+
+    const handleUpwardScroll = useCallback((
+        currentSectionIndex: number,
+        sections: HTMLElement[],
+        preventDefault: () => void
+    ) => {
+        const currentSection = sections[currentSectionIndex];
+        const stepsAttr = currentSection.getAttribute('data-steps');
+        const maxSteps = stepsAttr ? parseInt(stepsAttr, 10) : 1;
+        const isStepped = maxSteps > 1;
+        const currentStep = stepsRef.current[currentSectionIndex] || 0;
+
+        if (isStepped && currentStep > 0) {
+            preventDefault();
+            if (Date.now() - lastScrollTime.current > SCROLL_THROTTLE_MS) {
+                const prevStep = currentStep - 1;
+                stepsRef.current[currentSectionIndex] = prevStep;
+                dispatchStepEvent(currentSection.id, prevStep);
+                lastScrollTime.current = Date.now();
+            }
+            return;
+        }
+
+        const currentScroll = window.scrollY;
+        const atTopBoundary = Math.abs(currentScroll - currentSection.offsetTop) < 10;
+
+        if (atTopBoundary) {
+            const prevSectionIndex = currentSectionIndex - 1;
+            const prevSection = sections[prevSectionIndex];
             const viewportHeight = window.innerHeight;
 
-            const currentSectionIndex = sections.findIndex(section => {
-                const { offsetTop, offsetHeight } = section;
-                return currentScroll >= offsetTop - 2 && currentScroll < offsetTop + offsetHeight - 2;
+            if (prevSection && (prevSection.offsetHeight <= viewportHeight + 10)) {
+                preventDefault();
+                if (Date.now() - lastScrollTime.current < SCROLL_THROTTLE_MS) return;
+
+                const prevStepsAttr = prevSection.getAttribute('data-steps');
+                if (prevStepsAttr) {
+                    const prevMax = parseInt(prevStepsAttr, 10);
+                    const lastStep = prevMax - 1;
+                    stepsRef.current[prevSectionIndex] = lastStep;
+                    dispatchStepEvent(prevSection.id, lastStep);
+                }
+
+                lastScrollTime.current = Date.now();
+                window.scrollTo({ top: prevSection.offsetTop, behavior: "smooth" });
+            }
+        }
+    }, [dispatchStepEvent]);
+
+    const handleDownwardScroll = useCallback((
+        currentSectionIndex: number,
+        sections: HTMLElement[],
+        preventDefault: () => void
+    ) => {
+        const currentSection = sections[currentSectionIndex];
+        const stepsAttr = currentSection.getAttribute('data-steps');
+        const maxSteps = stepsAttr ? parseInt(stepsAttr, 10) : 1;
+        const isStepped = maxSteps > 1;
+        const currentStep = stepsRef.current[currentSectionIndex] || 0;
+        const viewportHeight = window.innerHeight;
+        const isStatic = currentSection.offsetHeight <= viewportHeight + 10;
+
+        if (isStepped && currentStep < maxSteps - 1) {
+            preventDefault();
+            if (Date.now() - lastScrollTime.current > SCROLL_THROTTLE_MS) {
+                const nextStep = currentStep + 1;
+                stepsRef.current[currentSectionIndex] = nextStep;
+                dispatchStepEvent(currentSection.id, nextStep);
+                lastScrollTime.current = Date.now();
+            }
+            return;
+        }
+
+        if (isStatic || isStepped) {
+            const nextSectionIndex = currentSectionIndex + 1;
+            const nextSection = sections[nextSectionIndex];
+
+            if (nextSection) {
+                preventDefault();
+                if (Date.now() - lastScrollTime.current < SCROLL_THROTTLE_MS) return;
+
+                stepsRef.current[nextSectionIndex] = 0;
+                dispatchStepEvent(nextSection.id, 0);
+
+                lastScrollTime.current = Date.now();
+                window.scrollTo({ top: nextSection.offsetTop, behavior: "smooth" });
+            }
+        }
+    }, [dispatchStepEvent]);
+
+    const handleScrollLogic = useCallback((deltaY: number, preventDefault: () => void) => {
+        const sections = getMainSections();
+        if (sections.length === 0) return;
+
+        const currentSectionIndex = getCurrentSectionIndex(sections);
+        if (currentSectionIndex === -1) return;
+
+        if (stepsRef.current[currentSectionIndex] === undefined) {
+            stepsRef.current[currentSectionIndex] = 0;
+        }
+
+        if (deltaY < -SCROLL_THRESHOLD) {
+            handleUpwardScroll(currentSectionIndex, sections, preventDefault);
+        } else if (deltaY > SCROLL_THRESHOLD) {
+            handleDownwardScroll(currentSectionIndex, sections, preventDefault);
+        }
+    }, [getMainSections, getCurrentSectionIndex, handleUpwardScroll, handleDownwardScroll]);
+
+    useEffect(() => {
+        let touchStartY = 0;
+
+        const handleWheel = (e: WheelEvent) => {
+            handleScrollLogic(e.deltaY, () => e.preventDefault());
+        };
+
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartY = e.touches[0].clientY;
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            const currentY = e.touches[0].clientY;
+            const deltaY = touchStartY - currentY;
+
+            handleScrollLogic(deltaY, () => {
+                if (e.cancelable) e.preventDefault();
             });
 
-            if (currentSectionIndex === -1) return;
+            touchStartY = currentY;
+        };
 
-            const currentSection = sections[currentSectionIndex];
-            const isStatic = currentSection.offsetHeight <= viewportHeight + 10;
-
-            const stepsAttr = currentSection.getAttribute('data-steps');
-            const maxSteps = stepsAttr ? parseInt(stepsAttr, 10) : 1;
-            const isStepped = maxSteps > 1;
-
-            if (stepsRef.current[currentSectionIndex] === undefined) {
-                stepsRef.current[currentSectionIndex] = 0;
-            }
-
-            const currentStep = stepsRef.current[currentSectionIndex];
-
-            const dispatchStep = (step: number) => {
-                window.dispatchEvent(new CustomEvent('hybrid-scroll-step', {
-                    detail: {
-                        sectionId: currentSection.id,
-                        step
-                    }
-                }));
-            };
-
-            if (e.deltaY < -threshold) {
-                if (isStepped && currentStep > 0) {
-                    e.preventDefault();
-                    if (Date.now() - lastScrollTime.current > 500) {
-                        stepsRef.current[currentSectionIndex] = currentStep - 1;
-                        dispatchStep(currentStep - 1);
-                        lastScrollTime.current = Date.now();
-                    }
-                    return;
-                }
-
-                const atTopBoundary = Math.abs(currentScroll - currentSection.offsetTop) < 10;
-                if (atTopBoundary) {
-                    const prevSection = sections[currentSectionIndex - 1];
-                    if (prevSection && (prevSection.offsetHeight <= viewportHeight + 10)) {
-                        e.preventDefault();
-
-                        if (Date.now() - lastScrollTime.current < 500) {
-                            return;
-                        }
-
-                        const prevStepsAttr = prevSection.getAttribute('data-steps');
-                        if (prevStepsAttr) {
-                            const prevMax = parseInt(prevStepsAttr, 10);
-                            stepsRef.current[currentSectionIndex - 1] = prevMax - 1;
-
-                            window.dispatchEvent(new CustomEvent('hybrid-scroll-step', {
-                                detail: {
-                                    sectionId: prevSection.id,
-                                    step: prevMax - 1
-                                }
-                            }));
-                        }
-
-                        lastScrollTime.current = Date.now();
-                        window.scrollTo({ top: prevSection.offsetTop, behavior: "smooth" });
-                    }
-                }
-            }
-
-            // Rule 2: Forward Scroll
-            else if (e.deltaY > threshold) {
-                // If stepped and not at end, increment step
-                if (isStepped && currentStep < maxSteps - 1) {
-                    e.preventDefault();
-                    if (Date.now() - lastScrollTime.current > 500) {
-                        stepsRef.current[currentSectionIndex] = currentStep + 1;
-                        dispatchStep(currentStep + 1);
-                        lastScrollTime.current = Date.now();
-                    }
-                    return;
-                }
-
-                // Snap to Next Section
-                // If we are at the last step (isStepped is true here means we fell through the above block)
-                // OR if the section is static, we should snap to next.
-                // We use (isStatic || isStepped) because if isStepped is true, we know we are at the last step
-                // and should behave like a static section transition effectively.
-                if (isStatic || isStepped) {
-                    const nextSection = sections[currentSectionIndex + 1];
-                    if (nextSection) {
-                        e.preventDefault();
-
-                        // Check throttle to prevent immediate section change after step change
-                        if (Date.now() - lastScrollTime.current < 500) {
-                            return;
-                        }
-
-                        // Reset next section step to 0 ONLY if we are actually moving to it
-                        // (This logic was already here but just reaffirming context)
-
-
-                        // Reset next section step to 0
-                        stepsRef.current[currentSectionIndex + 1] = 0;
-                        // Dispatch reset for next section just in case
-                        window.dispatchEvent(new CustomEvent('hybrid-scroll-step', {
-                            detail: {
-                                sectionId: nextSection.id,
-                                step: 0
-                            }
-                        }));
-
-                        // Reset throttle to prevent immediate step change from inertia
-                        lastScrollTime.current = Date.now();
-                        window.scrollTo({ top: nextSection.offsetTop, behavior: "smooth" });
-                    }
-                }
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (['ArrowUp', 'ArrowLeft'].includes(e.key)) {
+                handleScrollLogic(-100, () => e.preventDefault());
+            } else if (['ArrowDown', 'ArrowRight'].includes(e.key)) {
+                handleScrollLogic(100, () => e.preventDefault());
             }
         };
 
         window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("touchstart", handleTouchStart, { passive: false });
+        window.addEventListener("touchmove", handleTouchMove, { passive: false });
+        window.addEventListener("keydown", handleKeyDown);
 
         return () => {
             window.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("touchstart", handleTouchStart);
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("keydown", handleKeyDown);
         };
-    }, []);
+    }, [handleScrollLogic]);
 };
 
