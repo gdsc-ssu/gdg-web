@@ -28,7 +28,7 @@ const LeftSection = () => {
       items-start
       lg:text-[48px] lg:pl-[76px]
       md:text-[42px] md:pt-[0px] md:pl-[48px]
-      sm:text-[32px] sm:pt-[200px]
+      sm:text-[32px] sm:pt-[10px]
     ">
       <AnimatedText text="실력 너머의" delay={0} />
       <span className="flex">

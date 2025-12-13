@@ -5,10 +5,12 @@ import ScrollGuideSection from '../ScrollGuideSection/ScrollGuideSection';
 
 const SECTION_CLASSNAMES = `
   w-full max-w-[1280px] m-auto
-  p-[50px] mt-[101px]
-  lg:p-[101px]
-  md:p-[101px]
-  sm:p-[52px]
+  p-[50px]
+  lg:p-[150px]
+  md:p-[150px]
+  sm:pt-[100px]
+  sm:pb-[20px]
+  sm:px-[50px]
   snap-start
 `;
 

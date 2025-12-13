@@ -17,9 +17,7 @@ const LandingPage = () => {
 
     return (
         <main className="flex flex-col justify-center items-center w-full min-h-screen">
-            <div className="w-full h-screen flex flex-col justify-center items-center">
-                <HeroSection />
-            </div>
+            <HeroSection />
             <BrandSection />
             <ActivitySection />
             <PictureSection />
