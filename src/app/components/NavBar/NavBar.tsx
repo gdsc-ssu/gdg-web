@@ -14,10 +14,10 @@ export default function NavBar() {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
-    
+
     return () => {
       window.removeEventListener('resize', checkIsMobile);
     };
@@ -40,7 +40,7 @@ export default function NavBar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   return (
     <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center
     max-h-[60px] py-[10px] px-[20px] mx-auto
@@ -60,11 +60,11 @@ export default function NavBar() {
               md:w-[40px] md:h-[40px]
               sm:w-[30px] sm:h-[30px]
             ">
-              <Image 
-                src="/icons/Logo.svg" 
-                alt="Logo" 
-                width={100} 
-                height={100} 
+              <Image
+                src="/icons/Logo.svg"
+                alt="Logo"
+                width={100}
+                height={100}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -73,11 +73,11 @@ export default function NavBar() {
 
         {isMobile ? (
           <div className="cursor-pointer" onClick={toggleMenu}>
-            <Image 
-              src="/icons/Menu.svg" 
-              alt="Menu" 
-              width={24} 
-              height={24} 
+            <Image
+              src="/icons/Menu.svg"
+              alt="Menu"
+              width={24}
+              height={24}
             />
           </div>
         ) : (
@@ -88,7 +88,6 @@ export default function NavBar() {
             sm:gap-[5px]
           ">
             {[
-              { href: '/', label: 'Landing' },
               { href: '/activities', label: 'Activities' },
               { href: '/peoples', label: 'Peoples' },
               { href: '/support', label: 'Support' }
@@ -106,7 +105,7 @@ export default function NavBar() {
             ))}
           </nav>
         )}
-        
+
         {/* 모바일 메뉴 사이드바 */}
         {isMobile && (
           <div className={`
@@ -116,21 +115,20 @@ export default function NavBar() {
             ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
             flex flex-col p-6 pt-[100px]
           `}>
-            <div 
-              className="absolute top-6 right-6 cursor-pointer" 
+            <div
+              className="absolute top-6 right-6 cursor-pointer"
               onClick={toggleMenu}
             >
-              <Image 
-                src="/icons/Close.svg" 
-                alt="Close" 
-                width={20} 
-                height={20} 
+              <Image
+                src="/icons/Close.svg"
+                alt="Close"
+                width={20}
+                height={20}
               />
             </div>
-            
+
             <div className="flex flex-col gap-6">
               {[
-                { href: '/', label: 'Landing' },
                 { href: '/activities', label: 'Activities' },
                 { href: '/peoples', label: 'Peoples' },
                 { href: '/support', label: 'Support' }
@@ -148,10 +146,10 @@ export default function NavBar() {
             </div>
           </div>
         )}
-        
+
         {/* 배경 오버레이 */}
         {isMenuOpen && isMobile && (
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 z-[9000]"
             onClick={toggleMenu}
           />
