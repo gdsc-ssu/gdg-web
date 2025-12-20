@@ -15,8 +15,8 @@ export default function SupportPage() {
     <PageContainer>
       <h2 className="text-style-subTitle text-neutral-black">Support</h2>
       <div className="flex flex-col items-center text-center">
+        <div className="w-full h-[60px]" />
         <p className="text-style-body14 text-neutral-grey max-w-[800px]">
-          <div className="w-full h-[60px]" />
           GDGoC Soongsil은 기술을 사랑하고 성장을 꿈꾸는 학생들이 모여 서로의 지식을 나누는 공간입니다.
           <br />
           우리는 혼자만의 성장이 아닌, '함께'의 가치를 믿으며 더 넓은 세상으로 나아가기 위해 치열하게 고민하고 도전합니다.
@@ -37,8 +37,8 @@ export default function SupportPage() {
 
       <h2 className="text-style-subTitle text-neutral-black">Hall of Fame</h2>
       <div className="flex flex-col items-center text-center">
+        <div className="w-full h-[60px]" />
         <p className="text-style-body14 text-neutral-grey max-w-[800px]">
-          <div className="w-full h-[60px]" />
           GDGoC Soongsil은 기술을 사랑하고 성장을 꿈꾸는 학생들이 모여 서로의 지식을 나누는 공간입니다.
           <br />
           우리는 혼자만의 성장이 아닌, '함께'의 가치를 믿으며 더 넓은 세상으로 나아가기 위해 치열하게 고민하고 도전합니다.
