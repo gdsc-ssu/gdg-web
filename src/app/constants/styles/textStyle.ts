@@ -1,25 +1,12 @@
 import { MEDIA_QUERY } from './mediaQuery';
 
 export const TEXT_STYLE_NAME = {
-  maintitle: 'maintitle',
   title: 'title',
-  subtitle1: 'subtitle1',
-  subtitle2B: 'subtitle2B',
-  subtitle2R: 'subtitle2R',
-  subtitle3: 'subtitle3',
-  body1B: 'body1B',
-  body1R: 'body1R',
-  body2B: 'body2B',
-  body2R: 'body2R',
-  body3: 'body3',
-  button1B: 'button1B',
-  button1R: 'button1R',
-  button2B: 'button2B',
-  button2R: 'button2R',
-  button3R: 'button3R',
-  button4B: 'button4B',
-  caption: 'caption',
-  description: 'description',
+  subTitle: 'subTitle',
+  subTitle32: 'subTitle32',
+  subTitle20: 'subTitle20',
+  navList: 'navList',
+  body14: 'body14',
 } as const;
 
 export type TextStyleNameType =
@@ -29,189 +16,74 @@ interface TextStyleType {
   fontSize: string;
   fontWeight: number;
   lineHeight: string;
+  letterSpacing?: string;
 }
 
 export const TEXT_STYLES: Record<TextStyleNameType, TextStyleType> = {
-  [TEXT_STYLE_NAME.maintitle]: {
-    fontSize: '64px',
-    fontWeight: 700,
-    lineHeight: '120%',
-    [`@media ${MEDIA_QUERY.tabletLg}`]: {
-      fontSize: '48px',
-    },
-    [`@media ${MEDIA_QUERY.tabletSm}`]: {
-      fontSize: '48px',
-    },
+  title: {
+    fontSize: '80px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
     [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '36px',
+      fontSize: '40px',
+      fontWeight: 600,
+      lineHeight: '140%',
     },
   },
-  [TEXT_STYLE_NAME.title]: {
-    fontSize: '36px',
-    fontWeight: 900,
-    lineHeight: 'normal',
+  subTitle: {
+    fontSize: '40px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
     [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '30px',
-      fontWeight: 900,
+      fontSize: '24px',
+      fontWeight: 600,
+      lineHeight: '140%',
     },
   },
-  [TEXT_STYLE_NAME.subtitle1]: {
-    fontSize: '30px',
-    fontWeight: 800,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '22px',
-      fontWeight: 800,
-    },
-  },
-  [TEXT_STYLE_NAME.subtitle2B]: {
-    fontSize: '22px',
-    fontWeight: 700,
-    lineHeight: 'normal',
+  subTitle32: {
+    fontSize: '32px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
     [`@media ${MEDIA_QUERY.mobile}`]: {
       fontSize: '20px',
-      fontWeight: 700,
+      fontWeight: 600,
+      lineHeight: '140%',
     },
   },
-  [TEXT_STYLE_NAME.subtitle2R]: {
-    fontSize: '22px',
+  subTitle20: {
+    fontSize: '20px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '16px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  navList: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  body14: {
+    fontSize: '14px',
     fontWeight: 500,
-    lineHeight: 'normal',
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
     [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '20px',
+      fontSize: '12px',
       fontWeight: 500,
-    },
-  },
-  [TEXT_STYLE_NAME.subtitle3]: {
-    fontSize: '20px',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '18px',
-      fontWeight: 700,
-    },
-  },
-
-  [TEXT_STYLE_NAME.body1B]: {
-    fontSize: '20px',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '18px',
-      fontWeight: 700,
-    },
-  },
-  [TEXT_STYLE_NAME.body1R]: {
-    fontSize: '20px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '18px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.body2B]: {
-    fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '18px',
-      fontWeight: 700,
-    },
-  },
-  [TEXT_STYLE_NAME.body2R]: {
-    fontSize: '18px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '16px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.body3]: {
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '14px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.caption]: {
-    fontSize: '14px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '12px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.button1B]: {
-    fontSize: '20px',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '12px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.button1R]: {
-    fontSize: '20px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '18px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.button2B]: {
-    fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '16px',
-      fontWeight: 700,
-    },
-  },
-  [TEXT_STYLE_NAME.button2R]: {
-    fontSize: '18px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '16px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.button3R]: {
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '14px',
-      fontWeight: 400,
-    },
-  },
-  [TEXT_STYLE_NAME.button4B]: {
-    fontSize: '14px',
-    fontWeight: 800,
-    lineHeight: 'normal',
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '13px',
-      fontWeight: 800,
-    },
-  },
-  [TEXT_STYLE_NAME.description]: {
-    fontSize: '25px',
-    fontWeight: 500,
-    lineHeight: '160%',
-    [`@media ${MEDIA_QUERY.tabletLg}`]: {
-      fontSize: '20px',
-    },
-    [`@media ${MEDIA_QUERY.tabletSm}`]: {
-      fontSize: '20px',
-    },
-    [`@media ${MEDIA_QUERY.mobile}`]: {
-      fontSize: '16px',
+      lineHeight: '140%',
     },
   },
 };
