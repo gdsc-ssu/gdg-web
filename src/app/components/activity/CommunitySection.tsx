@@ -19,7 +19,7 @@ const CommunitySection = () => {
                     <br />
                     세미나, 대회, MT, Code Jam, 네트워킹 등 한계 없이 다양한 범위의 이벤트를 개최합니다.
                     <br />
-                    더 많은 이벤트 내용은 GDGoC bevy페이지에서 확인해 보실 수 있습니다.
+                    더 많은 이벤트 내용은 <a href="https://gdg.community.dev/gdg-on-campus-soongsil-university-seoul-south-korea/" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">GDGoC bevy페이지</a>에서 확인해 보실 수 있습니다.
                 </p>
             </div>
 

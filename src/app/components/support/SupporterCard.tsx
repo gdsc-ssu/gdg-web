@@ -1,0 +1,44 @@
+'use client';
+
+import Image from "next/image";
+
+interface SupporterCardProps {
+    name: string;
+    position: string;
+    description: string;
+    imageUrl?: string;
+}
+
+const SupporterCard = ({
+    name,
+    position,
+    description,
+    imageUrl = "/placeholder-event.png"
+}: SupporterCardProps) => {
+    return (
+        <div className="flex flex-col w-full bg-white rounded-[20px] overflow-hidden border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300">
+            {/* Image Section */}
+            <div className="relative w-full aspect-[4/3] bg-gray-100">
+                {imageUrl && (
+                    <Image
+                        src={imageUrl}
+                        alt={name}
+                        fill
+                        className="object-cover"
+                    />
+                )}
+            </div>
+
+            {/* Content Section */}
+            <div className="flex flex-col p-6 gap-3">
+                <h3 className="text-2xl font-bold text-black">{name}</h3>
+                <div className="flex flex-col gap-1 text-sm text-gray-500">
+                    <span>{position}</span>
+                    <span>{description}</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SupporterCard;
