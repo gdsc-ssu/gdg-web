@@ -27,7 +27,7 @@ export default function NavBar() {
               <span className={`
                 text-[16px] font-semibold leading-[140%] tracking-[-0.025em]
                 max-md:text-[14px]
-                ${pathname === href ? 'text-black' : 'text-neutral-black'}
+                ${pathname === href ? 'text-primary-red' : 'text-neutral-black'}
                 hover:text-black transition-colors
               `}>
                 {label}
