@@ -61,8 +61,20 @@ const HeroSection = () => {
 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: [0, -15, 0]
+          }}
+          transition={{
+            opacity: { duration: 0.8, delay: 0.2, ease: "easeOut" },
+            scale: { duration: 0.8, delay: 0.2, ease: "easeOut" },
+            y: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
           className="relative w-[420px] h-[260px] max-md:w-[300px] max-md:h-[200px]"
         >
           <Image
