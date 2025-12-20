@@ -14,12 +14,12 @@ const Footer = () => {
             <div className="w-full max-w-[1280px] flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
 
                 {/* Left: Organization Name */}
-                <div className="font-semibold text-neutral-black">
+                <div className="text-style-body14 text-color-neutral-grey font-semibold">
                     GDGoC Soongsil
                 </div>
 
                 {/* Center: Copyright */}
-                <div className="text-center text-neutral-grey">
+                <div className="text-center text-style-body14">
                     Copyright © 2025 Google Developer Groups on Campus Soongsil All Rights Reserved.
                 </div>
 

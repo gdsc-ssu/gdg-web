@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import NavBar from "@/app/components/NavBar";
 import "@/app/globals.css";
+import Footer from "@/app/components/common/Footer";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -44,6 +45,7 @@ export default function RootLayout({
       <body className={geist.className}>
         <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );
