@@ -24,7 +24,7 @@ const TabBar = ({ tabs, activeTab, onTabChange }: TabBarProps) => {
     const activeIndex = tabs.indexOf(activeTab);
 
     return (
-        <div className="w-full flex justify-between gap-4 border-b-0">
+        <div className="w-full flex justify-between gap-4 max-sm:gap-2 border-b-0">
             {/* Note: The image shows gaps between the bottom borders of tabs, so we don't put a border on the container.
           Instead, we put border on individual items. */}
             {tabs.map((tab, index) => {
@@ -36,11 +36,11 @@ const TabBar = ({ tabs, activeTab, onTabChange }: TabBarProps) => {
                     <button
                         key={tab}
                         onClick={() => onTabChange(tab)}
-                        className="flex-1 flex flex-col items-center gap-4 group"
+                        className="flex-1 flex flex-col items-center gap-4 max-sm:gap-2 group"
                     >
                         <span
                             className={cn(
-                                "text-[24px] font-bold leading-[140%] whitespace-nowrap transition-colors",
+                                "text-[24px] max-md:text-[12px] max-sm:text-[7px] font-bold leading-[140%] whitespace-nowrap transition-colors",
                                 isActive ? activeTextColor : "text-neutral-light-grey group-hover:text-neutral-grey"
                             )}
                         >
