@@ -22,18 +22,26 @@ export default function NavBar() {
         </Link>
 
         <nav className="flex items-center gap-[60px] max-md:gap-[30px] max-sm:gap-[20px] max-[600px]:hidden">
-          {NAV_LINKS.map(({ href, label }) => (
-            <Link key={href} href={href}>
-              <span className={`
+          {NAV_LINKS.map(({ href, label }) => {
+            const isActive = pathname === href;
+            let activeColorClass = 'text-primary-red';
+            if (href === '/activity') activeColorClass = 'text-primary-blue';
+            else if (href === '/member') activeColorClass = 'text-primary-green';
+            else if (href === '/support') activeColorClass = 'text-primary-yellow';
+
+            return (
+              <Link key={href} href={href}>
+                <span className={`
                 text-[16px] font-semibold leading-[140%] tracking-[-0.025em]
                 max-md:text-[14px]
-                ${pathname === href ? 'text-primary-red' : 'text-neutral-black'}
-                hover:text-black transition-colors
+                ${isActive ? activeColorClass : 'text-neutral-black hover:text-black'}
+                transition-colors
               `}>
-                {label}
-              </span>
-            </Link>
-          ))}
+                  {label}
+                </span>
+              </Link>
+            )
+          })}
         </nav>
       </div>
     </div>
