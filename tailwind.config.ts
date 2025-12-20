@@ -1,6 +1,81 @@
 import type { Config } from "tailwindcss";
 import { COLORS } from "./src/app/constants/styles";
 
+const MEDIA_QUERY = {
+  mobile: '(max-width: 768px)',
+  tablet: '(max-width: 1024px)',
+  desktop: '(max-width: 1280px)',
+};
+
+const TEXT_STYLES = {
+  title: {
+    fontSize: '80px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '40px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle: {
+    fontSize: '40px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '24px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle32: {
+    fontSize: '32px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '20px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle20: {
+    fontSize: '20px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '16px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  navList: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  body14: {
+    fontSize: '14px',
+    fontWeight: 500,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '12px',
+      fontWeight: 500,
+      lineHeight: '140%',
+    },
+  },
+};
+
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -76,5 +151,32 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = Object.entries(TEXT_STYLES).reduce(
+        (acc, [key, style]) => {
+          const className = `.text-style-${key}`;
+          const { fontSize, fontWeight, lineHeight, letterSpacing } = style;
+
+          acc[className] = {
+            fontSize,
+            fontWeight: String(fontWeight),
+            lineHeight,
+            ...(letterSpacing && { letterSpacing }),
+          };
+
+          Object.keys(style).forEach((prop) => {
+            if (prop.startsWith('@media')) {
+              acc[className][prop] = style[prop as keyof typeof style];
+            }
+          });
+
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+
+      addUtilities(newUtilities, ['responsive']);
+    },
+  ],
 } satisfies Config;
