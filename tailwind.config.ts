@@ -73,7 +73,13 @@ const TEXT_STYLES = {
       fontWeight: 500,
       lineHeight: '140%',
     },
-  },
+  }, 
+  body12: {
+    fontSize: '12px',
+    fontWeight: 500,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+  }
 };
 
 export default {
