@@ -1,264 +1,157 @@
 'use client';
-import { useState, useEffect } from 'react';
-import SectionWrapper from '../SectionWrapper';
-import { motion, AnimatePresence } from 'framer-motion';
-import { EventItem, SeminarItem, StudyItem } from './Slider';
-import { SEMINARS, STUDIES, EVENTS } from './const';
-import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
-import { AnimatedText } from '@/app/components/Animated/AnimatedText';
 
-// Types
-type SeminarType = string;
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
 
-interface StudyType {
-  title: string;
-  description: string;
-  thumbnail: string;
-  tags?: string[];
-  url?: string;
-}
+const SLIDER_IMAGES = [
+  '/seminar_ssumall2.png',
+  '/seminar_ssumall3.png',
+  '/seminar_sumall1.png',
+  '/event_devcon-2024.jpeg',
+  '/event_devfest-campus.png',
+  '/event_ideathon.jpeg',
+  '/event_solution-challenge.jpeg',
+  '/event_job-fair.jpeg',
+  '/event_senior-seminar.jpeg',
+];
 
-interface EventType {
-  image: string;
-  url: string;
-  imageAlign?: 'center' | 'bottom' | 'top';
-}
-
-type ActivityDataBase = {
-  title: string;
-  description: string;
-  containerWidth: string;
-  smContainerWidth: string;
-};
-
-interface SeminarActivityData extends ActivityDataBase {
-  items: SeminarType[];
-  ItemComponent: typeof SeminarItem;
-  renderItem: (item: SeminarType, index: number) => React.ReactNode;
-}
-
-interface StudyActivityData extends ActivityDataBase {
-  items: StudyType[];
-  ItemComponent: typeof StudyItem;
-  renderItem: (item: StudyType, index: number) => React.ReactNode;
-}
-
-interface EventActivityData extends ActivityDataBase {
-  items: EventType[];
-  ItemComponent: typeof EventItem;
-  renderItem: (item: EventType, index: number) => React.ReactNode;
-}
-
-type ActivityData = SeminarActivityData | StudyActivityData | EventActivityData;
-
-// Constants
-const TITLE_STYLES = `
-  text-[40px] font-normal leading-[110%] block mb-3 
-  lg:text-[48px] 
-  md:text-[32px] 
-  sm:text-[28px]
-`;
-
-const SECTION_STYLES = `
-  w-full h-screen 
-  flex flex-col 
-  justify-center
-  items-center
+const SECTION_CLASSNAMES = `
+  w-full
+  flex flex-col items-center justify-center
+  min-h-screen
   overflow-hidden
+  bg-white
+  py-20
   snap-start
 `;
 
-const HEADER_STYLES = `
-  flex flex-col
-  px-[104px]
-  lg:flex-row
-  md:flex-row
-  sm:flex-col sm:px-[52px]
+const TEXT_CONTAINER = `
+  flex flex-col items-center text-center gap-6 mb-16 z-10 px-4
 `;
 
-const TITLE_CONTAINER_STYLES = `
-  flex-shrink-0 
-  relative 
-  flex flex-col 
-  font-bold
-  text-[32px]
-  lg:text-[48px] lg:pl-[76px]
-  md:text-[42px] md:pl-[52px]
-  sm:text-[32px]
-`;
+// 300x254 aspect ratio
+const IMAGE_WIDTH = 300;
+const IMAGE_HEIGHT = 254;
 
-const PENCIL_STYLES = `
-  absolute 
-  left-[120px] bottom-[0px] w-[100px] h-[100px]
-  lg:w-[100px] lg:h-[100px] lg:left-[250px]
-  md:w-[80px] md:h-[80px] md:left-[200px]
-  sm:w-[60px] sm:h-[60px] sm:left-[150px]
-`;
+const SliderRow = ({ images, reverse = false }: { images: string[], reverse?: boolean }) => {
+  // Duplicate images enough times to cover screen width + buffer for seamless loop
+  const list = [...images, ...images, ...images];
 
-// Components
-const Section = ({
-  title,
-  description,
-  childrenContainerClassName,
-  children,
-}: {
-  title: string;
-  description: string;
-  childrenContainerClassName?: string;
-  children: React.ReactNode;
-}) => {
   return (
-    <div className={SECTION_STYLES}>
-      <div className={HEADER_STYLES}>
-        <SectionWrapper>
-          <div className={TITLE_CONTAINER_STYLES}>
-            <span className="flex">
-              <span className="relative whitespace-nowrap">
-                <AnimatedText text="함께 한 경험" delay={0} />
-                <AnimatedImage
-                  src="/icons/UnderScore_blue.svg"
-                  alt="UnderScore"
-                  width={100}
-                  height={2}
-                  className="absolute left-0 bottom-[-2px] w-full"
-                  delay={0.8}
-                  animationType="drawLine"
-                />
-              </span>
-              <AnimatedText text="은" delay={0.8} />
-            </span>
-            <AnimatedText text="배움의 가치를" delay={1.2} />
-            <AnimatedText text="더합니다." delay={1.8} />
-            <AnimatedImage
-              src="/icons/Pencil.svg"
-              alt="Pencil"
-              width={101}
-              height={101}
-              className={PENCIL_STYLES}
-              delay={2.5}
-              animationType="fadeUp"
+    <div className="flex w-full overflow-hidden relative select-none pointer-events-none">
+      <motion.div
+        className="flex gap-6 pr-6" // Add padding right to match gap
+        initial={{ x: reverse ? '-33.33%' : '0%' }}
+        animate={{ x: reverse ? '0%' : '-33.33%' }}
+        transition={{
+          duration: 30, // Adjust for speed
+          ease: "linear",
+          repeat: Infinity,
+        }}
+        style={{ width: "fit-content" }}
+      >
+        {list.map((src, idx) => (
+          <div
+            key={idx}
+            className="relative shrink-0 overflow-hidden rounded-[20px]"
+            style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT }}
+          >
+            <Image
+              src={src}
+              alt={`Slider image ${idx}`}
+              fill
+              className="object-cover"
             />
           </div>
-        </SectionWrapper>
-        <SectionWrapper>
-          <div className="md:pt-[0px] sm:pt-[50px]">
-            <span className={`text-primary-blue break-keep pt-[100px] md:pt-[0px] sm:pt-[0px] ${TITLE_STYLES} hipi`}>
-              {title}
-            </span>
-            {description}
-          </div>
-        </SectionWrapper>
-      </div>
-
-      <div
-        className={`
-          flex flex-row gap-6 mt-10 h-[280px] self-start pt-[80px]
-          sm:mt-6 sm:h-[180px]
-          ${childrenContainerClassName}
-        `}
-      >
-        {children}
-      </div>
+        ))}
+      </motion.div>
     </div>
   );
 };
 
-// Data
-const ACTIVITIES_DATA: ActivityData[] = [
+const activityVariants = cva(
+  "absolute bottom-0 left-0 h-full -z-0",
   {
-    title: "슈몰세미나",
-    description:
-      '슈몰세미나는 모든 멤버가 최소 한 번 직접 주제를 정하고 발표하는 내부 세미나 활동입니다. 꼭 프로그래밍이 아니어도 여행 경험이나 관심사 등 다양한 주제로 발표할 수 있습니다.',
-    items: [...SEMINARS, ...SEMINARS] as SeminarType[],
-    ItemComponent: SeminarItem,
-    containerWidth: "w-[22824px]",
-    smContainerWidth: "sm:w-[14244px]",
-    renderItem: (item: SeminarType, index: number) => <SeminarItem key={index} youtubeVideoId={item} />
-  } as SeminarActivityData,
+    variants: {
+      variant: {
+        seminar: "bg-secondary-pastel-red",
+        study: "bg-secondary-pastel-blue",
+        community: "bg-secondary-pastel-green",
+      },
+    },
+    defaultVariants: {
+      variant: "seminar",
+    },
+  }
+);
+
+const textVariants = cva(
+  "",
   {
-    title: "스터디 & 프로젝트",
-    description:
-      "내부에서 다양하고 재미있는 주제로 스터디와 프로젝트가 활발하게 개설됩니다. 함께 할 때 가치가 높아지는 것이라면 그 어떤 주제도 환영합니다.",
-    items: [...STUDIES, ...STUDIES] as StudyType[],
-    ItemComponent: StudyItem,
-    containerWidth: "w-[7128px]",
-    smContainerWidth: "sm:w-[4928px]",
-    renderItem: (item: StudyType, index: number) => <StudyItem key={index} {...item} />
-  } as StudyActivityData,
-  {
-    title: "커뮤니티 활동",
-    description:
-      "개방적인 학생 개발자 커뮤니티로서, 정보를 공유하거나 견학, 체험 등의 활동을 함께 합니다. 세미나, 대회, MT, Code Jam 등 한계 없이 다양한 범위의 이벤트를 개최합니다.",
-    items: [...EVENTS, ...EVENTS] as EventType[],
-    ItemComponent: EventItem,
-    containerWidth: "w-[4752px]",
-    smContainerWidth: "sm:w-[3312px]",
-    renderItem: (item: EventType, index: number) => <EventItem key={index} {...item} />
-  } as EventActivityData
-];
+    variants: {
+      variant: {
+        seminar: "text-primary-red",
+        study: "text-primary-blue",
+        community: "text-primary-green",
+      },
+    },
+    defaultVariants: {
+      variant: "seminar",
+    },
+  }
+);
 
+interface ActivitySectionProps extends VariantProps<typeof activityVariants> {
+  activityName: string;
+  description: React.ReactNode;
+}
 
-// Main Component
-const ActivitySection = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-
-  useEffect(() => {
-    const handleStepChange = (e: CustomEvent) => {
-      if (e.detail.sectionId === 'activity-section') {
-        setCurrentStep(e.detail.step);
-      }
-    };
-
-    window.addEventListener('hybrid-scroll-step' as any, handleStepChange as any);
-    return () => {
-      window.removeEventListener('hybrid-scroll-step' as any, handleStepChange as any);
-    };
-  }, []);
-
-  const renderActivityItems = (activity: ActivityData) => {
-    if (!('items' in activity && 'renderItem' in activity)) return null;
-
-    if (activity.title === "슈몰세미나") {
-      return (activity as SeminarActivityData).items.map((item, index) =>
-        (activity as SeminarActivityData).renderItem(item, index)
-      );
-    } else if (activity.title === "스터디 & 프로젝트") {
-      return (activity as StudyActivityData).items.map((item, index) =>
-        (activity as StudyActivityData).renderItem(item, index)
-      );
-    } else {
-      return (activity as EventActivityData).items.map((item, index) =>
-        (activity as EventActivityData).renderItem(item, index)
-      );
-    }
-  };
-
-  const currentActivity = ACTIVITIES_DATA[currentStep];
-
+const ActivitySection = ({ activityName, description, variant }: ActivitySectionProps) => {
   return (
-    <section
-      id="activity-section"
-      data-steps={ACTIVITIES_DATA.length}
-      className="w-full flex flex-col h-screen relative snap-start overflow-hidden"
-    >
-      <AnimatePresence mode="wait">
+    <section id="activity-section" className={SECTION_CLASSNAMES}>
+      {/* Text Section */}
+      <div className={TEXT_CONTAINER}>
         <motion.div
-          key={currentActivity.title}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full h-full"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center"
         >
-          <Section
-            title={currentActivity.title}
-            description={currentActivity.description}
-            childrenContainerClassName={`animate-slide-90 ${currentActivity.containerWidth} ${currentActivity.smContainerWidth}`}
-          >
-            {renderActivityItems(currentActivity)}
-          </Section>
+          <h1 className="text-style-subTitle font-normal max-md:text-[32px]">
+            함께한 경험은
+            <br />
+            <span className="relative inline-block">
+              <span className="relative z-10 font-bold">배움의 가치</span>
+              <motion.span
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                className={cn(activityVariants({ variant }))}
+              />
+            </span> 를 더합니다
+          </h1>
+
+          <div className="flex flex-col items-center gap-4 mt-8">
+            <span className={`text-style-subTitle32 ${cn(textVariants({ variant }))}`}>{activityName}</span>
+            <div className="text-neutral-500 text-[16px] text-center leading-relaxed max-md:text-[14px]">
+              {description}
+            </div>
+          </div>
         </motion.div>
-      </AnimatePresence>
+      </div>
+
+      {/* Slider Section */}
+      <div className="flex flex-col gap-6 w-full max-w-[100vw]">
+        {/* Row 1: Left to Right -> reverse=true */}
+        <SliderRow images={SLIDER_IMAGES} reverse={true} />
+
+        {/* Row 2: Right to Left -> reverse=false */}
+        <SliderRow images={[...SLIDER_IMAGES].reverse()} reverse={false} />
+      </div>
     </section>
   );
 };
