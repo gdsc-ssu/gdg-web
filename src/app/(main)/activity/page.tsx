@@ -1,15 +1,21 @@
-import type { Metadata } from "next";
-import PageContainer from "@/app/components/common/PageContainer";
+'use client';
 
-export const metadata: Metadata = {
-  title: "Activity | GDSC Soongsil",
-  description: "GDSC Soongsil의 다양한 활동들을 소개합니다.",
-};
+import { useState } from 'react';
+import PageContainer from "@/app/components/common/PageContainer";
+import TabBar from "@/app/components/activity/TabBar";
+import TabContent from "@/app/components/activity/TabContent";
+
+const TABS = ['SSUmall Seminar', 'Solution Challenge', 'Community'];
 
 export default function ActivityPage() {
+  const [activeTab, setActiveTab] = useState(TABS[0]);
+
   return (
     <PageContainer>
-      <div className="w-full h-[100px]"></div>
+      <div className="w-full max-w-[1280px]">
+        <TabBar tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
+        <TabContent activeTab={activeTab} />
+      </div>
     </PageContainer>
   );
 }
