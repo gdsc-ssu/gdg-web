@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="w-full max-w-[1280px] flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
 
                 {/* Left: Organization Name */}
-                <div className="text-style-body14 text-color-neutral-grey font-semibold">
+                <div className="text-style-body14 text-neutral-grey font-semibold">
                     GDGoC Soongsil
                 </div>
 
