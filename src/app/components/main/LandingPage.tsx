@@ -2,6 +2,7 @@
 
 import ActivitySection from '@/app/components/main/ActivitySection/ActivitySection';
 import HeroSection from '@/app/components/main/HeroSection/HeroSection';
+import PictureSection from '@/app/components/main/PictureSection/PictureSection';
 
 const ACTIVITIES = [
     {
@@ -52,6 +53,7 @@ const LandingPage = () => {
                     description={activity.description}
                 />
             ))}
+            <PictureSection />
         </main>
     );
 };
