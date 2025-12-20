@@ -8,7 +8,7 @@ interface PageContainerProps {
 export default function PageContainer({ children, className = "" }: PageContainerProps) {
     return (
         <main className={`w-full min-h-screen pt-24 ${className}`}>
-            <section className="max-w-[1280px] mx-auto px-[101px] sm:px-[52px]">
+            <section className="max-w-[1440px] mx-auto px-[101px] sm:px-[52px] flex flex-col items-center">
                 {children}
             </section>
         </main>

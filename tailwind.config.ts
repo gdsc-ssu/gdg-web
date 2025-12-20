@@ -21,7 +21,7 @@ const TEXT_STYLES = {
   },
   subTitle: {
     fontSize: '40px',
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: '140%',
     letterSpacing: '-0.025em',
     [`@media ${MEDIA_QUERY.mobile}`]: {
