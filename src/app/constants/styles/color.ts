@@ -1,27 +1,31 @@
 export const COLORS = {
   primary: {
-    red: "#EA4335",
-    yellow: "#FBBC04",
-    green: "#0F9D58",
-    blue: "#4285F4",
-    yellow200: "#FDE293",
-    ssuBlue: {
-      light: "#62C6C4",
-      medium: "#02A6CB",
-      dark: "#006E93",
+    red: "#EA4336",
+    yellow: "#FCBE03",
+    green: "#34A854",
+    blue: "#4286F5",
+  },
+  secondary: {
+    halftone: {
+      red: "#FF7DAF",
+      blue: "#57CBFF",
+      yellow: "#FFD428",
+      green: "#5DDB6E",
+    },
+    pastel: {
+      red: "#F8D8D8",
+      blue: "#C3ECF6",
+      yellow: "#FFE7A5",
+      green: "#CDF6C5",
     },
   },
-  grayscale: {
+  neutral: {
+    black: "#000000",
+    grey: "#767676",
+    lightGrey: "#D9D9D9",
+    offWhite: "#f0f0f0",
+    black02: "#1e1e1e",
+    background: "#F5F5F5",
     white: "#FFFFFF",
-    gray1: "#F3F5F7",
-    gray2: "#ECEEF0",
-    gray3: "#E2E5E8",
-    gray4: "#D4D8DC",
-    gray5: "#B5B9BD",
-    gray6: "#8E9398",
-    gray7: "#505458",
-    gray8: "#3A3D40",
-    gray9: "#252729",
-    black: "#101112",
   },
 };
