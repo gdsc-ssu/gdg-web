@@ -7,7 +7,7 @@ const SECTION_CLASSNAMES = `
   w-full max-w-[1280px] mt-[60px]
   flex flex-col justify-center items-center
   min-h-[calc(100vh-60px)]
-  px-[20px]
+  px-[48px]
   snap-start
   relative
 `;
@@ -26,7 +26,7 @@ const TEXT_WRAPPER = `
 const HIGHLIGHT_CLASSNAMES = `
   relative inline-block z-0
   after:content-['']
-  after:absolute after:bottom-[5px] after:left-[-5px] after:right-[-5px] after:h-[30px]
+  after:absolute after:bottom-0 after:left-[-5px] after:right-[-5px] after:h-full
   after:-z-10
   after:bg-[#F8D8D8]
 `;
@@ -46,13 +46,13 @@ const HeroSection = () => {
           >
             실력 너머의
             <br />
-            <span className={HIGHLIGHT_CLASSNAMES}>유쾌함</span>으로 세상을
+            <span className={HIGHLIGHT_CLASSNAMES}>유쾌함</span> 으로 세상을
             <br />
             바꿉니다
           </h1>
 
           <div
-            className="text-style-subTitle text-neutral-grey max-md:text-[16px] flex flex-col pt-6"
+            className="text-style-subTitle32 text-neutral-grey max-md:text-[16px] flex flex-col pt-6"
           >
             <p>Google Developer Groups on Campus</p>
             <p>Soongsil University</p>
@@ -75,7 +75,7 @@ const HeroSection = () => {
               ease: "easeInOut"
             }
           }}
-          className="relative w-[420px] h-[260px] max-md:w-[300px] max-md:h-[200px]"
+          className="relative w-[600px] h-[400px] max-md:w-[300px] max-md:h-[200px]"
         >
           <Image
             src="/5th/logo_texture.svg"

@@ -124,7 +124,7 @@ const ActivitySection = ({ activityName, description, variant }: ActivitySection
             함께한 경험은
             <br />
             <span className="relative inline-block">
-              <span className="relative z-10 font-bold">배움의 가치</span>
+              <span className="relative z-10">배움의 가치</span>
               <motion.span
                 initial={{ width: "0%" }}
                 whileInView={{ width: "100%" }}
@@ -145,7 +145,7 @@ const ActivitySection = ({ activityName, description, variant }: ActivitySection
       </div>
 
       {/* Slider Section */}
-      <div className="flex flex-col gap-6 w-full max-w-[100vw]">
+      <div className="flex flex-col gap-6 w-full max-w-[100vw] mt-[120px]">
         {/* Row 1: Left to Right -> reverse=true */}
         <SliderRow images={SLIDER_IMAGES} reverse={true} />
 
