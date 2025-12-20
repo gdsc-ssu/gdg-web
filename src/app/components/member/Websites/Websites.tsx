@@ -9,40 +9,41 @@ interface WebsiteProps {
   instagram: string;
 }
 const Websites = ({ github, linkedin, instagram }: WebsiteProps) => {
+
+  const handleClick = (url: string) => {
+    window.open(url, "_blank");
+  };
   return (
-    <div className="flex flex-row justify-start gap-2">
+    <div className="flex flex-row justify-start gap-4">
       <Link href={github || ""} target="_blank">
-        {github ? (
+        {github && (
           <Image
             src="/icons/github.svg"
             alt="github_logo"
-            width={18}
-            height={18}
-            onClick={() => {
-              location.href = github;
-            }}
+            width={20}
+            height={20}
+            onClick={() => handleClick(github)}
           />
-        ) : (
-          ""
         )}
       </Link>
       <Link href={linkedin || ""} target="_blank">
-        {linkedin ? (
+        {linkedin && (
           <Image
             src="/icons/linkedin.svg"
             alt="linkedin_logo"
-            width={18}
-            height={18}
+            width={20}
+            height={20}
+            onClick={() => handleClick(linkedin)}
           />
-        ) : (
-          ""
         )}
       </Link>
       <Link href={instagram || ""} target="_blank">
-        {instagram ? (
-          <Image src="/icons/ig.svg" alt="instagram" width={18} height={18} />
-        ) : (
-          ""
+        {instagram && (
+          <Image src="/icons/instagram.svg" 
+            alt="instagram" 
+            width={20} 
+            height={20} 
+            onClick={() => handleClick(instagram)} />
         )}
       </Link>
     </div>
