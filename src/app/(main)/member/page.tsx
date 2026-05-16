@@ -5,8 +5,8 @@ import GenerationBar from "@/app/components/member/GenerationBar";
 import { MemberProvider } from "@/app/components/member/contexts/MemberContext";
 
 export const metadata: Metadata = {
-  title: "Member | GDSC Soongsil",
-  description: "GDSC Soongsil의 다양한 활동들을 소개합니다.",
+  title: "Member | GDGoC Soongsil",
+  description: "GDGoC Soongsil의 다양한 활동들을 소개합니다.",
 };
 
 export default function MemberPage() {

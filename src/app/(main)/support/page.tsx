@@ -4,8 +4,8 @@ import SupportButton from '@/app/components/support/SupportButton';
 import SupporterSection from '@/app/components/support/SupporterSection';
 
 export const metadata: Metadata = {
-  title: 'Support | GDSC Soongsil',
-  description: 'GDSC Soongsil의 발전을 위해 도움 주신 분들입니다.',
+  title: 'Support | GDGoC Soongsil',
+  description: 'GDGoC Soongsil의 발전을 위해 도움 주신 분들입니다.',
 };
 
 
