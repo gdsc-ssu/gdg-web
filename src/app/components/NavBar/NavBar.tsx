@@ -1,160 +1,100 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function NavBar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkIsMobile);
-    };
-  }, []);
+  const NAV_LINKS = [
+    { href: '/about', label: 'About' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/member', label: 'Member' },
+    { href: '/support', label: 'Support' },
+  ];
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      if (isMenuOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }
-  }, [isMenuOpen]);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const getActiveColorClass = (href: string) => {
+    if (href === '/blog') return 'text-primary-blue';
+    if (href === '/member') return 'text-primary-green';
+    if (href === '/support') return 'text-primary-yellow';
+    return 'text-primary-red';
   };
-  
-  return (
-    <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center
-    max-h-[60px] py-[10px] px-[20px] mx-auto
-    lg:backdrop-blur-md
-    lg:bg-white/80
-    md:backdrop-blur-md
-    md:bg-whtie/80
-    sm:bg-white
-    ">
-      <div className="w-full h-full flex max-w-[1280px] justify-between items-center">
-        <div className="shrink-0">
-          <Link href="/">
-            <div className="
-              flex justify-center items-center
-              w-[50px] h-[50px]
-              lg:w-[50px] lg:h-[50px]
-              md:w-[40px] md:h-[40px]
-              sm:w-[30px] sm:h-[30px]
-            ">
-              <Image 
-                src="/icons/Logo.svg" 
-                alt="Logo" 
-                width={100} 
-                height={100} 
-                className="w-full h-full object-contain"
-              />
-            </div>
-          </Link>
-        </div>
 
-        {isMobile ? (
-          <div className="cursor-pointer" onClick={toggleMenu}>
-            <Image 
-              src="/icons/Menu.svg" 
-              alt="Menu" 
-              width={24} 
-              height={24} 
-            />
-          </div>
-        ) : (
-          <nav className="
-            flex items-center gap-[15px]
-            lg:gap-[15px]
-            md:gap-[10px]
-            sm:gap-[5px]
-          ">
-            {[
-              { href: '/', label: 'Landing' },
-              { href: '/activities', label: 'Activities' },
-              { href: '/peoples', label: 'Peoples' },
-              { href: '/support', label: 'Support' }
-            ].map(({ href, label }) => (
+  return (
+    <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center h-[60px] bg-white border-b border-gray-200">
+      <div className="w-full h-full flex justify-between items-center px-[5%]">
+        <Link href="/" className="shrink-0 flex items-center" onClick={() => setIsMenuOpen(false)}>
+          <Image src="/5th/logo.svg" alt="GDG Logo" width={42} height={42} priority />
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="flex items-center gap-[60px] max-md:gap-[30px] max-sm:gap-[20px] max-[600px]:hidden">
+          {NAV_LINKS.map(({ href, label }) => {
+            const isActive = pathname === href;
+            const activeColorClass = getActiveColorClass(href);
+
+            return (
               <Link key={href} href={href}>
                 <span className={`
-                  text-[16px] font-bold leading-[110%]
-                  ${pathname === href ? 'text-primary-black' : 'text-grayscale-gray5'}
-                  sm:text-[12px]
-                  hover:text-primary-black transition-colors
-                `}>
+                text-[16px] font-semibold leading-[140%] tracking-[-0.025em]
+                max-md:text-[14px]
+                ${isActive ? activeColorClass : 'text-neutral-black hover:text-black'}
+                transition-colors
+              `}>
                   {label}
                 </span>
               </Link>
-            ))}
-          </nav>
-        )}
-        
-        {/* 모바일 메뉴 사이드바 */}
-        {isMobile && (
-          <div className={`
-            fixed top-0 right-0 bottom-0
-            w-[250px] bg-white shadow-lg
-            transform transition-transform duration-300 ease-in-out z-[10000]
-            ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-            flex flex-col p-6 pt-[100px]
-          `}>
-            <div 
-              className="absolute top-6 right-6 cursor-pointer" 
-              onClick={toggleMenu}
-            >
-              <Image 
-                src="/icons/Close.svg" 
-                alt="Close" 
-                width={20} 
-                height={20} 
-              />
-            </div>
-            
-            <div className="flex flex-col gap-6">
-              {[
-                { href: '/', label: 'Landing' },
-                { href: '/activities', label: 'Activities' },
-                { href: '/peoples', label: 'Peoples' },
-                { href: '/support', label: 'Support' }
-              ].map(({ href, label }) => (
-                <Link key={href} href={href} onClick={() => setIsMenuOpen(false)}>
+            )
+          })}
+        </nav>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          className="hidden max-[600px]:flex items-center justify-center p-2 text-neutral-black"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          )}
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        {isMenuOpen && (
+          <div className="fixed inset-0 top-[60px] bg-white z-[9997] flex flex-col items-center pt-8 gap-8 min-[600px]:hidden">
+            {NAV_LINKS.map(({ href, label }) => {
+              const isActive = pathname === href;
+              const activeColorClass = getActiveColorClass(href);
+
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full text-center py-2"
+                >
                   <span className={`
-                    text-[16px] font-bold leading-[110%]
-                    ${pathname === href ? 'text-primary-black' : 'text-grayscale-gray5'}
-                    hover:text-primary-black transition-colors
+                    text-[20px] font-semibold
+                    ${isActive ? activeColorClass : 'text-neutral-black'}
                   `}>
                     {label}
                   </span>
                 </Link>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        )}
-        
-        {/* 배경 오버레이 */}
-        {isMenuOpen && isMobile && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-[9000]"
-            onClick={toggleMenu}
-          />
         )}
       </div>
     </div>

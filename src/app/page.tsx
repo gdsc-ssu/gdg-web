@@ -1,16 +1,12 @@
-import ActivitySection from '@/app/components/main/ActivitySection';
-import BrandSection from '@/app/components/main/BrandSection';
-import HeroSection from '@/app/components/main/HeroSection';
-import PictureSection from '@/app/components/main/PictureSection';
-import ScrollGuideSection from '@/app/components/main/ScrollGuideSection';
+import LandingPage from '@/app/components/main/LandingPage';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'GDSC Soongsil University',
-  description: 'GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
+  title: 'GDGoC Soongsil University',
+  description: 'GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
   openGraph: {
-    title: 'GDSC Soongsil University',
-    description: 'GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
+    title: 'GDGoC Soongsil University',
+    description: 'GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
     url: 'https://gdscsoongsil.pages.dev',
     images: [
       {
@@ -24,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'GDSC Soongsil University',
-    description: 'GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
+    title: 'GDGoC Soongsil University',
+    description: 'GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.',
     images: ['https://gdscsoongsil.pages.dev/opengraph.png'],
   },
   icons: {
@@ -35,13 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <main className="flex flex-col justify-center items-center w-full min-h-screen">
-      <HeroSection />
-      <ScrollGuideSection />
-      <BrandSection />
-      <ActivitySection />
-      <PictureSection />
-    </main>
-  );
+  return <LandingPage />;
 } 

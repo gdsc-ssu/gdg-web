@@ -1,6 +1,87 @@
 import type { Config } from "tailwindcss";
 import { COLORS } from "./src/app/constants/styles";
 
+const MEDIA_QUERY = {
+  mobile: '(max-width: 768px)',
+  tablet: '(max-width: 1024px)',
+  desktop: '(max-width: 1280px)',
+};
+
+const TEXT_STYLES = {
+  title: {
+    fontSize: '80px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '40px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle: {
+    fontSize: '40px',
+    fontWeight: 700,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '24px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle32: {
+    fontSize: '32px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '20px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  subTitle20: {
+    fontSize: '20px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '16px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  navList: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '140%',
+    },
+  },
+  body14: {
+    fontSize: '14px',
+    fontWeight: 500,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+    [`@media ${MEDIA_QUERY.mobile}`]: {
+      fontSize: '12px',
+      fontWeight: 500,
+      lineHeight: '140%',
+    },
+  }, 
+  body12: {
+    fontSize: '12px',
+    fontWeight: 500,
+    lineHeight: '140%',
+    letterSpacing: '-0.025em',
+  }
+};
+
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -24,25 +105,29 @@ export default {
           green: COLORS.primary.green,
           blue: COLORS.primary.blue,
           red: COLORS.primary.red,
-          yellow200: COLORS.primary.yellow200,
-          "ssu-blue": {
-            light: COLORS.primary.ssuBlue.light,
-            medium: COLORS.primary.ssuBlue.medium,
-            dark: COLORS.primary.ssuBlue.dark,
+        },
+        secondary: {
+          halftone: {
+            red: COLORS.secondary.halftone.red,
+            blue: COLORS.secondary.halftone.blue,
+            yellow: COLORS.secondary.halftone.yellow,
+            green: COLORS.secondary.halftone.green,
+          },
+          pastel: {
+            red: COLORS.secondary.pastel.red,
+            blue: COLORS.secondary.pastel.blue,
+            yellow: COLORS.secondary.pastel.yellow,
+            green: COLORS.secondary.pastel.green,
           },
         },
-        grayscale: {
-          white: COLORS.grayscale.white,
-          gray1: COLORS.grayscale.gray1,
-          gray2: COLORS.grayscale.gray2,
-          gray3: COLORS.grayscale.gray3,
-          gray4: COLORS.grayscale.gray4,
-          gray5: COLORS.grayscale.gray5,
-          gray6: COLORS.grayscale.gray6,
-          gray7: COLORS.grayscale.gray7,
-          gray8: COLORS.grayscale.gray8,
-          gray9: COLORS.grayscale.gray9,
-          black: COLORS.grayscale.black,
+        neutral: {
+          black: COLORS.neutral.black,
+          grey: COLORS.neutral.grey,
+          "light-grey": COLORS.neutral.lightGrey,
+          "off-white": COLORS.neutral.offWhite,
+          "black-02": COLORS.neutral.black02,
+          background: COLORS.neutral.background,
+          white: COLORS.neutral.white,
         },
       },
       keyframes: {
@@ -72,5 +157,33 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = Object.entries(TEXT_STYLES).reduce(
+        (acc, [key, style]) => {
+          const className = `.text-style-${key}`;
+          const { fontSize, fontWeight, lineHeight, letterSpacing } = style;
+
+          acc[className] = {
+            fontSize,
+            fontWeight: String(fontWeight),
+            lineHeight,
+            ...(letterSpacing && { letterSpacing }),
+          };
+
+          Object.keys(style).forEach((prop) => {
+            if (prop.startsWith('@media')) {
+              acc[className][prop] = style[prop as keyof typeof style];
+            }
+          });
+
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+
+      addUtilities(newUtilities, ['responsive']);
+    },
+  ],
 } satisfies Config;

@@ -7,8 +7,8 @@ interface AnimatedTextProps {
   className?: string;
 }
 
-export const AnimatedText = ({ 
-  text, 
+export const AnimatedText = ({
+  text,
   delay = 0,
   className = "inline-flex"
 }: AnimatedTextProps) => {
@@ -24,7 +24,7 @@ export const AnimatedText = ({
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{
             duration: 0.3,
-            delay: isInView ? delay + (index * 0.1) : 0,
+            delay: isInView ? delay + (index * 0.08) : 0,
             ease: "easeOut"
           }}
           className="whitespace-pre"

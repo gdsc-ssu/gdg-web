@@ -1,0 +1,25 @@
+# Line ending 설정
+* text=auto
+
+# 텍스트 파일은 LF로 통일
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# SVG는 텍스트이지만 line ending 변환 없이 유지
+*.svg text eol=lf
+
+# 바이너리 파일
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+

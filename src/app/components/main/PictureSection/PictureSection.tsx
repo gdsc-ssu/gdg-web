@@ -1,175 +1,67 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { AnimatedText } from '@/app/components/Animated/AnimatedText';
-import { AnimatedImage } from '@/app/components/Animated/AnimatedImage';
+import { motion } from 'framer-motion';
+import SliderRow from '@/app/components/common/SliderRow';
 
-interface PictureItemProps {
-  image: string;
-  text: string;
-  degree: string;
-  index: number;
-  isLargeScreen: boolean;
-}
-
-const PICTURES = [
-  {
-    image: '/mt.png',
-    text: '☆ 2기 MT',
-    degree: '-15deg',
-  },
-  {
-    image: '/ideathon.jpeg',
-    text: '☆ 2기 아이디어톤',
-    degree: '0deg',
-  },
-  {
-    image: '/festival.jpg',
-    text: '☆ 1기 Festival',
-    degree: '16deg',
-  },
-  {
-    image: '/3rd-mt.jpeg',
-    text: '☆ 3기 MT',
-    degree: '-2deg',
-  },
+// Using existing images as placeholders since I cannot extract from screenshot
+const SLIDER_IMAGES = [
+  '/mt.png',
+  '/ideathon.jpeg',
+  '/festival.jpg',
+  '/3rd-mt.jpeg',
+  '/event_solution-challenge.jpeg',
+  '/event_devfest-campus.png',
 ];
 
-const STYLES = {
-  pictureContainer: `
-    relative flex items-center
-    gap-[32px]
-    lg:gap-[24px]
-    md:gap-[20px]
-    sm:gap-[16px]
-  `,
-  heading: `
-    text-[32px] font-bold leading-[120%] text-center mb-[128px]
-    lg:text-[48px] lg:mb-[53px]
-    md:text-[40px] md:mb-[30px]
-    sm:text-[32px] sm:mb-[15px]
-  `,
-  pictureItem: (index: number) => `
-    relative w-[300px] h-[400px]
-    lg:w-[240px] lg:h-[320px]
-    md:w-[200px] md:h-[267px]
-    sm:w-[160px] sm:h-[213px]
-    ${index === 0 ? 'z-40' : 'z-30'}
-  `,
-  imageContainer: `
-    relative w-full h-[85%] rounded-[10px] overflow-hidden 
-    shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)]
-  `,
-  textContainer: `
-    absolute bottom-0 w-full h-[15%] bg-grayscale-white
-    flex items-center justify-center rounded-[10px]
-    shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)]
-  `,
-  text: `
-    text-primary-yellow text-[24px] font-normal leading-[110%] hipi
-    lg:text-[20px]
-    md:text-[16px]
-    sm:text-[14px]
-  `,
-  decoration: `
-    absolute -rotate-[30deg] w-[80px] h-[30px] bg-[#FFE4E4]
-    -right-5 top-10
-    lg:w-[64px] lg:h-[24px] lg:top-8
-    md:w-[53px] md:h-[20px] md:top-7
-    sm:w-[43px] sm:h-[16px] sm:top-5
-  `,
-  characterImage: `
-    absolute -right-[101px] bottom-0
-    w-[101px] h-[101px] text-primary-yellow
-    lg:w-[100px] lg:h-[100px] lg:-right-[150px]
-    md:w-[80px] md:h-[80px] md:-right-[120px]
-    sm:w-[60px] sm:h-[60px] sm:-right-[90px]
-  `
-};
+const SECTION_CLASSNAMES = `
+  w-full
+  flex flex-col items-center justify-center
+  min-h-screen
+  overflow-hidden
+  bg-white
+  py-20
+  snap-start
+`;
 
-const PictureItem = ({ image, text, degree, index, isLargeScreen }: PictureItemProps) => (
-  <div
-    className={STYLES.pictureItem(index)}
-    style={{ transform: `rotate(${isLargeScreen ? degree : '0deg'})` }}
-  >
-    <div className={STYLES.imageContainer}>
-      <Image
-        className="object-cover"
-        src={image}
-        alt="activity picture"
-        fill
-      />
-    </div>
-    <div className={STYLES.textContainer}>
-      <span className={STYLES.text}>{text}</span>
-    </div>
-    <div className={STYLES.decoration} />
-  </div>
-);
-
-const HeadingSection = () => (
-  <span className={STYLES.heading}>
-    <span className="relative inline-block">
-      <span className="whitespace-nowrap">
-        <AnimatedText text="소중한 인연" delay={0} />
-        <AnimatedImage
-          src="/icons/UnderScore.svg"
-          alt="under score"
-          width={100}
-          height={100}
-          className="absolute left-0 bottom-[-2px] w-full text-primary-yellow"
-          delay={0.8}
-          animationType="drawLine"
-        />
-        <AnimatedImage
-          src="/icons/Character.svg"
-          alt="character"
-          width={100}
-          height={100}
-          className={STYLES.characterImage}
-          delay={1.2}
-          animationType="fadeUp"
-        />
-      </span>
-    </span>
-    <AnimatedText text="과" delay={1.5} />
-    <br />
-    <AnimatedText text="건강한 커뮤니티를" delay={1.8} />
-    <br />
-    <AnimatedText text="만듭니다." delay={2.4} />
-  </span>
-);
+const TEXT_CONTAINER = `
+  flex flex-col items-center text-center gap-6 mb-16 z-10 px-4
+`;
 
 const PictureSection = () => {
-  const [isLargeScreen, setIsLargeScreen] = useState(true);
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024);
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-center py-10">
-      <HeadingSection />
-      <div className={`
-        ${STYLES.pictureContainer}
-        ${isLargeScreen ? 'flex-row flex-nowrap' : 'flex-wrap justify-center max-w-[450px]'}
-        pt-[50px]
-      `}>
-        {PICTURES.map((picture, index) => (
-          <PictureItem 
-            key={index} 
-            {...picture} 
-            index={index} 
-            isLargeScreen={isLargeScreen}
-          />
-        ))}
+    <section id="picture-section" className={SECTION_CLASSNAMES}>
+      {/* Text Section */}
+      <div className={TEXT_CONTAINER}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center"
+        >
+          <h1 className="text-style-subTitle font-normal max-md:text-[32px]">
+            소중한 인연과
+            <br />
+            <span className="relative inline-block">
+              <span className="relative z-10 font-bold">건강한 커뮤니티</span>
+              <motion.span
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                className="absolute bottom-0 left-0 h-full bg-secondary-pastel-yellow -z-0"
+              />
+            </span> 를
+            <br />
+            만듭니다
+          </h1>
+        </motion.div>
+      </div>
+
+      {/* Slider Section */}
+      <div className="flex flex-col gap-6 mt-[120px] mb-[400px] w-full max-w-[100vw]">
+        {/* Row 1: Left to Right -> reverse=true */}
+        <SliderRow images={SLIDER_IMAGES} reverse={true} staggerOdd={true} />
       </div>
     </section>
   );

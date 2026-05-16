@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import NavBar from "@/app/components/NavBar";
 import "@/app/globals.css";
+import Footer from "@/app/components/common/Footer";
 
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GDSC Soongsil University",
-  description: "GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
+  title: "GDGoC Soongsil University",
+  description: "GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
   openGraph: {
-    title: "GDSC Soongsil University",
-    description: "GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
+    title: "GDGoC Soongsil University",
+    description: "GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
     url: "https://gdscsoongsil.pages.dev",
     images: [
       {
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "GDSC Soongsil University",
-    description: "GDSC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
+    title: "GDGoC Soongsil University",
+    description: "GDGoC Soongsil University는 서로의 실력과 무관하게 시너지를 발휘하는 학생 개발자 커뮤니티입니다.",
     images: ["https://gdscsoongsil.pages.dev/opengraph.png"],
   },
   icons: {
@@ -44,6 +45,7 @@ export default function RootLayout({
       <body className={geist.className}>
         <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );

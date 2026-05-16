@@ -1,76 +1,91 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const SECTION_CLASSNAMES = `
-  w-full max-w-[1280px] m-auto
-  p-[50px] mt-[101px]
-  lg:p-[101px]
-  md:p-[101px]
-  sm:p-[52px]
+  w-full mt-[60px]
+  flex flex-col justify-center items-center
+  min-h-[calc(100vh-60px)]
+  px-[48px]
+  snap-start
+  relative
 `;
 
-const TEXT_CLASSNAMES = `
-  text-[120px] leading-[90%] font-black m-0
-  lg:text-[96px]
-  md:text-[80px]
-  sm:text-[12vw]
-  max-sm:text-[12vw]
-  select-none
+const CONTENT_WRAPPER = `
+  flex w-full justify-between items-center
+  max-lg:flex-col-reverse max-lg:gap-10
+  z-10
+`;
+
+const TEXT_WRAPPER = `
+  flex flex-col gap-6
+  max-lg:items-center max-lg:text-center
+`;
+
+const HIGHLIGHT_CLASSNAMES = `
+  relative inline-block z-0
+  after:content-['']
+  after:absolute after:bottom-0 after:left-[-5px] after:right-[-5px] after:h-full
+  after:-z-10
+  after:bg-[#F8D8D8]
 `;
 
 const HeroSection = () => {
-  const textVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.2,
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
   return (
     <section className={SECTION_CLASSNAMES}>
-      <p className={TEXT_CLASSNAMES}>
-        <motion.span 
-          className="text-grayscale-gray5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+      <div className={CONTENT_WRAPPER}>
+        <motion.div
+          className={TEXT_WRAPPER}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.span custom={0} variants={textVariants}>
-            Google
+          <h1
+            className="text-style-title text-black max-md:text-[40px]"
+          >
+            실력 너머의
             <br />
-          </motion.span>
-          <motion.span custom={1} variants={textVariants}>
-            Developer
+            <span className={HIGHLIGHT_CLASSNAMES}>유쾌함</span> 으로 세상을
             <br />
-          </motion.span>
-          <motion.span custom={2} variants={textVariants}>
-            Group on
-            <br />
-          </motion.span>
-          <motion.span custom={3} variants={textVariants}>
-            Campus
-            <br />
-          </motion.span>
-        </motion.span>
-        <motion.span 
-          custom={4} 
-          variants={textVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+            바꿉니다
+          </h1>
+
+          <div
+            className="text-style-subTitle32 text-neutral-grey max-md:text-[16px] flex flex-col pt-6"
+          >
+            <p>Google Developer Groups on Campus</p>
+            <p>Soongsil University</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: [0, -15, 0]
+          }}
+          transition={{
+            opacity: { duration: 0.8, delay: 0.2, ease: "easeOut" },
+            scale: { duration: 0.8, delay: 0.2, ease: "easeOut" },
+            y: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+          className="relative w-[600px] h-[400px] max-md:w-[300px] max-md:h-[200px]"
         >
-          Soongsil
-          <br />
-          University
-        </motion.span>
-      </p>
+          <Image
+            src="/5th/logo_texture.svg"
+            alt="GDG Logo Texture"
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+      </div>
     </section>
   );
 };
