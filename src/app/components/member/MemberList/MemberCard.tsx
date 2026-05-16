@@ -7,7 +7,6 @@ import { Member } from "@/types/member";
     pictureUrl,
     name,
     websites,
-    part,
     comment,
     role,
   }: Member) {

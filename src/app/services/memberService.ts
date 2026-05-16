@@ -50,11 +50,11 @@ export class MemberService {
     }
 
     // 헤더 추출
-    const headers = values[0].map((h: any) => String(h).toLowerCase().trim());
+    const headers = values[0].map((h: unknown) => String(h).toLowerCase().trim());
 
     // 데이터 변환
     const drive = this.library.getDriveClient();
-    const memberPromises = values.slice(1).map(async (row: any[], index: number) => {
+    const memberPromises = values.slice(1).map(async (row: unknown[], index: number) => {
       const paddedRow = this.padRow(row, headers.length);
       return this.transformRowToMember(paddedRow, headers, drive, generation, index);
     });
@@ -65,7 +65,7 @@ export class MemberService {
   /**
    * 행을 헤더 길이에 맞게 패딩
    */
-  private padRow(row: any[], targetLength: number): any[] {
+  private padRow(row: unknown[], targetLength: number): unknown[] {
     const paddedRow = [...row];
     while (paddedRow.length < targetLength) {
       paddedRow.push("");
@@ -77,15 +77,15 @@ export class MemberService {
    * Google Sheets 행을 Member 도메인 모델로 변환
    */
   private async transformRowToMember(
-    row: any[],
+    row: unknown[],
     headers: string[],
     drive: ReturnType<typeof this.library.getDriveClient>,
     generation: string,
     rowIndex: number
   ): Promise<Member> {
-    const getValue = (headerName: string) => {
+    const getValue = (headerName: string): string => {
       const index = headers.indexOf(headerName.toLowerCase());
-      return index >= 0 ? (row[index] || "") : "";
+      return index >= 0 ? String(row[index] || "") : "";
     };
 
     // Part 필드 처리 (슬래시로 구분된 값들을 정리)

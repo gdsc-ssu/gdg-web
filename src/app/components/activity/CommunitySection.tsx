@@ -2,12 +2,6 @@
 
 import EventSection from "./event/EventSection";
 
-const COMMUNITY_IMAGES = [
-    '/mt.png',
-    '/festival.jpg',
-    '/3rd-mt.jpeg',
-];
-
 const CommunitySection = () => {
     return (
         <div className="flex flex-col items-center gap-10 mt-[170px] w-full animate-fade-in">

@@ -35,11 +35,11 @@ export async function GET() {
           "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error fetching generations:", err);
     const errorResponse = createErrorResponse(
       "Failed to fetch generations",
-      err.message
+      err instanceof Error ? err.message : String(err)
     );
     return NextResponse.json(errorResponse, { status: errorResponse.status });
   }

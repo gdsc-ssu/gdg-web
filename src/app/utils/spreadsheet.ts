@@ -112,9 +112,9 @@ export async function convertGoogleDriveUrl(
     if (file.data.webContentLink) {
       return file.data.webContentLink;
     }
-  } catch (err: any) {
-    const isApiDisabledError = err?.message?.includes('has not been used') || 
-                                err?.message?.includes('is disabled');
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : '';
+    const isApiDisabledError = message.includes('has not been used') || message.includes('is disabled');
     
     if (!isApiDisabledError) {
       console.warn(`Failed to get Google Drive file info for ${fileId}:`, err);
