@@ -12,7 +12,7 @@ export default function ActivityPage() {
 
   return (
     <PageContainer>
-      <div className="w-full max-w-[1280px]">
+      <div className="w-full">
         <TabBar tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
         <TabContent activeTab={activeTab} />
       </div>

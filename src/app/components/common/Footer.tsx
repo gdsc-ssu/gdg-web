@@ -10,8 +10,8 @@ const SOCIAL_LINKS = [
 
 const Footer = () => {
     return (
-        <footer className="w-full flex justify-center items-center py-10 px-[48px] bg-white text-neutral-grey text-[12px] font-medium border-t border-neutral-light-grey">
-            <div className="w-full max-w-[1280px] flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
+        <footer className="w-full flex justify-center items-center py-10 px-[5%] bg-white text-neutral-grey text-[12px] font-medium border-t border-neutral-light-grey">
+            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
 
                 {/* Left: Organization Name */}
                 <div className="text-style-body14 text-neutral-grey font-semibold">

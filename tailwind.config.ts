@@ -158,6 +158,7 @@ export default {
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     function ({ addUtilities }: { addUtilities: any }) {
       const newUtilities = Object.entries(TEXT_STYLES).reduce(
         (acc, [key, style]) => {

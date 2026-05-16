@@ -11,13 +11,13 @@ export default function NavBar() {
 
   const NAV_LINKS = [
     { href: '/about', label: 'About' },
-    { href: '/activity', label: 'Activity' },
+    { href: '/blog', label: 'Blog' },
     { href: '/member', label: 'Member' },
     { href: '/support', label: 'Support' },
   ];
 
   const getActiveColorClass = (href: string) => {
-    if (href === '/activity') return 'text-primary-blue';
+    if (href === '/blog') return 'text-primary-blue';
     if (href === '/member') return 'text-primary-green';
     if (href === '/support') return 'text-primary-yellow';
     return 'text-primary-red';
@@ -25,7 +25,7 @@ export default function NavBar() {
 
   return (
     <div className="w-full fixed top-0 left-0 right-0 z-[9998] flex justify-center items-center h-[60px] bg-white border-b border-gray-200">
-      <div className="w-full h-full flex max-w-[1280px] justify-between items-center px-5">
+      <div className="w-full h-full flex justify-between items-center px-[5%]">
         <Link href="/" className="shrink-0 flex items-center" onClick={() => setIsMenuOpen(false)}>
           <Image src="/5th/logo.svg" alt="GDG Logo" width={42} height={42} priority />
         </Link>

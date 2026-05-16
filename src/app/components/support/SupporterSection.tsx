@@ -3,14 +3,7 @@
 import SupporterCard from "./SupporterCard";
 import { motion } from "framer-motion";
 
-const MOCK_EVENTS = [
-    {
-        name: "지선의",
-        position: "lead",
-        description: "가평 캠프",
-        imageUrl: "/mt.png"
-    },
-];
+const MOCK_EVENTS: { name: string; position: string; description: string; imageUrl: string }[] = [];
 
 const SupporterSection = () => {
     return (

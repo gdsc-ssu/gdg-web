@@ -10,7 +10,6 @@ const SECTION_CLASSNAMES = `
   flex flex-col
   justify-center
   items-center
-  max-w-[1280px]
   px-[16px]
   lg:flex-row
   md:flex-row

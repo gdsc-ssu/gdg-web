@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const SECTION_CLASSNAMES = `
-  w-full max-w-[1280px] mt-[60px]
+  w-full mt-[60px]
   flex flex-col justify-center items-center
   min-h-[calc(100vh-60px)]
   px-[48px]
