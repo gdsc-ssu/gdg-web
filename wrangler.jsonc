@@ -2,6 +2,9 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
 	"name": "gdg-web",
+	"build": {
+		"command": "pnpm run build:cf"
+	},
 	"compatibility_date": "2026-05-18",
 	"compatibility_flags": [
 		"nodejs_compat",
