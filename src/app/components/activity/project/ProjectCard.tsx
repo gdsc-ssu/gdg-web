@@ -1,7 +1,6 @@
 'use client';
 
 import Image from "next/image";
-import { cn } from "@/utils/cn";
 
 interface ProjectCardProps {
     projectName: string;

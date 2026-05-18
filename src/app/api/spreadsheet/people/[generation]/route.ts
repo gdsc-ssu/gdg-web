@@ -36,14 +36,12 @@ export async function GET(
           "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error fetching people:", err);
 
-    const status = err.message.includes("Invalid generation") ? 404 : 500;
-    const errorResponse = createErrorResponse(
-      "Failed to fetch people",
-      err.message
-    );
+    const message = err instanceof Error ? err.message : String(err);
+    const status = message.includes("Invalid generation") ? 404 : 500;
+    const errorResponse = createErrorResponse("Failed to fetch people", message);
 
     return NextResponse.json(errorResponse, { status });
   }

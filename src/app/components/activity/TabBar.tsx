@@ -27,7 +27,7 @@ const TabBar = ({ tabs, activeTab, onTabChange }: TabBarProps) => {
         <div className="w-full flex justify-between gap-4 max-sm:gap-2 border-b-0">
             {/* Note: The image shows gaps between the bottom borders of tabs, so we don't put a border on the container.
           Instead, we put border on individual items. */}
-            {tabs.map((tab, index) => {
+            {tabs.map((tab) => {
                 const isActive = tab === activeTab;
                 const activeTextColor = TEXT_COLORS[activeIndex] || TEXT_COLORS[0];
                 const activeBgColor = BG_COLORS[activeIndex] || BG_COLORS[0];

@@ -54,13 +54,16 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: true,
-  experimental: {
-    turbo: {
-      rules: {
-        "*.svg": ["@svgr/webpack"],
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
       },
     },
   },
 };
 
 export default nextConfig;
+
+import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());
