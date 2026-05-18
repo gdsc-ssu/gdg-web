@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import PageContainer from '@/app/components/common/PageContainer'
 import { getAllPosts } from '@/lib/blog'
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Blog | GDGoC Soongsil',
   description: 'GDGoC Soongsil 멤버들의 이야기를 담은 블로그입니다.',
