@@ -45,6 +45,9 @@ next-env.d.ts
 
 #agent
 .agent/*
+# Generated files (auto-created by scripts/generate-posts.mjs)
+/src/generated/
+
 # OpenNext
 .open-next
 
