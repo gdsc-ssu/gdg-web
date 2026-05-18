@@ -16,5 +16,5 @@ export function getAllPosts(): PostMeta[] {
 export function getPostBySlug(slug: string) {
   const post = posts.find((p) => p.slug === slug)
   if (!post) throw new Error(`Post not found: ${slug}`)
-  return { meta: { slug, ...post.meta } as PostMeta, content: post.content }
+  return { meta: { slug, ...post.meta } as PostMeta, html: post.html }
 }

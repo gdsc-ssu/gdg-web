@@ -2,6 +2,10 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import matter from 'gray-matter'
+import { evaluate } from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime'
+import { renderToStaticMarkup } from 'react-dom/server'
+import React from 'react'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const postsDir = join(__dirname, '../content/posts')
@@ -10,16 +14,28 @@ const outputPath = join(outputDir, 'posts.ts')
 
 if (!existsSync(outputDir)) mkdirSync(outputDir, { recursive: true })
 
+async function compileToHtml(mdxContent) {
+  const { default: MDXContent } = await evaluate(mdxContent, {
+    ...runtime,
+    baseUrl: import.meta.url,
+  })
+  return renderToStaticMarkup(React.createElement(MDXContent))
+}
+
 const posts = existsSync(postsDir)
-  ? readdirSync(postsDir)
-      .filter((f) => f.endsWith('.mdx'))
-      .map((filename) => {
-        const slug = filename.replace(/\.mdx$/, '')
-        const raw = readFileSync(join(postsDir, filename), 'utf-8')
-        const { data, content } = matter(raw)
-        return { slug, meta: data, content }
-      })
-      .sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime())
+  ? await Promise.all(
+      readdirSync(postsDir)
+        .filter((f) => f.endsWith('.mdx'))
+        .map(async (filename) => {
+          const slug = filename.replace(/\.mdx$/, '')
+          const raw = readFileSync(join(postsDir, filename), 'utf-8')
+          const { data, content } = matter(raw)
+          const html = await compileToHtml(content)
+          return { slug, meta: data, html }
+        }),
+    ).then((arr) =>
+      arr.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime()),
+    )
   : []
 
 writeFileSync(
@@ -28,7 +44,7 @@ writeFileSync(
 export interface PostEntry {
   slug: string
   meta: Record<string, unknown>
-  content: string
+  html: string
 }
 
 export const posts: PostEntry[] = ${JSON.stringify(posts, null, 2)}
