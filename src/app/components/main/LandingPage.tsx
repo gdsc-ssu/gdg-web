@@ -4,6 +4,17 @@ import ActivitySection from '@/app/components/main/ActivitySection/ActivitySecti
 import HeroSection from '@/app/components/main/HeroSection/HeroSection';
 import PictureSection from '@/app/components/main/PictureSection/PictureSection';
 
+const STUDY_PROJECT_IMAGES = [
+    '/project_bird_sweeper.webp',
+    '/project_ANBD.webp',
+    '/project_baby24.webp',
+    '/project_beyond-b.webp',
+    '/project_litera-sea.webp',
+    '/project_Path-to-Pet.webp',
+    '/project_weve.webp',
+    '/project_ssung_delivery.webp'
+];
+
 const ACTIVITIES = [
     {
         variant: "seminar" as const,
@@ -19,6 +30,8 @@ const ACTIVITIES = [
     {
         variant: "study" as const,
         activityName: "스터디&프로젝트",
+        images: STUDY_PROJECT_IMAGES,
+        href: 'https://github.com/gdsc-ssu',
         description: (
             <p>
                 내부에서 다양하고 재미있는 주제로 스터디와 프로젝트가 활발하게 개설됩니다.
@@ -51,6 +64,8 @@ const LandingPage = () => {
                     variant={activity.variant}
                     activityName={activity.activityName}
                     description={activity.description}
+                    images={'images' in activity ? activity.images : undefined}
+                    href={'href' in activity ? activity.href : undefined}
                 />
             ))}
             <PictureSection />
