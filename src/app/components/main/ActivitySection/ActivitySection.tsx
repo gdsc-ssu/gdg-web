@@ -13,8 +13,6 @@ const SLIDER_IMAGES = [
   '/event_devfest-campus.png',
   '/event_ideathon.jpeg',
   '/event_solution-challenge.jpeg',
-  '/event_job-fair.jpeg',
-  '/event_senior-seminar.jpeg',
 ];
 
 const SECTION_CLASSNAMES = `

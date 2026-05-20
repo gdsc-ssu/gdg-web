@@ -6,7 +6,6 @@ import PictureSection from '@/app/components/main/PictureSection/PictureSection'
 
 const COMMUNITY_IMAGES = [
     '/event_escape.jpeg',
-    '/event_senior-seminar.jpeg',
     '/event_debate.jpeg',
     '/event_gdsc-career.jpeg',
     '/event_festival.jpg',
