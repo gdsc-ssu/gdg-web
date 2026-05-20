@@ -9,8 +9,10 @@ const SLIDER_IMAGES = [
   '/ideathon.jpeg',
   '/festival.jpg',
   '/3rd-mt.jpeg',
-  '/event_solution-challenge.jpeg',
-  '/event_devfest-campus.png',
+  '/5th_first.png',
+  '/4th_mt.jpg',
+  '/5th_year_end.png',
+  '/5th_home_comming.png',
 ];
 
 const SECTION_CLASSNAMES = `

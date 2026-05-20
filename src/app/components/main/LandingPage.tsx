@@ -4,10 +4,39 @@ import ActivitySection from '@/app/components/main/ActivitySection/ActivitySecti
 import HeroSection from '@/app/components/main/HeroSection/HeroSection';
 import PictureSection from '@/app/components/main/PictureSection/PictureSection';
 
+const COMMUNITY_IMAGES = [
+    '/event_escape.jpeg',
+    '/event_debate.jpeg',
+    '/event_gdsc-career.jpeg',
+    '/event_festival.jpg',
+    '/event_solution-challenge.jpeg',
+    '/event_ideathon.jpeg',
+    '/event_devcon.jpg',
+    '/event_devfest-campus.png',
+    '/event_newyear-hackathon.jpg',
+    '/event_snowflower-hackathon.jpg',
+    '/event_gen-ai.png',
+    '/event_devcon-2024.jpeg',
+    '/event_year_end_party.png',
+    '/event_homecomming.png',
+];
+
+const STUDY_PROJECT_IMAGES = [
+    '/project_bird_sweeper.webp',
+    '/project_ANBD.webp',
+    '/project_baby24.webp',
+    '/project_beyond-b.webp',
+    '/project_litera-sea.webp',
+    '/project_Path-to-Pet.webp',
+    '/project_weve.webp',
+    '/project_ssung_delivery.webp'
+];
+
 const ACTIVITIES = [
     {
         variant: "seminar" as const,
         activityName: "슈몰세미나",
+        href: 'https://www.youtube.com/@gdgocsoongsil6711',
         description: (
             <p>
                 모든 멤버가 최소 한 번 직접 주제를 정하고 발표하는 내부 세미나 활동입니다.
@@ -19,6 +48,8 @@ const ACTIVITIES = [
     {
         variant: "study" as const,
         activityName: "스터디&프로젝트",
+        images: STUDY_PROJECT_IMAGES,
+        href: 'https://github.com/gdsc-ssu',
         description: (
             <p>
                 내부에서 다양하고 재미있는 주제로 스터디와 프로젝트가 활발하게 개설됩니다.
@@ -30,6 +61,8 @@ const ACTIVITIES = [
     {
         variant: "community" as const,
         activityName: "커뮤니티 활동",
+        images: COMMUNITY_IMAGES,
+        href: 'https://gdg.community.dev/gdg-on-campus-soongsil-university-seoul-south-korea/',
         description: (
             <p>
                 개방적인 학생 개발자 커뮤니티로서, 정보를 공유하거나 견학, 체험 등의 활동을 함께 합니다.
@@ -51,6 +84,8 @@ const LandingPage = () => {
                     variant={activity.variant}
                     activityName={activity.activityName}
                     description={activity.description}
+                    images={'images' in activity ? activity.images : undefined}
+                    href={'href' in activity ? activity.href : undefined}
                 />
             ))}
             <PictureSection />

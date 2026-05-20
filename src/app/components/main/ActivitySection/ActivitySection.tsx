@@ -13,8 +13,6 @@ const SLIDER_IMAGES = [
   '/event_devfest-campus.png',
   '/event_ideathon.jpeg',
   '/event_solution-challenge.jpeg',
-  '/event_job-fair.jpeg',
-  '/event_senior-seminar.jpeg',
 ];
 
 const SECTION_CLASSNAMES = `
@@ -66,9 +64,12 @@ const textVariants = cva(
 interface ActivitySectionProps extends VariantProps<typeof activityVariants> {
   activityName: string;
   description: React.ReactNode;
+  images?: string[];
+  href?: string;
 }
 
-const ActivitySection = ({ activityName, description, variant }: ActivitySectionProps) => {
+const ActivitySection = ({ activityName, description, variant, images, href }: ActivitySectionProps) => {
+  const sliderImages = images ?? SLIDER_IMAGES;
   return (
     <section id="activity-section" className={SECTION_CLASSNAMES}>
       {/* Text Section */}
@@ -107,10 +108,10 @@ const ActivitySection = ({ activityName, description, variant }: ActivitySection
       {/* Slider Section */}
       <div className="flex flex-col gap-6 w-full max-w-[100vw] mt-[120px]">
         {/* Row 1: Left to Right -> reverse=true */}
-        <SliderRow images={SLIDER_IMAGES} reverse={true} />
+        <SliderRow images={sliderImages} reverse={true} href={href} />
 
         {/* Row 2: Right to Left -> reverse=false */}
-        <SliderRow images={[...SLIDER_IMAGES].reverse()} reverse={false} />
+        <SliderRow images={[...sliderImages].reverse()} reverse={false} href={href} />
       </div>
     </section>
   );

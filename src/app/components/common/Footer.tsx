@@ -2,10 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const SOCIAL_LINKS = [
-    { name: 'Github', href: 'https://github.com/gdgoc-ssu', icon: '/5th/footer/Github.svg' },
-    { name: 'Instagram', href: 'https://www.instagram.com/gdgoc_ssu', icon: '/5th/footer/Instagram.svg' },
-    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/gdgoc-ssu', icon: '/5th/footer/LinkedIn.svg' },
-    { name: 'YouTube', href: 'https://www.youtube.com/@gdgoc_ssu', icon: '/5th/footer/YouTube.svg' },
+    { name: 'Github', href: 'https://github.com/gdsc-ssu', icon: '/5th/footer/Github.svg' },
+    { name: 'Instagram', href: 'https://www.instagram.com/gdg.ssu/', icon: '/5th/footer/Instagram.svg' },
+    { name: 'YouTube', href: 'https://www.youtube.com/@gdgocsoongsil6711', icon: '/5th/footer/YouTube.svg' },
 ];
 
 const Footer = () => {
