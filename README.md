@@ -1,6 +1,60 @@
-# GDG-WEB-2025 DEV
-[TEST WEB PAGE](https://gdg-web-hl6w.vercel.app/)
-[![image](https://github.com/user-attachments/assets/524c3fa8-e060-48ca-9327-ad4a550e15a4)](https://gdg-web-hl6w.vercel.app/)
+# GDG-WEB-2026 DEV
+[WEB PAGE](https://gdgocsoongsil.com/)
+
+# 블로그 글 작성 안내
+
+### 1. 파일 위치
+content/posts/ 폴더 안에 .mdx 파일을 생성해요.
+
+### 2. 파일명 규칙
+
+content/posts/파일명.mdx
+  - 영문 소문자, 숫자, 하이픈(-)만 사용
+  - 파일명이 URL의 slug가 됨 (예: my-post.mdx → /blog/my-post)
+
+### 3. 상단 메타데이터 (필수)
+파일 맨 위에 ---로 감싼 frontmatter를 반드시 작성해야 해요.
+
+```
+  ---
+  title: "글 제목"
+  date: "2025-05-20"          # YYYY-MM-DD 형식
+  description: "글 요약"       # 블로그 목록에 표시됨
+  author: "작성자 이름"
+  tags: ["태그1", "태그2"]    # 선택사항
+  ---
+```
+
+### 4. 본문 작성
+frontmatter 아래에 Markdown 문법으로 작성해요.
+
+```
+# 제목 (h1)
+## 소제목 (h2)
+```
+일반 문단 텍스트입니다.
+
+```
+  **굵게**, *기울임*, `인라인 코드`
+
+  - 목록 항목 1
+  - 목록 항목 2
+  [링크 텍스트](https://링크주소)
+
+  코드 블록:
+  javascript
+  console.log('Hello!')
+  
+```
+
+### 5. 주의사항
+
+  - date 형식이 틀리면 정렬이 깨질 수 있어요 → 반드시 "YYYY-MM-DD" 형식
+  - 최신 글이 목록 상단에 표시되므로 날짜를 정확히 입력해야 해요
+  - 파일 저장 후 개발 서버가 자동으로 재생성해줌 (pnpm dev 실행 중이면 자동 반영)
+  - 이미지를 넣고 싶다면 public/ 폴더에 이미지를 넣고 `![alt](이미지경로)` 문법 사용
+
+---
 
 ## 🌱 Commit Convention
 
