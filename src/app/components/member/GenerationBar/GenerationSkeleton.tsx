@@ -1,7 +1,3 @@
-"use client";
-
-import React from "react";
-
   export default function GenerationSkeleton() {
     return (
       <div className="w-6 flex flex-col items-center justify-center gap-1">

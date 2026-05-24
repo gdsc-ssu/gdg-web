@@ -1,25 +1,16 @@
-"use client";
-
 import Generation from "./Generation";
-import { useMemberContext } from "../contexts/MemberContext";
-import { useGenerationInfo } from "../hooks/useGenerationInfo";
-import GenerationSkeleton from "./GenerationSkeleton";
+import { GenerationInfo } from "@/types/member";
 
-export default function GenerationBar() {
-  const { selectedGeneration, setSelectedGeneration } = useMemberContext();
-  const { generationInfo, isLoading } = useGenerationInfo();
+interface GenerationBarProps {
+  generationInfo: GenerationInfo[];
+  selectedGeneration: string;
+}
 
+export default function GenerationBar({
+  generationInfo,
+  selectedGeneration,
+}: GenerationBarProps) {
   const generationBarClasses = "w-full flex flex-row justify-center items-center gap-8";
-
-  if (isLoading) {
-    return (
-      <div className={generationBarClasses}>
-        {[...Array(5)].map((_, index) => (
-          <GenerationSkeleton key={`generation-skeleton-${index}`} />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className={generationBarClasses}>
@@ -27,8 +18,7 @@ export default function GenerationBar() {
         <Generation
           key={id}
           title={title}
-          active={selectedGeneration === title ? title : ""}
-          onClickGeneration={() => setSelectedGeneration(title)}
+          active={selectedGeneration === title}
         />
       ))}
     </div>

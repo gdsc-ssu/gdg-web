@@ -1,31 +1,28 @@
-"use client";
-
 import MemberCard from "./MemberCard";
-import MemberSkeleton from "./MemberSkeleton";
-import { useMemberContext } from "../contexts/MemberContext";
-import { useMembers } from "../hooks/useMembers";
+import { Member } from "@/types/member";
 
-export default function MemberList() {
-  const { selectedGeneration } = useMemberContext();
-  const { members, isLoading } = useMembers(selectedGeneration);
+interface MemberListProps {
+  title: string;
+  members: Member[];
+}
 
-  const gridClasses = "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3";
+export default function MemberList({ title, members }: MemberListProps) {
+  const gridClasses =
+    "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3";
 
-  if (isLoading) {
-    return (
-      <div className={gridClasses}>
-        {[...Array(4)].map((_, index) => (
-          <MemberSkeleton key={`member-card-skeleton-${index}`} />
-        ))}
-      </div>
-    );
+  if (members.length === 0) {
+    return null;
   }
 
   return (
-    <div className={gridClasses}>
-      {members.map((member) => (
-        <MemberCard key={member.id} {...member} />
-      ))}
+    <div className="w-full flex flex-col gap-5">
+      <h2 className="text-style-label">{title}</h2>
+
+      <div className={gridClasses}>
+        {members.map((member) => (
+          <MemberCard key={member.id} {...member} />
+        ))}
+      </div>
     </div>
   );
 }
