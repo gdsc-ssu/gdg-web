@@ -1,124 +1,293 @@
 import { Member } from "@/types/member";
-import { SpreadsheetLibrary, spreadsheetLibrary } from "@/app/libraries/spreadsheetLibrary";
-import { convertGoogleDriveUrl } from "@/app/utils/spreadsheet";
+import {
+  NotionDataSourceProperty,
+  NotionLibrary,
+  NotionPage,
+  NotionProperty,
+  notionLibrary,
+} from "@/app/libraries/notionLibrary";
 
 export class MemberService {
-  constructor(private library: SpreadsheetLibrary) {}
+  constructor(private library: NotionLibrary) {}
+
+  private readonly generationPropertyName = "generation";
 
   /**
    * Generation 목록 조회
    */
   async getGenerations(): Promise<{ id: string; title: string }[]> {
-    const sheets = await this.library.getSheets();
-    const sheetsAfterFirst = sheets.slice(1);
+    const properties = await this.library.getDataSourceProperties();
+    const generationProperty = this.findDataSourceProperty(properties, [
+      this.generationPropertyName,
+      "기수",
+    ]);
+    const generations = this.getGenerationOptions(generationProperty);
 
-    return sheetsAfterFirst.map((sheet, index) => ({
-      id: sheet.properties?.sheetId?.toString() || (index + 1).toString(),
-      title: (index + 1).toString(),
-    }));
+    return generations
+      .sort((a, b) => Number(a) - Number(b))
+      .map((generation) => ({
+        id: generation,
+        title: generation,
+      }));
   }
 
   /**
    * 특정 Generation의 멤버 목록 조회
    */
   async getMembersByGeneration(generation: string): Promise<Member[]> {
-    // Generation 번호 검증
     const generationNumber = parseInt(generation, 10);
     if (isNaN(generationNumber) || generationNumber < 1) {
       throw new Error(`Invalid generation number: ${generation}`);
     }
 
-    // 시트 정보 가져오기
-    const sheets = await this.library.getSheets();
-    const sheetsAfterFirst = sheets.slice(1);
-
-    if (generationNumber > sheetsAfterFirst.length) {
-      throw new Error(
-        `Invalid generation number: ${generation}. Must be between 1 and ${sheetsAfterFirst.length}`
-      );
-    }
-
-    const targetSheet = sheetsAfterFirst[generationNumber - 1];
-    if (!targetSheet?.properties?.title) {
-      throw new Error(`Sheet not found for generation: ${generation}`);
-    }
-
-    // 시트 데이터 가져오기
-    const values = await this.library.getSheetValues(targetSheet.properties.title);
-    if (!values || values.length === 0) {
-      return [];
-    }
-
-    // 헤더 추출
-    const headers = values[0].map((h: unknown) => String(h).toLowerCase().trim());
-
-    // 데이터 변환
-    const drive = this.library.getDriveClient();
-    const memberPromises = values.slice(1).map(async (row: unknown[], index: number) => {
-      const paddedRow = this.padRow(row, headers.length);
-      return this.transformRowToMember(paddedRow, headers, drive, generation, index);
+    const pages = await this.library.queryPages({
+      filter: {
+        property: this.generationPropertyName,
+        select: {
+          equals: generation,
+        },
+      },
     });
 
-    return Promise.all(memberPromises);
+    return pages.map((page, index) =>
+      this.transformPageToMember(page, generation, index)
+    );
   }
 
-  /**
-   * 행을 헤더 길이에 맞게 패딩
-   */
-  private padRow(row: unknown[], targetLength: number): unknown[] {
-    const paddedRow = [...row];
-    while (paddedRow.length < targetLength) {
-      paddedRow.push("");
-    }
-    return paddedRow;
-  }
-
-  /**
-   * Google Sheets 행을 Member 도메인 모델로 변환
-   */
-  private async transformRowToMember(
-    row: unknown[],
-    headers: string[],
-    drive: ReturnType<typeof this.library.getDriveClient>,
+  private transformPageToMember(
+    page: NotionPage,
     generation: string,
-    rowIndex: number
-  ): Promise<Member> {
-    const getValue = (headerName: string): string => {
-      const index = headers.indexOf(headerName.toLowerCase());
-      return index >= 0 ? String(row[index] || "") : "";
-    };
-
-    // Part 필드 처리 (슬래시로 구분된 값들을 정리)
-    const partValue = getValue("part");
-    const part = partValue
+    index: number
+  ): Member {
+    const name = this.getPropertyText(page, ["name", "이름"]) || "Unknown";
+    const interest = this.getPropertyValues(page, ["interest", "관심사"])
+      .join("/")
       .split("/")
-      .map((p: string) => p.trim())
-      .filter((p: string) => p)
+      .map((interestName) => interestName.trim())
+      .filter(Boolean)
       .join(" / ");
 
-    // 이미지 URL 변환
-    const pictureUrl = getValue("pictureUrl");
-    const convertedPictureUrl = pictureUrl
-      ? await convertGoogleDriveUrl(pictureUrl, drive)
-      : undefined;
-
-    const name = getValue("name") || "Unknown";
-    const memberId  = `${generation}-${rowIndex}-${name.toLowerCase().replace(/\s+/g, "-")}`;
+    const memberId = `${generation}-${index}-${name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+    const roleKey = this.normalizeRole(
+      this.getPropertyText(page, ["role", "역할"])
+    );
+    const role = this.getRoleDisplayName(roleKey, generation);
 
     return {
       id: memberId,
-      pictureUrl: convertedPictureUrl,
+      pictureUrl: this.getPageCoverUrl(page),
       name,
       websites: {
-        github: getValue("github") || "",
-        linkedin: getValue("linkedin") || "",
-        instagram: getValue("instagram") || "",
+        github: this.getPropertyUrl(page, ["github", "깃허브"]) || "",
+        linkedin: this.getPropertyUrl(page, ["linkedin", "링크드인"]) || "",
+        instagram: this.getPropertyUrl(page, ["instagram", "인스타그램"]) || "",
       },
-      part,
-      comment: getValue("comment") || "",
-      role: getValue("role") || "",
+      interest,
+      comment: this.getPropertyText(page, ["comment", "소개", "한마디"]),
+      roleKey,
+      role,
     };
+  }
+
+  private getRoleDisplayName(role: string, generation: string): string {
+    const generationNumber = Number(generation);
+    const roleConfig =
+      generationNumber >= 4
+        ? {
+            lead: "Organizer",
+            "core-member": "Team Member",
+            member: "Member",
+          }
+        : {
+            lead: "Lead",
+            "core-member": "Core Member",
+            member: "Member",
+          };
+
+    return roleConfig[role as keyof typeof roleConfig] || role;
+  }
+
+  private normalizeRole(role: string): string {
+    return role.trim().toLowerCase();
+  }
+
+  private getPropertyText(page: NotionPage, aliases: string[]): string {
+    return this.getPropertyValues(page, aliases).join(" / ");
+  }
+
+  private getPropertyUrl(
+    page: NotionPage,
+    aliases: string[]
+  ): string | undefined {
+    const property = this.findProperty(page, aliases);
+    if (!property) {
+      return undefined;
+    }
+
+    if (property.type === "url") {
+      return this.asString(property.url);
+    }
+
+    if (property.type === "files") {
+      const [file] = this.asArray(property.files);
+      if (this.isRecord(file)) {
+        const external = this.asRecord(file.external);
+        const notionFile = this.asRecord(file.file);
+        return this.asString(external?.url) || this.asString(notionFile?.url);
+      }
+    }
+
+    return this.getPropertyText(page, aliases) || undefined;
+  }
+
+  private getPageCoverUrl(page: NotionPage): string | undefined {
+    if (!page.cover) {
+      return undefined;
+    }
+
+    if (page.cover.type === "external") {
+      return page.cover.external?.url;
+    }
+
+    if (page.cover.type === "file") {
+      return page.cover.file?.url;
+    }
+
+    return page.cover.external?.url || page.cover.file?.url;
+  }
+
+  private getPropertyValues(page: NotionPage, aliases: string[]): string[] {
+    const property = this.findProperty(page, aliases);
+    if (!property) {
+      return [];
+    }
+
+    switch (property.type) {
+      case "title":
+        return this.getRichTextValues(property.title);
+      case "rich_text":
+        return this.getRichTextValues(property.rich_text);
+      case "select": {
+        const select = this.asRecord(property.select);
+        return this.asString(select?.name) ? [this.asString(select?.name)] : [];
+      }
+      case "multi_select":
+        return this.asArray(property.multi_select)
+          .map((item) =>
+            this.isRecord(item) ? this.asString(item.name) : undefined
+          )
+          .filter((value): value is string => Boolean(value));
+      case "status": {
+        const status = this.asRecord(property.status);
+        return this.asString(status?.name) ? [this.asString(status?.name)] : [];
+      }
+      case "number":
+        return typeof property.number === "number"
+          ? [String(property.number)]
+          : [];
+      case "url":
+        return this.asString(property.url) ? [this.asString(property.url)] : [];
+      case "email":
+        return this.asString(property.email)
+          ? [this.asString(property.email)]
+          : [];
+      case "phone_number":
+        return this.asString(property.phone_number)
+          ? [this.asString(property.phone_number)]
+          : [];
+      case "files":
+        return this.getFileUrls(property);
+      default:
+        return [];
+    }
+  }
+
+  private findProperty(
+    page: NotionPage,
+    aliases: string[]
+  ): NotionProperty | undefined {
+    const properties = page.properties || {};
+    const normalizedAliases = aliases.map((alias) => this.normalize(alias));
+    const propertyName = Object.keys(properties).find((name) =>
+      normalizedAliases.includes(this.normalize(name))
+    );
+
+    return propertyName ? properties[propertyName] : undefined;
+  }
+
+  private findDataSourceProperty(
+    properties: Record<string, NotionDataSourceProperty>,
+    aliases: string[]
+  ): NotionDataSourceProperty | undefined {
+    const normalizedAliases = aliases.map((alias) => this.normalize(alias));
+    const propertyName = Object.keys(properties).find((name) =>
+      normalizedAliases.includes(this.normalize(name))
+    );
+
+    return propertyName ? properties[propertyName] : undefined;
+  }
+
+  private getGenerationOptions(
+    property: NotionDataSourceProperty | undefined
+  ): string[] {
+    if (!property || property.type !== "select") {
+      return [];
+    }
+
+    const select = this.asRecord(property.select);
+    return this.asArray(select?.options)
+      .map((option) =>
+        this.isRecord(option) ? this.asString(option.name) : undefined
+      )
+      .filter((value): value is string => Boolean(value));
+  }
+
+  private getRichTextValues(value: unknown): string[] {
+    return this.asArray(value)
+      .map((item) =>
+        this.isRecord(item)
+          ? this.asString(item.plain_text) ||
+            this.asString(this.asRecord(item.text)?.content)
+          : undefined
+      )
+      .filter((text): text is string => Boolean(text));
+  }
+
+  private getFileUrls(property: NotionProperty): string[] {
+    return this.asArray(property.files)
+      .map((file) => {
+        if (!this.isRecord(file)) {
+          return undefined;
+        }
+
+        const external = this.asRecord(file.external);
+        const notionFile = this.asRecord(file.file);
+        return this.asString(external?.url) || this.asString(notionFile?.url);
+      })
+      .filter((url): url is string => Boolean(url));
+  }
+
+  private normalize(value: string): string {
+    return value.toLowerCase().replace(/[\s_-]/g, "");
+  }
+
+  private asArray(value: unknown): unknown[] {
+    return Array.isArray(value) ? value : [];
+  }
+
+  private asRecord(value: unknown): Record<string, unknown> | undefined {
+    return this.isRecord(value) ? value : undefined;
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null;
+  }
+
+  private asString(value: unknown): string {
+    return typeof value === "string" ? value : "";
   }
 }
 
-export const memberService = new MemberService(spreadsheetLibrary);
+export const memberService = new MemberService(notionLibrary);

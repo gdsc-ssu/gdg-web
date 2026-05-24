@@ -9,17 +9,13 @@ export interface Member {
   pictureUrl: string | undefined;
   name: string;
   websites: MemberWebsites;
-  part: string;
+  interest: string;
   comment: string;
+  roleKey: string;
   role: string;
 }
 
 export interface GenerationInfo {
   id: string;
   title: string;
-}
-
-export interface MemberCacheData {
-  data: Member[];
-  timestamp: number;
 }
