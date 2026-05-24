@@ -1,3 +1,3 @@
-import MemberList from "./MemberList";
+import MemberSection from "./MemberSection";
 
-export default MemberList;
+export default MemberSection;
