@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import SeminarMainImg from "@public/seminar_main.png";
+import SeminarMainImg from "@public/seminar_main.jpg";
 import Slide from "../Slide";
 
 const Seminar = () => {
@@ -41,8 +41,9 @@ const Seminar = () => {
           <Image
             src={SeminarMainImg}
             alt="SSUmall Seminar Main"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="100vw"
+            className="object-cover"
           />
           <p className="absolute inset-0 flex items-center justify-center text-white text-xl font-semibold bg-black bg-opacity-40">
             함께 한 경험은 배움의 가치를 더합니다.

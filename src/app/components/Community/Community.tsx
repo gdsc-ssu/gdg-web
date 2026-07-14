@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import EventImage from "@public/community_main.png";
+import EventImage from "@public/community_main.jpg";
 import CatImg from "@public/challenge_cat.jpg";
-import GonImg from "@public/community_gon.png";
+import GonImg from "@public/community_gon.jpg";
 
 const Community = () => {
   const events = [
@@ -94,9 +94,9 @@ const Community = () => {
             <Image
               src={events[leftIndex].image}
               alt={events[leftIndex].title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
+              fill
+              sizes="(max-width: 1280px) 34vw, 711px"
+              className="rounded-lg object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60"></div>
           </div>
@@ -106,9 +106,9 @@ const Community = () => {
             <Image
               src={events[currentIndex].image}
               alt={events[currentIndex].title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
+              fill
+              sizes="(max-width: 1280px) 52vw, 862px"
+              className="rounded-lg object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60"></div>
             <div className="absolute bottom-4 left-4 text-white">
@@ -124,9 +124,9 @@ const Community = () => {
             <Image
               src={events[rightIndex].image}
               alt={events[rightIndex].title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
+              fill
+              sizes="(max-width: 1280px) 34vw, 711px"
+              className="rounded-lg object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60"></div>
           </div>

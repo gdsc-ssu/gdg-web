@@ -5,12 +5,12 @@ import SliderRow from '@/app/components/common/SliderRow';
 
 // Using existing images as placeholders since I cannot extract from screenshot
 const SLIDER_IMAGES = [
-  '/mt.png',
-  '/ideathon.jpeg',
-  '/festival.jpg',
+  '/mt.jpg',
+  '/ideathon_optimized.jpg',
+  '/festival_optimized.jpg',
   '/3rd-mt.jpeg',
-  '/5th_first.png',
-  '/4th_mt.jpg',
+  '/5th_first_optimized.jpg',
+  '/4th_mt_optimized.jpg',
   '/5th_year_end.png',
   '/5th_home_comming.png',
 ];

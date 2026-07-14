@@ -92,7 +92,7 @@ export const SEMINARS = [
     {
       title: 'WOW MEET',
       description: '로그인 없이 1분만에 끝내는 초 간단 일정 조율',
-      thumbnail: '/project_wowmeet.png',
+      thumbnail: '/project_wowmeet.jpg',
       tags: ['project'],
     },
     {
@@ -137,7 +137,7 @@ export const SEMINARS = [
       url: 'https://developers.google.com/community/gdsc-solution-challenge?hl=ko',
     },
     {
-      image: '/event_ideathon.jpeg',
+      image: '/event_ideathon.jpg',
       url: 'https://www.instagram.com/p/CwSWDYAvbsJ',
     },
     {
@@ -162,7 +162,7 @@ export const SEMINARS = [
       url: 'https://www.instagram.com/p/C0X94oRyVje/?img_index=1',
     },
     {
-      image: '/event_gen-ai.png',
+      image: '/event_gen-ai.jpg',
       url: 'https://gdsc.community.dev/events/details/developer-student-clubs-chungang-university-presents-gdsc-x-wrtn-gen-ai-onboarding-conference/',
       imageAlign: 'top',
     },

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import ChallengeSubImg from "@public/challenge_sub.png";
+import ChallengeSubImg from "@public/challenge_sub.jpg";
 import ChallengeCatImg from "@public/challenge_cat.jpg";
 
 import Image from "next/image";
@@ -102,9 +102,9 @@ const Challenge = () => {
         <Image
           src={ChallengeSubImg}
           alt="ChallengeSubImg"
-          layout="fill"
-          objectFit="cover"
-          className="absolute inset-0 w-full h-full opacity-20"
+          fill
+          sizes="100vw"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
         />
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <p className="leading-relaxed font-medium">
@@ -150,6 +150,7 @@ const Challenge = () => {
                     className="object-contain h-full"
                     width={240}
                     height={160}
+                    sizes="240px"
                   />
                 </div>
                 <div className="bg-yellow-100 p-4">

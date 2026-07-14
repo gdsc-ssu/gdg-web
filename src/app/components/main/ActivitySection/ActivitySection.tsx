@@ -11,7 +11,7 @@ const SLIDER_IMAGES = [
   '/seminar_sumall1.png',
   '/event_devcon-2024.jpeg',
   '/event_devfest-campus.png',
-  '/event_ideathon.jpeg',
+  '/ideathon_optimized.jpg',
   '/event_solution-challenge.jpeg',
 ];
 

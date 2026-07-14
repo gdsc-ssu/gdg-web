@@ -8,37 +8,37 @@ const MOCK_EVENTS = [
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
     {
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
     {
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
     {
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
     {
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
     {
         title: "MT",
         date: "2024. 10. 12.",
         location: "가평 산여울 캠프",
-        imageUrl: "/mt.png"
+        imageUrl: "/mt.jpg"
     },
 ];
 
