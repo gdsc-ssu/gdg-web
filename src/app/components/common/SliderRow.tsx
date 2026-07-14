@@ -14,10 +14,11 @@ interface SliderRowProps {
 // 300x254 aspect ratio
 const IMAGE_WIDTH = 300;
 const IMAGE_HEIGHT = 254;
+const IMAGE_SIZES = "(max-width: 640px) 160px, (max-width: 1024px) 220px, 300px";
 
 const SliderRow = ({ images, reverse = false, staggerOdd = false, href }: SliderRowProps) => {
     // Duplicate images enough times to cover screen width + buffer for seamless loop
-    const list = [...images, ...images, ...images];
+    const list = [...images, ...images];
 
     return (
         <div className={`flex w-full overflow-hidden relative select-none ${href ? '' : 'pointer-events-none'}`}>
@@ -47,6 +48,7 @@ const SliderRow = ({ images, reverse = false, staggerOdd = false, href }: Slider
                                 alt={`Slider image ${idx}`}
                                 fill
                                 className="object-cover"
+                                sizes={IMAGE_SIZES}
                             />
                         </div>
                     );
