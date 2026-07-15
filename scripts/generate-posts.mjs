@@ -6,7 +6,6 @@ import { evaluate } from '@mdx-js/mdx'
 import * as runtime from 'react/jsx-runtime'
 import { renderToStaticMarkup } from 'react-dom/server'
 import React from 'react'
-
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const postsDir = join(__dirname, '../content/posts')
 const outputDir = join(__dirname, '../src/generated')
@@ -19,7 +18,11 @@ async function compileToHtml(mdxContent) {
     ...runtime,
     baseUrl: import.meta.url,
   })
-  return renderToStaticMarkup(React.createElement(MDXContent))
+  const html = renderToStaticMarkup(React.createElement(MDXContent))
+
+  return html.replace(/<img\b(?![^>]*\bloading=)([^>]*?)>/g, (match, attrs) => {
+    return `<img loading="lazy" decoding="async"${attrs}>`
+  })
 }
 
 const posts = existsSync(postsDir)
