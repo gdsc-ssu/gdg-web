@@ -1,9 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import PageContainer from '@/app/components/common/PageContainer'
-import MdxImage from '@/app/components/blog/MdxImage'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
 
 interface Props {
@@ -34,7 +32,7 @@ export default async function PostPage({ params }: Props) {
     notFound()
   }
 
-  const { meta, content } = post
+  const { meta, html } = post
 
   return (
     <PageContainer>
@@ -73,14 +71,8 @@ export default async function PostPage({ params }: Props) {
             prose-code:bg-neutral-off-white prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[13px]
             prose-pre:bg-neutral-off-white prose-pre:rounded-xl prose-pre:p-4
           "
-        >
-          <MDXRemote
-            source={content}
-            components={{
-              img: MdxImage,
-            }}
-          />
-        </div>
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
 
         <div className="w-full h-[60px]" />
 
